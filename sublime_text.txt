@@ -1,0 +1,47 @@
+{
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"font_face": "Consolas",
+	"font_options":
+	[
+		"directwrite"
+	],
+	"font_size": 11,
+	"highlight_line": true,
+	"translate_tabs_to_spaces": true
+}
+
+
+
+
+// 配置文件sublime text
+{
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"font_face": "Courier New",
+	"font_size": 12.0,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"line_padding_bottom": 2,
+	"line_padding_top": 2,
+	"translate_tabs_to_spaces": true
+}
+
+
+
+// 添加新的build
+
+{
+    "cmd" : ["lua", "$file"],
+    "selector" : "source.lua",
+}
+
+
+ubuntu setting:
+{
+    "font_face": "Ubuntu Mono",
+    "font_size": 16,
+    "highlight_line": true,
+    "translate_tabs_to_spaces": true,
+}
+

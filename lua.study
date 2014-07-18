@@ -1,0 +1,211 @@
+userdata
+{
+    full userdata,          managed by lua      medatable
+    light userdata,         mamanged by host 
+}
+
+
+-- 将栈上某个索引当表，取该表的值，放入栈顶上。
+lua_getfield(l, i, "index")
+lua_gettable(l, i, index)
+
+-- 将LUA代码中，全局名放入栈顶
+lua_getglobal(l, "")
+
+
+-- 判断函数
+lua_isboolean
+lua_iscfunction
+lua_isfunction
+lua_islightuserdata
+lua_isnil
+lua_isnone  判断给定的索引是否可用
+lua_isnoneornil 相似于 lua_isnone 以及nil 给定的索引
+lua_isnumber
+lua_isstring
+lua_istable
+lua_isthread
+lua_isuserdata
+
+
+lua_len(L, d) = #
+
+
+lua_pushfstring
+
+
+
+lua_settable
+
+C:  BOOL FALSE/TRUE as lua boolean
+
+
+
+
+
+
+-- lua 学习总结
+
+语句以;结束，但;是可选的
+
+lua -la -lb:要求在一个chunk内先运行a,再运行b
+
+lua -i -la -lb : -i 表示运行之后进入交互模式
+
+删除全局变量：b = nil
+
+注释： -- 单行 --[[  内容  ]] : 多行注释
+
+lua -e "print(math.sin(12))"  : -e 表示直接将命令传递给lua
+
+lua 的8个类型：nil boolean number string userdata function thread table
+
+
+Sring : [[...]]  多行字符串， 可以包含换行，
+
+Lua通过引用比较tables、userdata、functions。也就是说当且仅当两者表示同一个对象时相等
+
+nil false 为假，其它为真
+
+x = x or v  
+等价于：
+if not x then
+	x = v 
+end
+
+a ? b : c 等价于：(a and b) or c
+
+lua 表的索引：从1开始
+
+表构造函数可以使用，；来间隔，但通过使用；来间隔不同的类型
+
+｛【】｝，【】中间要么是数字（record风格），要么是字符串(list风格)，
+
+{["x"]=0, ["y"]=0}      					<-->    {x=0, y=0} 
+{[1]="red", [2]="green", [3]="blue"}      	<-->  	{"red", "green", "blue"} 
+
+if while repeat,末尾都有;结束号
+
+函数只有一个参数并且这个参数是字符串或者表构造的时候，()可有可无
+a{dddd=1,ddd=2,}
+print "nihao" dofile "thefilename"
+
+lua 函数多个返回值的问题，
+1、当做为最后一个参数（包含仅有一个参数时），尽可能多的返回值
+2、而其它情况下时，只返回一个参数
+
+另：圆括号强制，如：return (foo2()) 只会返回第一个值
+
+
+unpack:	接收一个数组做为输入参数，返回数组的所有元素。
+a = {"hello", "ll"}
+f = string.find
+print(f(unpack(a))		-> 3 4
+
+可变参数：内部有一个arg表，保存所有的元素。arg中有一个n字段，表示共有多少个
+function select (n, ...)
+    return arg[n]
+end
+
+-- 将可以参数，传递给另一个函数：
+function fwrite(fmt, ...)
+    return io.write(string.format(fmt, unpack(arg)))
+end
+
+-- 闭包
+function newCounter()
+    local i = 0
+    return function()     -- anonymous function
+       i = i + 1
+        return i
+    end
+end
+
+c1 = newCounter()
+print(c1())  --> 1
+print(c1())  --> 2
+c2 = newCounter()
+print(c2())	 --> 1
+print(c1())	 --> 3
+
+
+require 与 dofile 前者只加载一次，更好，
+
+loadlib用来加载二进制库函数
+
+
+
+
+// 元表
+
+__add   +
+__mul   *
+__sub   -
+__div(除)、
+__unm(负)、
+__pow(幂)
+__concat ..
+__len
+
+__index __newindex  表中访问的域不存在时候才起作用
+
+__eq    ==
+__lt    <
+__le    <=
+
+__tostring
+
+__callable()
+
+多个类型操作时，lua首先调用第一个的元表，如果不存在，则调用第二个的元表，否则报错。
+
+function Account:withdraw(v)
+    self.xxx = v
+end
+冒号的效果相当于在函数定义和函数调用的时候，增加一个额外的隐藏参数。self
+
+
+C 与lua  交互
+读写Lua全局变量的函数，
+调用Lua函数的函数，
+运行Lua代码片断的函数，
+注册C函数然后可以在Lua中被调用的函数
+
+
+
+--[[ -- 测试总结 -------------- ]]
+
+当表b 引用 到a之上是，b更改了内容，a的内容会发生更改，b消失后a不变，
+local a = {}
+local b = a
+b.str="123"
+b=nil
+此时a仍有字段str
+
+
+表中存入函数地址，或者字符串。
+
+
+
+
+
+
+
+--------------------- new lib study ----------------
+_, cnt = string.gsub(str, " "," ")      -- 统计了 出现的次数
+%b用来匹配对称的字符
+%bxy:常用的模式有：%b() %b[]  %b%{%}  %b<>
+
+str= "name = value"
+_, _, key, val = string.find(str, "(%a+)%s=%s(%a+)")    -- 返回
+
+match gmatch返回的是itor,而不是位置
+
+
+
+
+
+
+
+
+

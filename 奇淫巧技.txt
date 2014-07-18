@@ -1,0 +1,14 @@
+o︻$▆▇◤
+
+
+
+_RPT2(_CRT_WARN, "\nnihao: %d,%d", 22, 33);
+_RPT2(_CRT_ERROR, "\nnihao: %d,%d", 22, 33);
+_RPT2(_CRT_ASSERT, "\nnihao: %d,%d", 22, 33);
+
+
+
+hg建立多少目录
+在一个空目录d:\code下建立HG仓库
+将其它仓库移动到这个空目录下即可。
+

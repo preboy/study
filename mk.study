@@ -1,0 +1,210 @@
+
+include foo.make *.mk $(var)  # 表示可以使用include包含其它的makefile文件
+
+Makefile中的变量其实就是C/C++中的宏
+
+objects := $(wildcard *.o)     # objects的值是所有[.o]的文件名的集合
+objects = *.o                  # 则不会被展开
+
+三个通配符   *  ~  ?   
+
+1 当make搜索文件是，可以在前面找到路径，
+2 特殊变量：VPATH：make在当前目录下找不到所需要的文件时，便会到VPATH指定的路径中去寻找
+3 使用vpath关键字：
+        1、vpath <pattern> <directories> 
+            为符合模式<pattern>的文件指定搜索目录<directories>。
+        2、vpath <pattern> 
+            清除符合模式<pattern>的文件的搜索目录。
+        3、vpath 
+            清除所有已被设置好了的文件搜索目录。 
+
+vpath %.h ../headers 表示所有的头文件，到上层headers中去找             #注释：   %表示匹配０或若干字符  \% 表示%
+
+vpath %.c foo
+vpath %.c blish   # vpath %c foo:blish 　这样也行，太...
+vpath %.c bar
+这家伙，还可以这样设置，有顺序了
+
+
+.PHONY : clean xxx   # 这个后面跟上的是伪目标
+
+伪目标可以是第一个目标，也可以有依赖如：
+
+all: p1 p2 p3
+.PHONY all
+
+p1: ddd
+    cc 
+p2: dd 
+这种用法，可以使用在一个makefile中，一次生成好多好多的exe
+伪目标是标签，所以不会生成
+
+TARGET =  # 这种使用方法，是声明，可以在多个文件中使用
+
+
+伪目标的依赖，当执行该目标时候，会先执行其依赖，这样就好像子程序一样：
+
+.PHONY c1 c2 c3
+
+c1:c2 c3
+    rm program
+c2:
+    rm *.o
+c3:
+    rm *.diff
+    
+FILE_CPP=$(shell find . -name "*.cpp")          $# 表示执行shell的结果
+
+$@ 用在多目标依赖中，表示当前目标名
+
+bigoutput littleoutput : text.g
+	generate text.g -$(subst output,,$@) > $@
+================ 
+	bigoutput : text.g
+	    generate text.g -big > bigoutput
+    littleoutput : text.g
+	    generate text.g -little > littleoutput
+
+
+
+静态依赖：用于多目标，爽得很，再不也用写那么多了
+objects = foo.o bar.o
+
+all: $(objects)
+
+$(objects): %.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
+表示所有objects中的%.o 都依赖于%.c
+展开＝＝＝
+foo.o : foo.c
+	$(CC) -c $(CFLAGS) foo.c -o foo.o
+bar.o : bar.c
+	$(CC) -c $(CFLAGS) bar.c -o bar.o
+	
+$< : 表示所有的依赖目标集   也就是：　foo.c   
+$@ : 表示目标集
+	
+又是一个自己理解的例子：
+    files = foo.elc bar.o lose.o
+    $(filter %.o,$(files)): %.o: %.c
+	    $(CC) -c $(CFLAGS) $< -o $@
+    $(filter %.elc,$(files)): %.elc: %.el
+	    emacs -f batch-byte-compile $<
+
+
+
+cc -M main.c 可以找出所有的依赖头文件
+g++ 会把std中的也包含进来，所以要使用-MM 参数
+
+
+
+当COMMAND包含多天命令时，他们之间以；分开，前面的命令会影响后面的环境，
+比如：
+    cd /usr; 
+    pwd;    # 如果不要;则pwd不变
+    
+
+
+# 进入子目录，执行编译
+subsystem:
+        cd subdir && $(MAKE)
+
+其等价于：
+
+subsystem:
+        $(MAKE) -C subdir
+
+
+如果你要传递变量到下级Makefile中，那么你可以使用这样的声明：
+
+export <variable ...>;
+
+如果你不想让某些变量传递到下级Makefile中，那么你可以这样声明：
+
+unexport <variable ...>;
+
+
+
+# 这两个变量，总是要传递下去的。
+
+个是SHELL，一个是MAKEFLAGS，
+
+
+# 定义命令包，可以想函数那样使用，
+define run-yacc
+yacc $(firstword $^)
+mv y.tab.c $@
+endef
+
+$(run-yacc)
+
+
+于系统变量“MAKELEVEL”，其意思是，如果我们的make有一个嵌套执行的动作（参见前面的“嵌套使用make”），那么，这个变量会记录了我们的当前Makefile的调用层数。 
+
+
+
+FOO ?= bar
+ # 果FOO没有被定义过，那么变量FOO的值就是“bar”，如果FOO先前被定义过，那么这条语句将什么也不做
+
+
+变量替换
+foo := a.o b.o c.o
+bar := $(foo:.o=.c)
+格式是“$(var:a=b)”或是“${var:a=b}”，其意思是，把变量“var”中所有以“a”字串“结尾”的“a”替换成“b”字串。
+
+
+# 这个是嵌套
+x = y
+y = z
+a := $($(x))
+
+
+
+追加变量
+objects += another.o
+
+
+目标变量：只在这个目标范围内，他的值才有效果
+prog : CFLAGS = -g
+
+
+
+
+# 条件编译
+
+
+libs_for_gcc = -lgnu
+normal_libs =
+
+foo: $(objects)
+ifeq ($(CC),gcc)
+        $(CC) -o foo $(objects) $(libs_for_gcc)
+else
+        $(CC) -o foo $(objects) $(normal_libs)
+endif
+
+这些都是关键字：ifeq ifneq ifdef  else  endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,112 @@
+在windows批处理文件中，
+set /p a="请输入参数"
+结果之后，环境变量a=所输入的值
+
+
+
+
+构造函数带参数的类A，做为类B的成员变量时，在类B的初始化列表中应该初始化，也只能在此初始化。
+
+
+
+
+
+// such as zcg,  zcg_big
+
+
+class zcg
+
+{
+    
+public:
+    
+    zcg(int a, int b) : 
+    a21(a),
+    b32(b)
+    
+    {
+        
+        a21 = a * a;
+    }
+    
+    
+    ~zcg(){}
+
+    
+    private:
+    
+        int a21;
+    
+        int b32;
+
+    };
+
+
+
+    
+    
+    class zcg_big
+
+    {
+
+    public:
+    
+        zcg_big() :
+    tt(23,32)
+    {}
+
+    
+        ~zcg_big(){}
+
+
+        
+        private:
+    
+            zcg tt;
+
+        };
+
+
+
+        
+
+
+
+给MFC程序添加cmd窗口，这样比较好，可以方便的查看输出信息。
+ AllocConsole();     
+
+win32添加窗口：
+::AllocConsole();
+::FreeConsole();
+freopen("CONIN$", "r+t", stdin); // 重定向 STDIN
+freopen("CONOUT$", "w+t", stdout); // 重定向STDOUT
+
+http://php.net/manual/zh/
+
+
+
+
+
+for mu_id in string.gmatch(mu_info, "(%d+)|*") do
+    print('mu_id='..mu_id);
+end
+
+
+
+设置控件台的字体颜色
+  for(BYTE i = 0x00; i < 0x0F; i++)
+    {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i);
+        printf("ddddddd\n");
+    }
+    
+
+do
+{
+}while(0)
+的妙用
+
+1、做一系列条件检测的时候，把他们都放到while(0)的后面，{}中做实体事情。
+2、做为一个独立的语言法，避免一些麻烦，多用于宏定义中。
+
+

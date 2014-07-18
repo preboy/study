@@ -1,0 +1,39 @@
+
+umask 002  #表示所有新创建的文件，屏蔽了其他用户2(写)的权限。
+
+fsetpos == fseek  == rewind    # 他们都是定位FILE流的函数。C标准提供。
+ftell 获取当前位置，好像。
+fflush  清洗 
+ferror   feof clearerr  # 这些都是针对出错处理的函数。
+fileno 与 fdopen 是流个filedescripter的交互
+
+flockfile  funlockfile   ftrylockfile   # 针对文件操作的锁， 可以嵌套哦，亲
+
+散列/聚集 io  readv  writev   也叫向量IO  相对于传统的线性IO
+
+
+
+内存映射：
+mmap  mremap   munmap
+mprotect改变内存区域的权限
+msync  : 同步到磁盘
+
+子进程也会忽略父进程忽略的信号，其他的都是默认操作
+
+
+sys_siglist[signo] # 这个东西，保存了信号对应的名字
+
+
+
+char* asctime_r(const struct tm * time, char* buf);
+char* ctime_t(const time_t* timemp);
+
+time_t mktime(struct tm* tm);
+struct tm * gmtime_r (const time_t *timep, struct tm *0result);
+
+
+
+
+
+
+

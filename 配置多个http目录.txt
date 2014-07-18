@@ -1,0 +1,61 @@
+ 使用apache配置多个虚拟目录
+分类： apache 2011-08-23 15:50 494人阅读 评论(0) 收藏 举报
+这几天帮同事弄虚拟目录，感觉好就没弄APACHE，手慢了许多，进入正题说说过程吧。
+
+
+其实就是要弄两个虚拟目录，
+
+http://10.90.23.202/test1
+
+http://10.90.23.202/test2,
+
+
+其中/test1 对应一个我本地C盘的目录， /test2 对应另一个我本地C盘的目录，刚开始被网上的帖子忽悠设置成虚拟主机，后来自己发现，其实很简单，
+只需要打开httpd.conf文件，在<IfModule alias_module>中，添加多个alias和directory即可，如下：
+
+
+**************************************************************
+    Alias "/test1" "C:\test\ReportDoc" 
+    <Directory   "C:\test\ReportDoc">   
+              Options   Indexes   Includes   FollowSymLinks   MultiViews   IncludesNoExec   
+              AllowOverride   None   
+              Order   allow,deny   
+              Allow   from   all   
+    </Directory>  
+
+    Alias "/test2" "C:\Documents and Settings\test\build"
+    <Directory   "C:\Documents and Settings\test\build">   
+              Options   Indexes   Includes   FollowSymLinks   MultiViews   IncludesNoExec   
+              AllowOverride   None   
+              Order   allow,deny   
+              Allow   from   all   
+    </Directory>  
+
+**************************************************************
+
+httpd.conf其他地方不要修改
+
+
+
+
+
+
+
+
+==================================================================
+或者  胡哥提供
+
+
++
+Listen 8080
+
++ 
+<VirtualHost *:8080>
+  DocumentRoot "E:/GameProjects/project-tools/OMS-TX/oms_web"
+  <Directory "E:/GameProjects/project-tools/OMS-TX/oms_web">
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>

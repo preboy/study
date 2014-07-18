@@ -1,0 +1,36 @@
+
+
+断言：
+    用，或者；分隔的条件，会对所有条件判断完
+    ，表示and
+    ; 表示or
+    
+    不会对所有条件判断完，找到一个为true就返回了，
+    andalso， 
+    orelse      
+
+
+erl -sname      对应不需要用域名来解析的地址，如同一台机器，或者周一个局域网，
+erl -name       对应不台的计算机，比如internet上的，需要dns来解析域名的，
+
+nl(Mod)         会在所有互联的Node上加载节点。
+
+net_adm:ping(Node)  你猜这是什么个意思？
+具有相同cookie且互联的节点，称为集群。
+
+
+
+spawn(Node,,,,,)   在节点上的版本，
+disconnect_node(Node)   强制断开一个节点的link
+
+monitor_node(Node, Flag)  -> true
+Flag 表示true/false，打开/关闭节点。
+
+监视者会收到，{nodeup, Node}, { nodedown, Node}, 表示新的节点加入或者离开被监视的那个节点。
+
+node()  ->  返回本地节点的名字。
+
+
+{RegName, Node} ! msg,  向远程NODE发送消息，我猜，{Pid, Node}! msg, 
+
+

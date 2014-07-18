@@ -1,0 +1,187 @@
+
+
+2D地图，画光标，多行的文本显示框，
+#pragma link 连接， 函数挂钩截获函数内容
+PE文件表，
+
+暂时不考虑压缩加密：
+
+精灵编辑器：
+AnimationEditor2D
+转换成DXT3、DXT5格式的帧组。拥有半透明度。
+打包成精灵文件。 *.spr
+
+精灵包文件：包括很多个精灵，按组按ID标记。人物、树木、怪物...
+
+
+简单情况：连续的帧。
+复杂情况：精灵，前级精灵，后级精灵依次渲染。
+
+
+
+地图编辑器：
+MapEditor2D
+格式：DXT1，
+*.map
+
+以地图为单位，统一加载或者释放资源。
+
+地形文件: 小块(128 * 128)集合，表示地形，比如街道，草地，雪山等。
+加载中间文件，放置小物件。
+
+第一层：纯地面部分, 
+制作方式：用素材填充地面，
+每一个小块分配一个唯一编号，一个块只属于一个组呢，(素材) 
+取编号就可以了。节省很多资源。(磁盘。)
+每一小块地形可以有多个素材，（2~3个）用作纹理混合，地形过渡处理。
+
+第二层：堆放精灵，树，房子、等。
+需要精灵编辑器提供精灵。
+(spritID, x, y)
+
+
+第三层：控件地面人物是否可停留标记,
+32*32大的小块，标记人物是否可停留
+
+
+第四层：区域事件触发器
+进入、离开、停留一段时间之后触发某一ID的事件。
+
+
+
+SetRenderFormat(int type)
+{   
+    case type:
+        Set_VertexLayout(...);
+        Set_VShader();
+        Set_PShader();
+        Set_Line/TRIP;
+}
+
+
+Render()
+{
+    SetVBuffer();
+    SetIBuffer();
+    Draw(...);
+}
+
+
+
+Src:    存放源文件，PS产生，一律保存成DXT1，DXT5格式。(不透明的采用DXT1，透明的采用DXT5)  将jpeg,bmp,png,解码成dxt1, dxt5,
+Sprite: 精灵类文件的根目录，存放工具所生产的精灵。
+    以路径访问，配置唯一ID号。在内存中以ID号访问。
+
+
+
+// 动画编辑器：流程
+
+1 确定多少帧，
+
+播放.spr文件
+
+SprMaker.exe
+
+版本：V1
+外方框大小固定，且边长均为2的幂数。
+保存成.spr文件。
+
+菜单功能：
+保存。
+保存并导出。
+导出。
+
+
+
+.sm工程文件，可导出为.spr文件。
+可批量将.sm导出为.spr.spr文件。
+SmExportSpr.exe
+
+
+
+动画是另外一种东西：跟Sprite不同的。
+
+
+
+    struct Sprite_t
+    {
+        DWORD   id;
+        char    szBuffer[128];
+        data[], 
+    };
+
+map<id, sprite_t*> allSprites;
+map<string, sprite_t*> mapS;
+
+
+
+先完善EditBox单行，完成ListBox、ProgressCtrl控件。滚动条。
+
+
+再弄SpriteMaker.exe;
+
+
+ProgressBar 绘制
+
+
+
+{,,msvcr110d.dll}_CrtSetBreakAlloc
+
+
+// 二进制的处理。
+// 变量类型转换。varant
+
+
+mysql_shutdown 函数，可能是关闭数据库。回去以后删除这个函数。
+shcreatedirectory()递归合建目录。
+// 加载VIP信息表;
+bool  LoadVipInfoTable( LPSTR pszFileName )
+{
+    ifstream dataStream(pszFileName);
+    if (!dataStream.is_open())
+    {
+        return false;
+    }
+
+    string sline;
+    getline(dataStream,sline);  // title;
+    while (getline(dataStream,sline))
+    {
+        istringstream is(sline, ios_base::in);
+
+        int i1  = 0;
+        int i2  = 0;
+        int i3  = 0;
+        int i4  = 0;
+        int i5  = 0;
+        int i6  = 0;
+        int i7  = 0;
+        int i8  = 0;
+        int i9  = 0;
+        int i10 = 0;
+        int i11 = 0;
+        int i12 = 0;
+
+        is 
+            >> i1
+            >> i2
+            >> i3
+            >> i4
+            >> i5
+            >> i6
+            >> i7
+            >> i8
+            >> i9
+            >> i10
+            >> i11
+            >> i12;
+
+        
+    g_mapVipTable[i1] = i8;
+
+       
+    }
+
+    dataStream.close();
+    return true;
+}

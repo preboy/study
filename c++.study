@@ -1,0 +1,433 @@
+
+
+先搞语言强化部分， 再了解新增加库的使用。  看完之后，再到网上查查别人的总结。
+
+新增加关键字：
+    alignas
+    alignof decltype
+    auto
+    static_assert
+    using
+    noexcept
+    export
+    null
+    constexpr
+    thread_local
+
+    std::array
+    std::forward_list
+    std::tuple
+    std::function
+    std::bind
+    unique_ptr
+    shared_ptr
+    weak_ptr
+    std::future
+    std::promises
+    std::async
+    std::regex
+
+    const 只有在初始化（亦是发生在运行时，是动态的）之后，才是常量
+
+    __STDC_HOSTED__
+    __STDC__
+    __STDC_VERSION__
+    STDC_ISO_10646__
+
+    __func__  :返回当前函数名字
+    =
+    static const char* __func__ = "hello";
+
+    支持 #pragma
+    _Pragma("once");    // 它是一个操作符
+    #define PR(...)  printf(__VA_ARGS__);
+
+    窄字符与宽字符，现在可以直接相连了， 没有试过
+
+    long long 与 unsigned long long  至少是64位
+    
+    g++ -std=c++11 main.cpp
+    
+    #if __cplusplus < 201103L
+        #error "fuck"
+    #endif
+    
+    NDEBUG
+
+
+    thorw() 被 noexcept 所取代，但如果还是异常了，会编译器会调用std::terminate()来终止进程。
+    void thefunc() noexcept {...}
+    void thefunc() noexcept (常量表达式) {...}   // 常量表达式的值通常为 true/false
+    noexcept 还是一个操作符 noexcept(T()) 表示他是否不会抛出异常
+    c++11中，new不会抛出异常了，同时很多标准库中的函数都由noexcept修改过，如果出现问题，则会直接std::terminate()
+    
+    c++11中析构函数，默认都是noexcept的，除非自己设置。或者基类中设置
+
+    两个概念：
+    就地初始化C98   int b(23);
+    初始化列表：C++11 int b{32};
+
+    struct 与 class 的初始化列表不一样，class则必须有这么一个初始化构造列表函数, struct则不需要
+
+    非常量的静态成员，需要到类外去定义
+    
+    无论是类还是实例，都可以通过sizeof(Pelple::hand) 进行求值，或者静态成员或者非
+    
+    sizeof( ((People*)0)->hand ) 求大小
+
+    
+    声明友元类时，friend class poly; 中的(class)可以省略，同时，poly 也可以是经过typedef之后的东西，
+    friend int;     // 这个就被忽略了，所以，可以用于模板中
+
+    class p;
+
+    template<typename T>
+    class my_cls
+    {
+        friend T;
+    }
+    my_cls<p>;
+    my_cls<int>;
+
+
+    被final声明过的虚函数，再也不能被重载了，
+
+    override表示该函数是重载而来的， 必须实现
+
+    模板函数，现在可以有默认的参数了
+    template<typename T = int> void func(){}; 而且不遵循从右到左的方式。
+
+    
+    可以显示实例化模板函数或者类，   // 这个东西，不会报错，但会减少编译器的压力
+    声明： template void fun<int>(int);   强制实例化
+    外部声明： extern template void fun<int>(int);
+
+    静态函数在编译时没有外部链接属性
+
+    struct{int i;}b ; 此处b是一个匿名的类型变量，
+    typedef struct{int i; }B; B是匿名类型
+    模板参数，现在可以是局部变量式匿名类型，匿名类型变量
+    
+
+    继承基类的函数 
+
+    class A
+    {
+        void f(double v){};
+    };
+    class B : public A
+    {
+        using A::f;
+        using A::A;     // C++11 继承了A中所有的构造函数  但无法初始化派生类中的成员函数，可以设置默认值
+    };
+
+    函数参数的默认值通常是不会被继承的，参数默认值到导致多个版本的构造函数产生，出会全都被子类继承
+
+    C++11中构造函数可以调用构造函数了，
+
+    this->Info();  或者 new (this) info;
+
+    我们不能在初始化列表中使用委托构造
+
+    一旦我们使用了临时对象，那么移动构造函数就会被触发
+    可以取地址的，有名字的，就是左传，否则就是右值
+        纯右值：
+            非引用返回的函数返回的临时变量值
+            运算表达式  2 + 3
+            不跟对象关联的字符值， 2, 'c', true, 
+            类型转换函数的返回值
+            lambda表达式
+        将亡值：
+            返回右值引用&&的函数返回值
+            std::move()返回值
+            转换为T&& 类型转换函数的返回值
+
+c++11中，所以的值，必定属于将亡值、纯右值，左值
+    
+    右值引用，是无法绑定到左值上去的：
+        int c;
+        int && d = c; 是错误的
+    但左值是可以绑定到右值是去的
+        T& e = ReturnRvalue();          // 错误
+        const T& f = ReturnRvalue();    // 正确， 这个功能，可以接受常量左值，非常量左值，右值
+    
+        常量左值引用 ，可以为右值续命，可以在传递到函数的时候，少传递一层 c98
+        
+        T returnRvalue() { return new T; } 
+        
+        void f(const T& t);   f(returnRvalue());      // 可以减少一次拷贝
+        void f(T&& t);        f(returnRvalue());          
+        这两个函数，都可以接受returnRvalue的返回值，
+        但&&可以改动哦，除非使用std::move 一般意义不大，
+
+    std::move 强制将一个左值转为一个右值
+
+
+    常量右值，const T&& cref = ReturnRvalue(); // 主要为了移动语义
+
+    is_rvalue_reference
+    is_lvalue_reference
+    is_reference
+
+    可以接受右值引用本身在却是一个左值
+
+    拷贝，移动构造函数，有3个版本，
+    T Object(T&);           // 
+    T Object(const T&);     // 拷贝构造函数
+    T Object(T&&);          // 移动构造函数
+
+    如果手工生成了移动构造函数、拷贝构造函数、拷贝赋值函数、构造函数中的一个或多个，
+    编译器则不会为程序员 生成默认的拷贝构造函数
+    所以这4个东西，都必须同时存在或者都不存在
+
+    他们都应该是noexcept的
+
+
+完美转发:指在函数模板中，完全依照模板的参数类型，将参数传递给函数模板中另一个函数
+
+    Tr & v = ...;
+    当Tr是&& 且 v 是v 或者&&才会中右值引用。
+    可以减少一些函数，const 非const, 提升性能
+    
+    explicit 被应用到了自定义类型的转换操作符上， 以支持显示类型转换  这个东西，还要网上再查查，没有完全搞懂
+
+
+
+
+    int a[] = {1,2,3};
+    int a[] {1,2,3};   // 这样也行
+    int b (2+1);
+    int b {2+1}; 
+    vector<string> s {"abc", "def", "ghj", };
+    map<int, float> d= {{1, 1.0f}, {2, 2.0f, }, {3, 3,0f},};
+
+    我们的类，只要定义一个初始化列表的构造函数，也就支持{}了，
+    #include <initializer_list>
+    People(std::initializer_list<T> l)
+    {
+        for auto i = l.begin(); i != l.end(); i++)
+            m_vec.pushback(i);
+    }
+    
+    函数的参数，也可以使用初始化列表
+    void the_func(std::initializer_list<int> l);
+    the_func({1,2,3,4});
+
+    还可以返回初始化列表哦
+    vector<int> the_func() { return {1,2,3} };
+    const vector<int>& the_func() { return {1,2,3} };
+    
+    可以防止收窄
+    char c = {1024 }; 编译通不过
+
+
+    POD: 两个概念
+        平凡的
+            没有自己定义构造函数，系统默认生成的就是平凡的。析构函数也一样。
+            不能包含虚函数以及虚基类    
+        
+        
+        标准布局
+            所有非静态成员，有相同的访问权限: private public protected
+            非静态成员只要同时出现在派生类和基类之中，就不属于标准布局
+            非静态成员出现在多个基类中，派生成也不属于标准布局
+            
+        std::is_trivial
+        std::is_pod
+
+
+    非受限union中，一般要自己定义构造函数，而且使用placement new
+    union T
+    {
+        string s;
+        int a;
+        public:
+            T(){ new (&s) string; }
+            ~T(){s.~string()}
+    }
+
+    
+    后缀标识操作符：
+    字面量： operator "" _C(const char*, size_t) {}   // 这个操作会解决以_C结尾的字符串，返回一个临时变量
+    
+    字面常量 ：
+        整型        unsigned long long    const char* 
+        激战型：    long double     const char* 
+        字符串：    const char* size_t
+        字符：      char
+
+        operator "" 与自定义后缀之间要有空格，以_开始，
+
+
+    内联别名:
+        
+        inline namespace :  允许程序员在父名字空间定义或特化子名字空间的模板
+
+
+
+    匿名命名空间，不可以跨文件，但在同一个文件中可以多次出现。
+    
+    namespace nname = oldname;  // 别名
+
+    std::is_same  用于判断两个类型是否一致
+
+    template<typename T>
+    using NamString = std::map<T, char*>;   // 比typedef更生猛
+
+    SFINEA: 匹配失败不算错误，就比如在模板中
+    对重载的模板的参数进行展开时，如果导致一些不匹配，则报错。
+
+    auto 代替 size_t
+
+    define MAX 的宏中，使用?:可能有性能损失，因为会被调用两次
+
+    auto 与 auto* 声明并无区别，但auto & 引用则必须这样写
+
+    decltype (表达式) 求出类型， 与auto一样，也是在编译时候确定的类型。
+    
+    using size_t = decltype(sizeof(0));
+
+    vector<int> vec
+    typedef decltype(vec.begin()) vectype;
+    
+    decltype 还可以重用匿名类型， 它一个最大用途就是用在追踪函数的返回类型当中。与auto联用
+    
+    
+    typedef double (*func)();
+    std::result_of<func()>::type f;         // f 类型为double, 
+
+    // 因为多了一对括号
+    int a = 1;
+    decltype((a)) b  = a;  
+    // b 是一个引用;  因为a是一个左值 int &; 
+    // 如果a 是一个将亡值，则b 为 int&&;
+
+    decltype  能带走cv限制符， 虽然auto不能。  // 其成员不会继承这两个属性 const volatile
+
+    std::is_const
+    std::is_volatile
+
+    函数除了有指针，还有引用，真是见怪，
+
+    int (*f)();   == auto (*f)()->int;
+    int (&f)();   == auto (&f)()->int;
+
+
+
+
+    for_each(arr, arr+sizeof(arr)/sizeof(arr[0], func)
+    for(int&e : arr)
+        something;
+
+    
+    constexpr 编译时常量表达式;
+
+
+    变长模板参数 
+
+    template<int... A> class NonTypeVaradicTemplate{};
+    
+    C++11中不再需要为原子数据类型显示地声明互斥锁
+
+    #include<cstdatomic>
+    atomic_bool
+    atomic_char
+    atomic_schar
+    atomic_uchar
+    atomic_int
+    atomic_uint
+    atomic_short
+    atomic_ushort
+    atomic_long
+    atomic_ulong
+    atomic_llong
+    atomic_ullong
+    atomic_char_16_t
+    atomic__char32_t
+    atomic_wchar_t
+    
+    // 任意类型
+    std::atomic<T> t;   // 不允许拷贝构造、赋值构造=
+    T tt = t;           // 这样就可以换回去了
+
+    -- 自旋锁
+    std::atomic_flag lock;
+    lock.test_and_set()
+    lock.clear()
+
+    memory_order  // 
+    
+    TLS  = thread local storage  拥有线程生命周期，以及线程可见性。
+
+    int thread_local var;   // 这就声明了一个TLS
+    // 这里有一个问题，声明写到哪儿？是全局空间，还是某函数内？
+    // 是每个线程都有吗？还是只是当前线程才有，
+    // -- 不过我觉得，应该与声明全局变量一样，每个线程都有
+
+    terminate 默认情况下会去调用abort,不可可以通过set_terminate来设置另外的，，，，哈哈哈哈哈，
+    abort会向符合 POSIX标准的程序发送信号,SIGABRT, 可以在这里接收，哈哈，哈哈，哈哈，
+    他们都不会调用任何析构函数
+
+    exit则是“正常退出”，会调用atexit设置的函数,atexit可以多次设置、且最后调用顺序相反。
+
+    C++11 new exit method:
+        quick_exit 不执行析构;  与 abord不同， 会调用at_quick_exit,所设置的函数；
+        这样做，主要是为了更快，因为在程序退出时，再一片一片的释放内存，没有多大的意义。
+        
+
+    C++ 默认生成6个函数，构造、析构、拷贝(2)，移动(2)
+    还有以下全局操作符 operator , & && * -> ->* new delete
+
+    另外， default delete 还可以用在类外，实现类的成员构造等函数的时候，写在后面，
+    可以在头文件中不写default, 而在2个cpp文件中，一个写delete, 一个写实现， 大家可以选择cpp了
+
+    delete 还可以用于防止隐式转换，class A{ A(char)=delete; }
+    delete 与 explicit 不可联用。
+
+
+    lambda
+    []{}
+    []() mutable -> int {}
+    capture
+    [var] 值传递方式
+    [=] 值传递方式，所有父作用域的变量，包括this
+    [&var] 引用传递方式
+    [&] 引用传递方式， 所有父作用域变量 include 'this'
+    [this] 以值方式传递this
+
+    对齐：
+        struct alignas(32) ColorVector
+        {
+            double r,g,b,a;
+        };
+
+        alignof(ColorVector)  // 32
+
+        alignas( alignof(double) ) char c;  == alignas(double) char c;
+        alignas 可以接受数字，也可以接受类型
+
+        g++ 通过属性  __attributes__
+        vc++     #pragma __declspec
+
+
+        C++11 通用属性: [[ attributes_list]]    // 这个操蛋的东西，应该还没有人用吧
+        日前只支持两个 [[noreturn]]  [[carries_dependency]]
+
+        
+        引入两种新的类型：
+        char16_t; 用于存储utf-16
+        char32_t; 用于存储utf-32
+        
+        前缀定义：
+        u8  utf8
+        u   utf16
+        U   utf32
+        R前缀，表示原生字符串
+
+        using namespace posix;
+
+        声明了析构或者拷贝复制操作符：不再默认生成拷贝构造函数
+        声明了析构或者拷贝构造操作符：不再默认生成拷贝复制函数
+
+        bind1st bind2st 被bind取代
+        ptr_fun  mem_fun mem_fun_ref unary_function  这些东西，统统被弃用，

@@ -1,0 +1,125 @@
+actionscript 3 学习总结
+
+== 比较会自动转换类型，
+ trace(6 == "6") // : true
+
+但是编译器默认给屏蔽了，
+
+isNoN 检测一个数字是否合法。
+
+比较两个对象的时候，只有当是两个引用的时候，才会认为是相等的。
+
+
+var arrayOne: Array = new Arrya("a", "B", "c");
+
+switch 等支持字符串做case的条件。
+
+对于条件 && || 可以使用NOT !来转换相反的条件。
+
+flash.utils 包中包含一个 Timer类，
+
+import flash.utils.Timer;
+var timer:Timer = new Timer(delay, repeatCount);
+
+
+类成员的访问方式比C++中多了一种：
+internal 可以被所在包中的所有类访问。
+
+import flash.errors;
+throw new Error("some text about exception");
+
+try
+{
+
+}
+catch(errObject:Error)
+{
+
+}
+finally
+{
+
+}
+
+class：
+ 一个as文件中只能在定义一个public类，
+ 且类名和文件名相同
+
+约定：
+内部private protected 变量，以_开头，如 var _id:Number;
+
+
+get set 属性
+
+static private var _example:String;
+static private 与 private static 是一样的。
+
+override 覆盖父类的方法，好像不需要父类是virtual 
+但，函数名，参数，返回类型必须与父类的一致。
+super.MethodName();
+
+flash.system.Capabilities
+
+
+Number int uint 可以使用toString转换成字符串，
+
+parseInt() 可以转换成数字，
+
+trace(new uint(51).toString(2)) 显示 110011
+
+trace(parseInt("110011", 2));显示51
+
+Math.round 
+Math.floor,
+Math.ceil
+
+import ascb.util.NumberUtilities
+NUmberUtilities.round(Math.PI, 0001))  3.1416\
+
+NumberUtilities.random()
+NumberUtilities.getUnique(); 唯一随机数
+
+数组很灵活，
+
+var array : Array = new Array();
+var arrya : Array  = new Array(23);
+var arrya : Array = ["a", "b" ,"c", ]
+
+下标从0开始哈，
+同一个数组里面，可以存储不同类型的东东
+
+
+push unshift 分别在尾部 首部，插入元素。。
+pop shift 分别在尾部，首部，删除元素。
+splice 在指定位置删除元素。该函数可以插入元素。
+
+字符串与数组之间的分分合合，
+
+string.split 
+array.join
+
+array.slice()  
+array.concat 复制数组 
+但是他们不能搞多维数组了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

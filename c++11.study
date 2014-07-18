@@ -1,0 +1,13 @@
+( a == 0 ? a : b ) = 16;
+就是将三元操作符当作左值来使用.
+
+namespace x = boost::filesystem;
+x:path mypath(strpath, fs:native);
+命名空间的引用
+
+可以在函数内声明class struct
+for (struct { int x, float y;} loop = {1,2}; ..;..){...}
+
+
+
+
