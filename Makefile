@@ -20,7 +20,7 @@ OBJD=$(SRCS:.cpp=.d)
 
 
 target: $(OBJS) 
-	$(CC) -o  $(TARGET) $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS)
 
 
 -include $(OBJD)	
