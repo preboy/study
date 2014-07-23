@@ -10,7 +10,7 @@
 TARGET=testcpp
 
 CC=g++
-FLAGS_C=-ggdb -O0 -Wall -std=c++11 -c
+FLAGS_C=-ggdb3 -O0 -Wall -std=c++11 -c
 FLAGS_D=-c -std=c++11 -MMD
 
 
