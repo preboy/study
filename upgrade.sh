@@ -2,7 +2,7 @@
 
 
 # general make file 
-cp ~/src/Makefile ~/src/Make ./
+cp ~/src/Makefile ./
 
 
 # study text.

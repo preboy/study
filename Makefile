@@ -1,17 +1,13 @@
 # general Makefile for simple projects
 #
-#
-# 
-# 
-#  
 # 
   
+
 
 TARGET=testcpp
 
 CC=g++
-FLAGS_C=-ggdb3 -O0 -Wall -std=c++11 -c
-FLAGS_D=-c -std=c++11 -MMD
+FLAGS_C=-ggdb3 -O0 -Wall -std=c++11 -c -MMD -MP
 
 
 SRCS=$(wildcard *.cpp)
@@ -19,11 +15,15 @@ OBJS=$(SRCS:.cpp=.o)
 OBJD=$(SRCS:.cpp=.d)
 
 
-target: $(OBJS) 
+$(TARGET): $(OBJS) 
 	$(CC) -o $(TARGET) $(OBJS)
 
 
--include $(OBJD)	
+-include $(OBJD)				
+
+
+$(OBJS): %.o: %.cpp
+	$(CC) $(FLAGS_C) $<
 
 
 cl:
@@ -32,6 +32,7 @@ cl:
 
 show:
 	@echo $(SRCS)
-
+	@echo $(OBJD)
+	@echo $(OBJS)
 
 .PHONY: cl show
