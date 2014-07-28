@@ -43,3 +43,10 @@ GSSAPIDelegateCredentials no
 实在不行，把下面这一行改为no,准行
 UseDNS no
 
+
+
+.bashrc 常用配置
+# edit by preboy
+alias la='ls -alF'
+alias cls='clear'
+PS1="\[\e[1;32m\]\u@\h:\w$ \[\e[m\]"
