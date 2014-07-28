@@ -36,4 +36,10 @@ struct tm * gmtime_r (const time_t *timep, struct tm *0result);
 
 
 
+SSH 连接慢的问题
+一下这两项改为No
+GSSAPIAuthentication no
+GSSAPIDelegateCredentials no
+实在不行，把下面这一行改为no,准行
+UseDNS no
 
