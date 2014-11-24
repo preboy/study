@@ -41,9 +41,6 @@ C:  BOOL FALSE/TRUE as lua boolean
 
 
 
-
-
-
 -- lua 学习总结
 
 语句以;结束，但;是可选的
@@ -152,10 +149,10 @@ __index __newindex  表中访问的域不存在时候才起作用
 __eq    ==
 __lt    <
 __le    <=
-
+__gc    the metable of full userdata or table field, called when gather collect.
 __tostring
 
-__callable()
+__callable() 让对象可执行
 
 多个类型操作时，lua首先调用第一个的元表，如果不存在，则调用第二个的元表，否则报错。
 
@@ -173,7 +170,7 @@ C 与lua  交互
 
 
 
---[[ -- 测试总结 -------------- ]]
+
 
 当表b 引用 到a之上是，b更改了内容，a的内容会发生更改，b消失后a不变，
 local a = {}
@@ -185,9 +182,81 @@ b=nil
 
 表中存入函数地址，或者字符串。
 
+如果有文件：lib.lua
+require("lib")不要包括后缀名，require中的内容只会加载一次，
+如果require返回一个表，在其它文件中引用之后，文件改变了表的内容，也会跟关改变
 
 
 
+local t = {} t的成员函数，定义在里面，外面都一样，
+只是在调用的时候，第一个参数由self传递。
+
+
+一般规定：
+表的.成员函数，不使用self对象，调用的时候，用.
+表的:成员函数，使用self对象，  调用的时候，用:
+他们都是一样的性质，
+
+
+-- 在for循环中删除表中的内容，应该如此，使用[]
+for k, v in ipairs(a) do
+    if ( k % 3 == 0 ) then
+        print(k .. " = ", v)
+        a[k] = nil 
+    end
+end
+
+-- 显示时间
+a = os.date("!*t")
+print_table(a, "a")
+
+
+
+在a文件中定义，
+local p = nil，在其它地方(比如 if ... end 内赋值。)是说明p为局部变量，其它文件中无法访问。
+否则，p会成为全局变量。
+
+
+for k, v .... 中的k,v 到for结束时，自动置为nil,不会污染全局命名空间。
+
+
+
+
+------------------ lua 5.2 study ---------------------------------------------------------------------------------------
+
+in interpreter mode, type "= xxx" gen effect the same as print(xxx)
+
+e.g.
+    =a          <--> print(a)
+
+    -- 多行字符串
+    [[ this is fuck 
+        haha
+    ]] 
+
+或者 [==[   ]==]
+
+
+::label::   &  goto label
+
+
+
+env..ment
+lua compiles any chunk in the scope of any upvalue called _ENV.
+translate any free name var to _ENV.var
+_ENV = _G
+
+
+
+
+
+_ENV = nil can invalidate any direct asscess to global variable in the rest of the chunk.
+
+
+I can switch _ENV in time every entry.
+
+
+_ENV = { _G = _G }
 
 
 
@@ -200,12 +269,5 @@ str= "name = value"
 _, _, key, val = string.find(str, "(%a+)%s=%s(%a+)")    -- 返回
 
 match gmatch返回的是itor,而不是位置
-
-
-
-
-
-
-
 
 

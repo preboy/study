@@ -1,0 +1,52 @@
+
+-- 找出全局重复的东东
+local tab = {}
+local logfile = io.open("c:\\key.txt", "w+")
+
+local mt = {}
+mt.__newindex = function(t, k, v)
+    if tab[k] then
+        logfile:write(k .. "\n")
+    else
+        tab[k] = true
+    end
+    -- rawset(t, k, v)
+end
+
+setmetatable(_G, mt)
+
+
+
+-- 打印出所有的全局项
+local pfile = io.open("c:\\a.txt", "w+")
+for k, v in pairs(_G) do
+    if type(v) ~= "function" then
+	pfile:write(k .. "\n")
+    end
+end
+pfile:close()
+
+
+
+
+// C++调试打印
+void utils::print_stack(lua_State* L)
+{
+    lua_getglobal(L, "debug");
+    lua_getfield(L, -1, "traceback");
+
+    int iError = lua_pcall(L, 0, 1, 0);
+    if (iError)
+    {
+        const char* sz = lua_tostring(L, -1);
+        sLog.error("%s", sz);
+        lua_pop(L, 1);
+    }
+    const char* stack = lua_tostring(L, -1);
+#if defined (ECL_WIN) 
+    ::OutputDebugStringA(stack);
+#else
+	printf("lua stack: %s\n", stack);
+#endif
+	lua_pop(L, 2);
+}

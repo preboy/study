@@ -1,0 +1,4 @@
+{
+    "cmd" : ["lua", "$file"],
+    "selector" : "source.lua",
+}

@@ -573,12 +573,29 @@ hexdump  od 他们都可以查看文件的内容
 
 
 
+iconv -l   # 列出所有支持的格式
+iconv -f gb2312 -t src.cpp > src2.cpp
 
 
 
 
 
+linux作为服务器，应该有如下规则：
 
+    # 查看 INPUT
+    iptables -L INPUT
+
+    # 允许外部tcp链接到本地的9999端口，实际上也就允许了服务端与客户端之间的双向通信
+    iptables -I INPUT -p tcp --dport 9999 -j ACCEPT
+        
+    # 允许本机的数据包发送到外部的端口。
+    iptables -I OUTPUT -p --sport 9999 -j ACCEPT
+
+
+
+# 设置中文编码
+    export LANG=zh_CN.UTF-8
+    其中 LC_ALL > LC_* > LANG
 
 
 

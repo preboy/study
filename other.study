@@ -68,7 +68,8 @@ public:
 
 
 
-        
+start "title" /MIN  ....
+XCOPY /D ....
 
 
 
