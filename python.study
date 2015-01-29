@@ -1,0 +1,127 @@
+在交互式中，_代表最后一次表达式的值
+
+print("string", end="")    # 这样的语句，可以自己提供可选的结束符（默认是\n）
+
+元祖()可以不用括号，但是要注意最乎一个‘,’
+
+for line in open("filename"):
+    print(line)
+
+t = set("hello")   # 这就是集合
+集合支持的操作:
+    | 并：
+    & 交
+    - 差，在前这种但不在后这种
+    ^  对称差：在前者后者中，但是不出现在二者交集中
+    t.add('x')            添加
+    t.update([1,2,3])     添加
+    t.remove('x')         移除
+
+
+集合：
+    键不可以是会发生变化的值，只能是 string, number, tuple, 
+    in 可以测试是否在dict中，
+    if "zcg" in family:
+        p = family["zcg"]
+    else
+        p = 0
+
+    相当于：    
+        p = family.get("zcg", 0)
+        list(family)  #获取关键字列表
+
+        del family[”zcg“]
+
+
+for x in range(0, 14, 3)  猜猜是什么意思呢？
+
+def  func_a(a, b):
+        return (a+b, a-b)
+
+x, b = func_a(b=1, a=10)
+
+
+
+要在函数中改变全域变量的值，需要在其中先使用global 申明
+
+
+使用yield的函数，叫做生成器
+
+import div 
+import div as d
+
+from div import div_func
+
+一行写不完的东西，可以用“\”来续行
+
+分号;分隔多条语句，单条可以不写
+
+
+变量名特殊：
+_foo        # 单下划线 不能被 from module import * 导入，表示私有变量
+__init__    # 内部定义使用
+__abc       # 表示私有变量，函数
+
+# -*- coding: UTF-8 -*-
+
+isinstance(s, list)   # 类型检测
+
+a = [1,2,[3,4]]
+b = list(a)
+b is a   # False   b是a的浅复制，即使应用
+
+b = copy.deepcopy(a)  深复制，a,b之间再无联系
+
+两种集合:  set   frozenset 不可变集合，可变集合
+
+
+
+
+isinstance
+issubclass
+
+value = a if a < b else b
+
+enumerate(s)    ==>  (0, s[0]), (1, s[1]), ...
+
+for i, x in enumerate(s):
+    print(i, x)
+
+s = (1,2,3)
+t = (4,5,6)
+for x, y in zip(s, t):
+    pass
+
+
+函数中如果使用局部变量是还没有赋值，则会异常
+[ x * 2 for x in a]  列表包含
+( x * 2 for x in a)  生成器
+
+
+@classmethod
+@staticmethod
+@property
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+ 把下面这几行写在.bashrc文件中，都是我常用的
+
+alias l='ls -l'
+alias ll='ls -la'
+alias grep='grep --color=auto'
+alias vi='vim'
+alias cls='clear'
+
+export PATH="$PATH:$HOME/bin"
+export PS1='\033[0;32m[\u@\h:\w]$\033[0m '
