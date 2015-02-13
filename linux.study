@@ -70,6 +70,39 @@ man syscalls
 lib64/libc.so.6  直接运行就可以查看版本，
 
 
+======================= linux shell =======================
+
+""   部分引用，之间的$ ` \ 保留特殊意义。
+''   全引用，  不保留任何特殊字符的意义，
+``  与 $() 一样，解释为系统命令，  fe:   `ls` == $(ls)
+\  转义符
+$0 $1 等表示参数，但从10开始，就要用花括号了${10}
+
+变量赋值：
+variable=value 或者 ${variable=value}
+echo $variable  ==  echo ${variable}
+
+echo "${color:=1000}"  表示如果没有对color赋值的话，color就是1000
+$* $@ 表示所有的参数  在双引号中有区别  "$*" = "$1 $2 $3"  "$@" = "$1" "$2" "$3"
+$# 参数数量
+$$ 脚本运行的进程号
+$? 退出状态
+
+
+variable:=value
+variable:=value
+
+readonly variable  ：这一句之后设置variable为只读变量，
+
+test : 结果为真，返回0  结果为假，返回非0
+
+for var in 1 2 4 5 6      for var in {1..6}  for var in ${seq 1 2 100}
+注意花括号
+
+
+
+
+
 
 
 
