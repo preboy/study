@@ -1,0 +1,36 @@
+PHP 将所有全局变量存储在一个名为 $GLOBALS[index] 的数组中。 index 保存变量的名称。这个数组可以在函数内部访问，也可以直接用来更新全局变量。
+
+echo print 区别
+
+
+设置常量，使用 define() 函数
+常量在整个脚本中都可以使用。
+格式：define(string constant_name, mixed value, case_sensitive = true)
+如：define("GREETING", "Welcome to W3CSchool.cc!");
+
+
+$str1 . $str2  字符串链接
+
+
+恒等于：x ===　y  　值等，且类型相同
+不等于： x <> y    x != y  
+
+ !== y	不恒等于	如果 x 不等于 y，或它们类型不相同，则返回 true
+
+
+ 数值数组 - 带有数字 ID 键的数组　　　　　　　　　　　　　　　　　　　　$cars=array("Volvo","BMW","Toyota")　　　for($x=0;$x<$arrlength;$x++)
+关联数组 - 带有指定的键的数组，每个键关联一个值　　　　　　　　　　　　$age=array("Peter"=>"35","Ben"=>"37","Joe"=>"43");　　　foreach($age as $x=>$x_value)
+多维数组 - 包含一个或多个数组的数组
+
+
+
+PHP 超级全局变量
+$GLOBALS
+$_SERVER
+$_REQUEST
+$_POST
+$_GET
+$_FILES
+$_ENV
+$_COOKIE
+$_SESSION
