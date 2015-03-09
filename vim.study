@@ -54,13 +54,13 @@ ctrl+W hlkj t b \
 
 vimdiff file1 file2 比较两个文件
 
-q{register(小写的26个字母之一)} [motion]+ q  记录，以后调用 @{register}即可
+{register(小写的26个字母之一)} [motion]+ q  记录，以后调用 @{register}即可
 而且，输入之后，{register}里面的内容，还是可以修改的，
 "{reg}p,粘贴出来，修改，"{reg}p$
 就可以了。
 q{reg(大写的26个字母之一)}，追加新的命令到寄存器。
 ：[range]s/from/to/g 全文替换
-
+@@可以直接调用上一次调用过的宏
 
 
 
@@ -301,3 +301,55 @@ vim插件：全局插件、 文件类型插件
 
 
 set list  显示TAB $ ^
+
+
+:hide edit newfile.h  打开新文件，旧的文件暂时先不用保存
+
+:next netx! wnext 用于文件列表，在vim开启时带的多个参数
+:args f1 f2 f3 可以打开另一个文件列表。
+:saveas new_fn  另存为
+:file fn.txt 标记已打开的文件为新建的文件，之后直接调用:w会给出提示。说还未保存过文件，
+
+:split  新建分隔窗口，可以带参数fn
+:new 打开新窗口
+
+[range]:s/from/to/flag  实现替换
+    flag: confirm/global/print    flag=g表示对该行的所有的都替换
+
+:[range]global/{pattern}/{command}
+
+Ctrl+V 然后 I 输入之后，ESC，所有行都输入了
+
+
+usr_12中，讲了可以替换文件夹下所有文件中的一个函数的方法。
+vim *.cpp
+qa 
+:%s/four/r/g
+wnext
+q
+999@a
+
+
+命令行上可以自动补全：tab  ctrl+L 
+history /  
+
+
+oldfiles 显示最近编辑文件列表
+:e #<2 打开oldfiles列表中的第2个文件，同样 split #<3 也可以
+
+ctrl+x ctrl+*  有一系列的提示按键
+
+ab\{1,3}  匹配ab, abb abbb
+其中{1,}  {,3}, {5} 是合法的输入
+{-2, 4}, 前面有一个-， 表示尽可能少的匹配
+a.*b 尽可能多的匹配
+a.{-}b 尽可以少的匹配
+/foo\|bar  多选一
+
+
+折叠
+zf  zo zc 创建，打开，关闭
+zr zm   zR zM更方便的操作
+zn zN  禁止/启用折叠  zi 在他们之间切换
+
+
