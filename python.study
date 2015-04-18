@@ -216,6 +216,6 @@ class Person:
 
 if "__main__" == __name__:
     p = Person("zcg")
-    # p.show() 报错，在使用之前必须先定义
+    # p.show() 报错，在使用之前必须先定义，即使写成 p.var = "wocao"这样在外部定义也行
     p.set("fuck")
     p.show()
