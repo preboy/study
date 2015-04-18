@@ -56,14 +56,15 @@ sed [opt] -f sed_file inputfile
     awk -F ':' 'awk code' inputfile
     awk -f awkscript input
 
-    awk 'BEGIN {one=1, two=2} {print${onw+two}} ' inputfile
+    awk 'BEGIN {one=1, two=2} {print${onw+two}} ' inputfile  # 这一行运行错误全
+    ll | awk 'BEGIN {one=1;two=2;}; {print one+two;}; END{}'
 
 
     
     引用符号，      意义
     ""              引用除了　＄　｀　\ 之外所以字符， 他们仍然是特殊意义。
     ''              所有的字符
-    ``              解释为系统命令
+    ``              解释为系统命令    在脚本中写： echo `ls`
     \               转义符
 
     $"varname"  与 $varname  可以保持变量的空格
@@ -102,7 +103,7 @@ sed [opt] -f sed_file inputfile
     done
 
     for file in $(ls); do echo $file; done   # or  for file in $(*) 
-
+    for a in {1..5}; do echo a; done
 
     字符串长度：
 
@@ -144,7 +145,7 @@ sed [opt] -f sed_file inputfile
     {
         echo $1 $2;
         echo "$@";      当作多个分割的单词
-        echo "$*";      当作当个单词   书上说用的比较少
+        echo "$*";      当作单个单词   书上说用的比较少
         return 0;
     }
     
@@ -170,8 +171,9 @@ sed [opt] -f sed_file inputfile
     INPUT | xargs -n 2 ./cechao.sh   执行cehao.sh多次，每次2个参数
 
     echo "Hello Wha Who" | tr 'A-Z' 'a-z'
-
-    cat file.txt | tr -d 'set1' 删除input中的制定字符
+    echo "Hello Wha Who" | tr 'A-Za-z' 'a-zA-Z'
+    
+    cat file.txt | tr -d 'set1' 删除set中的制定字符
     tr -d -c '0-9 \n'  删除set之外的东西
 
     md5sum计算文件的md5码
@@ -432,8 +434,10 @@ xargs:      将标准输入的东西，转换成命令行参数u
     
  
   扩展名：
-    $(var%.*)    删除%右侧的通配符    # 从右向左匹配哈  
-    $(var%.*)    更加贪婪
+    ${var%.*}    删除%右侧的通配符    # 从右向左匹配哈  
+    ${var%%.*}   更加贪婪
+    fe: echo "${var%.*}"           echo "${var%.exe}"
+
     
    $(var#*.)     删除所有的通配符     # 从左向右哈
    $(var##*.)    更加贪婪
