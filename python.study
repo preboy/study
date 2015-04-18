@@ -11,7 +11,7 @@ t = set("hello")   # 这就是集合
 集合支持的操作:
     | 并：
     & 交
-    - 差，在前这种但不在后这种
+    - 差，在前者中但不在后者中
     ^  对称差：在前者后者中，但是不出现在二者交集中
     t.add('x')            添加
     t.update([1,2,3])     添加
@@ -23,14 +23,14 @@ t = set("hello")   # 这就是集合
     in 可以测试是否在dict中，
     if "zcg" in family:
         p = family["zcg"]
-    else
+    else:
         p = 0
 
     相当于：    
         p = family.get("zcg", 0)
         list(family)  #获取关键字列表
 
-        del family[”zcg“]
+        del family["zcg"]
 
 
 for x in range(0, 14, 3)  猜猜是什么意思呢？
@@ -98,12 +98,34 @@ for x, y in zip(s, t):
 ( x * 2 for x in a)  生成器
 
 
-@classmethod
+@classmethod  成员函数中的第一个参数为class，而不是一个类
 @staticmethod
-@property
+@property  将类中定义的函数可以在外部当成成员函数使用
 
 
+"""
+    class TestA(object):
+        @classmethod
+        def func_a(cls):
+            print(cls, type(cls))
 
+        def func_b(self):
+            print(self, type(self))        
+
+        @staticmethod
+        def func_c():
+            print("this is in statkc")
+
+
+    if "__main__" == __name__:
+        ta = TestA()
+        ta.func_a()
+        print("dd")
+        ta.func_b()
+        print('cc')
+        ta.func_c()
+        TestA.func_c()
+"""
 
 
 
@@ -150,14 +172,50 @@ else:
 
 
 
+############################################################
+类变量  类成员函数示例：
+class Person:
+    name2 = []
+    def __init__(self,name):
+        self.__name = name
+        print ('(Initializing %s)' %self.__name )
+    def show(self):
+        print(self.__name)
+        print(self.name2)
+
+if "__main__" == __name__:
+    p = Person("zcg")
+    q = Person("dengxiao")
+    Person.name2 = "class Person"
+    p.show()
+    q.show()
+    print("__________________________", Person.name2, p.name2, q.name2)
+    p.name2 = "obj p"
+    p.show()
+    q.show()
+    print("===========================", Person.name2, p.name2, q.name2)
+    q.name2 = "obj q"
+    p.show()
+    q.show()
+    print("............................", Person.name2, p.name2, q.name2)
 
 
+"""
+类成员变量，在使用前必须先定义
+"""
+class Person:
+    def __init__(self, name):
+        self.__name = name
+        # self.var = 0
+    def set(self, var):
+        self.var = var
+        print("in set:", self.__name, self.var)
+    def show(self):
+        print(self.__name)
+        print(self.var)
 
-
-
-
-
-
-
-
-
+if "__main__" == __name__:
+    p = Person("zcg")
+    # p.show() 报错，在使用之前必须先定义
+    p.set("fuck")
+    p.show()
