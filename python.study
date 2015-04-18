@@ -168,7 +168,15 @@ for x in a[:]:
     print(x)
 else:
     print("the for end")
-在for的最后，会执行else部分
+在for的最后，会执行else部分，只要没有中途break
+while a < 10:
+    a = a + 1
+    if a == 2:
+        break
+else:
+    print("while else")
+wile与for也一样，只要没有break则会执行esle部分
+
 
 
 
