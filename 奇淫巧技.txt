@@ -1,4 +1,4 @@
-o︻$▆▇◤
+﻿o︻$▆▇◤
 
 
 
@@ -8,7 +8,21 @@ _RPT2(_CRT_ASSERT, "\nnihao: %d,%d", 22, 33);
 
 
 
+
+
+
 hg建立多少目录
 在一个空目录d:\code下建立HG仓库
 将其它仓库移动到这个空目录下即可。
 
+
+
+vs2013中搜索之后，显示数量，但不显示具体的被搜索到的东西。
+
+现在我讲讲解决方案：
+
+在注册表中查找：HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{73B7DC00-F498-4ABD-AB79-D07AFD52F395}\InProcServer32
+
+发现了默认的值被设置成了NULL。
+
+问题就在这里，只需要填入C:\\Program Files (x86)\\Common Files\\microsoft shared\\MSEnv\\TextMgrP.dll，就可以解决问题了。

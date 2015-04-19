@@ -109,8 +109,44 @@ for x, y in zip(s, t):
 
 
 
+--------------------- new at comp --------------
 
 
+"str" * 8     # 8倍字符串
+模块，就是一个文件
+from imp import reload   # 从文件中复制出一个名字
+
+'f' in d        # d = {}  测试F是否是D的键
+
+isinstance(L, list)   type(L) == "list"
+
+O   0x   0b  分别表示8  16  2 进制
+
+"{0:o} {1:0x} {2:0b}".format(64,64,64)  分别显示   oct   hex   bin 
+
+
+set("fuckyou,fuckme")     or  {'a', 'b'}
+
+ a = {'fuckme', 'fuckme', 'fuckyou'}  a是一个集合
+
+ 变量总是指向一个对象的指针，不像lua， a  =3 就是复制
+
+
+global 使用全局变量
+
+nolocal 使用外层变量，类似闭包的东西。 
+
+a,b,c,d = [1,2,3,4] 可以这样哦，
+a, *b = [1,2,3,4]  b 会匹配剩下的[2,3,4]  而且更神奇的是，b也可以出现在中间哦，
+a, *b, c = [1,2,3,4] 猜猜结果？
+这个功能是不是有点像erlang中的匹配？ 带*的会最终是一个[],  但后面匹配的可以是"string", 'string', 
+
+下面这个例子会复制a，这样在循环中，可以修改a的内容
+for x in a[:]:
+    print(x)
+else:
+    print("the for end")
+在for的最后，会执行else部分
 
 
 
