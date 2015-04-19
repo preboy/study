@@ -431,3 +431,28 @@ c++11中，所以的值，必定属于将亡值、纯右值，左值
 
         bind1st bind2st 被bind取代
         ptr_fun  mem_fun mem_fun_ref unary_function  这些东西，统统被弃用，
+
+
+
+
+
+
+
+
+
+
+
+
+( a == 0 ? a : b ) = 16;
+就是将三元操作符当作左值来使用.
+
+namespace x = boost::filesystem;
+x:path mypath(strpath, fs:native);
+命名空间的引用
+
+可以在函数内声明class struct
+for (struct { int x, float y;} loop = {1,2}; ..;..){...}
+
+
+
+
