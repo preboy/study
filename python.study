@@ -227,3 +227,35 @@ if "__main__" == __name__:
     # p.show() 报错，在使用之前必须先定义，即使写成 p.var = "wocao"这样在外部定义也行
     p.set("fuck")
     p.show()
+
+
+
+
+############################ 包装器 #########################################
+
+def funA(a):
+    print ('funA', a)
+    return a
+def funB(b):
+    print( 'funB', b)
+    return b
+
+@funA
+@funB
+def funC():
+    print( 'funC')
+
+# 相当于 funC = funA(funB(funC))
+
+
+@funA(x)
+@funB
+def funC():
+    print( 'funC')
+#相当于 funC = funA(x)(funB(funC))
+
+@funA(x)
+@funB(xx)
+def funC():
+    print( 'funC')
+# 相当于 funC = funA(x)funB(xx)(funC)
