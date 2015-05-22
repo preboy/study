@@ -303,10 +303,6 @@ vim插件：全局插件、 文件类型插件
 set list  显示TAB $ ^
 
 
-<<<<<<< HEAD
-
-
-
 
 
 
@@ -382,5 +378,3 @@ zf  zo zc 创建，打开，关闭
 zr zm   zR zM更方便的操作
 zn zN  禁止/启用折叠  zi 在他们之间切换
 
-
->>>>>>> 00a929332ea292d4e7f2da4156f924fa8bb6cafa
