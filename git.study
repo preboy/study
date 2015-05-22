@@ -236,3 +236,21 @@ git branch --set-upstream dev origin/dev
     从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
 
 
+tag
+git tag  -- 列出标签
+git tag  tagname    -- 在最新的commit打标签
+git tag  tagname 3453453  在某一次commit上打标签
+git show tagname 显示标签commit的东西
+git tag -d v0.1  删除标签
+
+
+git push origin tagname    -- 推送某个标签
+git push origin --tags  -- 推送所有的标签
+
+删除远程标签：
+    git tag -d v0.9   -- 先删除本地
+    git push origin :refs/tags/v0.9     推送无远程 可能refs 是固定的吗？
+
+
+
+
