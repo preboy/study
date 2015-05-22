@@ -183,4 +183,9 @@ HEAD^^ 表示上上一个版本
 当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
 
 主要使用：git reset --hard  HEAD^ 之类的命令来回退
-git reflog 可看最近的操作栈
+git reflog 可看最近的操作栈，然后找回commit id， 方便再前进。
+
+git diff file.txt 查看文件工作区与stage中的区别
+git diff HEAD -- file.txt 查看文件与仓库中的区别
+
+git checkout  -- file.txt : 就是让这个文件回到最近一次git commit或git add时的状态。
