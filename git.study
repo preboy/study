@@ -188,8 +188,25 @@ git reflog 可看最近的操作栈，然后找回commit id， 方便再前进�
 git diff file.txt 查看文件工作区与stage中的区别
 git diff HEAD -- file.txt 查看文件与仓库中的区别
 
-git checkout  -- file.txt : 把工作区已修改的内容（未暂时），恢复
+git checkout  -- file.txt : 把工作区已修改的内容（未暂时），恢复  包括删除的文件找回，一键还原.
 git reset HEAD file.txt  把已暂时的内容，更改为未暂存   (把暂存区的修改回退到工作区)    -- git reset 还可以回退版本哦
+第三种回复： 把commit的东西再回复，这个时间就要使用 git reset -- hard HEAD^ 之类的了，见上10行左右。
 
+
+git remote add origin git@server-name:path/repo-name.git；
+    这是关联远程仓库与本地仓库的方法
+
+git push -u origin master
+    第一次推送使用，会关联本地与远程的master
+    非第一次使用： git push origin master
+
+
+branch:     开始新的工作时创建分支，工作分成时合并，删除分支
+git checkout -b dev     -- 创建交切换
+    ==
+    git branch dev      -- 创建
+    git checkout dev    -- 切换
+    
+git branch  -- 查看分支
 
 
