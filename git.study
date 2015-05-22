@@ -171,3 +171,16 @@ $ git checkout -b dev origin/dev
 
 设置本地与远程的关系：
 $ git branch --set-upstream dev origin/dev
+
+
+
+
+--==================== 再读git网站
+
+在Git中，用HEAD表示当前版本  
+HEAD^ 表示上一个版本
+HEAD^^ 表示上上一个版本
+当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+
+主要使用：git reset --hard  HEAD^ 之类的命令来回退
+git reflog 可看最近的操作栈
