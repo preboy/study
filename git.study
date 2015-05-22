@@ -208,5 +208,31 @@ git checkout -b dev     -- 创建交切换
     git checkout dev    -- 切换
     
 git branch  -- 查看分支
+git branch -d dev -- 删除分支
+git branch -D dev -- 强行删除分支
+git merge dev  -- 将dev合并到当前分支。
+
+
+
+
+git stash       -- 保存现场
+git stash list  -- 查看现场
+git stash apply -- 恢复现场，偶或并不删除，再需要使用 git stash drop 来删除
+git stash pop   -- 恢复，同时删除
+git stash apply stash@{0}  -- 同时可以在多个stash中恢复，
+    通常我们保存现场，然后切换回master分支，再新建bug分支，修复完之后合并，删除bug分支，再切换回工作区，并回复stash
+
+
+git branch --set-upstream dev origin/dev
+    设置本地与远程分支的链接。
+
+
+分支开发：
+    查看远程库信息，使用git remote -v；
+    本地新建的分支如果不推送到远程，对其他人就是不可见的；
+    从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+    在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+    建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+    从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
 
 
