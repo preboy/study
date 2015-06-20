@@ -603,16 +603,11 @@ linux作为服务器，应该有如下规则：
 
 
 
+echo `ls -d $*` | xargs -n 1 cat -n
+
+更改系统时区、时间：
+    ls -s ../usr/share/zoneinf....     localtime
 
 
-
-
-
-
-
-
-
-
-
-
+strings filename  # 查看文件中所有可以打印的字符串
 
