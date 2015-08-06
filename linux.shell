@@ -24,3 +24,11 @@ PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\
 
 mycat.sh
 echo `ls -d $*` | xargs -n 1 cat -n
+
+
+时区同步：
+tzselect  交互式选择
+cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+
+
+rdate -s time.nist.gov  同步时间

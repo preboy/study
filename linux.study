@@ -106,3 +106,203 @@ W B 则不会把标点当作一个WORD
 表示在一行搜索之后，继续做同样的操作  ,（方向相反） ;（方向相同）
 . 表示在重复上一次的操作，比如：删除一行，
 `` 把光标返回到上次G的位置或者？/的位置。
+
+
+
+
+
+在同一行上多条命令之后用;隔开
+ls -l ; who; date
+
+
+通配符：
+
+* 任意字符串
+？任意一个字符
+^ 取反
+[]  与 正则一样
+{}  表示集合：   ls -l {[a-h].awk, 0?.pem}
+
+[a-h]*.[^awk]* 列出以a-h开头，不以awk结尾巴的
+
+
+
+在sed中$表示最后一行
+sed -n '$p' input
+
+ls -l | sed '/cpp/czcg' 改变一行
+ls -l | sed '/cpp/, out/s/game/preboy/g'   可以是pg
+不带g，则具替换每一行第一次出现的位置，否则全部
+sed 's/abc/def/g' 可以不指定范围
+sed 'y/12345/ABCDE'  input  变化，tr也有这个功能
+可以将多个命令写在一个{}里面，与多个-e参数功能一样哟，  多个之间用;隔开
+sed '/partern/{n; s/1/2/g; }'  input n 表示处理下一行，
+用;隔开的命令也行 
+sed 's/1/2; s/3/4; ' input
+
+
+
+${var:-333}   如果var不存在，则返回333,否则返回var
+${var:=333}   如果var不存在，则返回333，并把333赋值给var,   否则返回var
+${var:?333}   如果var不存在，则退出脚本并错误输出333,   否则返回var
+${var?333}
+${var:+333}   如果var不存在，则返回空  ,  否则返回333  与上面相反
+
+$((exp))  符号C语言规范的表达式
+
+
+
+
+()  在子shell中执行，结果不影响当前shell  比如变量修改
+
+{} 在当前shell中执行，影响当前shell      比如变量修改
+
+
+
+
+
+################## 字符串相关的操作：################## 
+
+${#string}
+expr length "$string" 
+    求长度
+
+expr match $string $substring
+    若匹配不到，返回0，否则返回匹配到的长度
+    fe: expr match "hello"  "hel"  返回3，   expr match "hello" ".*l"
+
+
+${string:startpos}
+${string:startpos:length_pos}
+    从左开始计数，取子字符串
+
+${string: -startpos}
+${string: -(startpos)}
+    从右开始计数，取子字符串
+
+expr substr $string $postion $length
+    这种方法也行，但是，索引是1开始
+
+
+expr match $string '\($substring\)'
+expr $string  : '\($substring\)'
+    使用正则表达式匹配，从左开始
+
+expr match $string '.*\($substring\)'
+expr $string  : '.*\($substring\)'
+    使用正则表达式匹配，从右开始
+
+
+删除子串：
+${var%pattern}    右短
+${var%%pattern}   右长
+${var#pattern}    左短
+${var##pattern}   左长
+
+
+替换：
+${string/find/replace}      仅替换一次
+${string//find/replace}     替换所有
+
+${string/#find/replace}     替换开头处的字符串
+${string/%find/replace}     替换结尾处的字符串    
+    string=abcdef
+    ${string/#a*c/111}      111def
+    ${string/#de*/111}      abc111
+
+
+变量的间接引用
+b=100
+a=b
+eval tmp=\$$a 或者 tmp=${!a} 
+
+
+expr 支持 | &  < > ~!  + - * / 等数学运算符
+但在是expr 中若出现元字符，应当括起来，比如：  expr 100 \* 23
+
+
+bc 支持浮点数运算，他是内建的计算器
+
+
+cat:
+    -b 编号，空不行编号
+    -n 所有行编号
+    -E 每一行结尾加$
+    -s 去掉重复的空行
+
+
+eval 与直接运行命令一样的效果，他的优势是：如果命令中包含特殊的字符，
+
+
+冒号的用法：
+1)
+while :  # 冒号可以表示永真
+do
+    ...
+done
+
+2)
+:>logg    清空文件
+
+
+
+()& 在后台运行子进程
+wait 等待所有字进程，因为没有默认参数
+
+
+在函数内使用 let "a=100" 此时，a会变成全局变量，如果想要使得a变成局部变量，需要在之前使用 local a 声明
+
+
+命令列表
+c1 && c2 && c3 ..
+依次执行，直到某个返回FALSE为止
+
+c1 || c2 || c3 
+
+
+数组
+city[n]=value
+n可以是数字不需要连续，也可以是任意字符
+city[zhang]=chaoguo
+
+    另一种方法：
+    city=(v1 v2 v3 v4)     这种方式默认数字索引
+    city={[2]=v2 [10]=v3   ... }
+    这种情况，如果未指定索引，则自动取前一个索引并加上1
+
+
+"$@"  "$*"
+ 用引号括起来的时候，
+    @表示分开了的，
+    *表示一坨，锅巴饼
+    没有括，好像都一个样
+这一条对于数组同样适用，
+"${city[@]}"    分行打印
+"${city[@*}"    打印在同一行
+
+
+数组也可以取子数组、抽取、替换 与字符串差不多
+
+${a[*]:1:3}  取第一个，到 第三个
+${a[*]:0}    取第0个到默认(最后)
+
+${a[*]#M*a}   将带有M*a的字串做处理，删除匹配的子串，但不是删除整个串哦， 最短删除   (不要写成#/哦，我犯过错)
+${a[*]##M*a}  将带有M*a的字串做处理，删除匹配的子串，但不是删除整个串哦， 最长删除
+
+${a[*]/M*a/replacement}     替换         一样的道理
+${a[*]//M*a/replacement}    替换 最长    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
