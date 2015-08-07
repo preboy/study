@@ -295,13 +295,150 @@ ${a[*]//M*a/replacement}    替换 最长
 
 
 
+let 中不需要使用$符号
+
+[] 与let一个样
+
+
+
+错误，输出，都重定向
+
+2 > &1 
+
+&>  
+
+
+
+数组长度
+
+${#a[@]}
 
 
 
 
 
+declare -A a
+
+数组索引
+
+${!a[@]}
 
 
+
+
+
+$\command  这样使用之后，不忽略了alias，而是直接使用命令
+
+
+
+
+
+以调试方式
+
+bash -x script.sh
+
+
+
+文件权限制  w r x
+
+执行位特殊权限：
+
+    拥有者   setuid
+
+    同组     setgid 
+
+    粘滞位: 目录还有一个权限，在其它位的x, 表示只有目录的创建者才有限制删除文件。tT  
+
+
+
+    chmod chown  ... -R 以递归执行下去
+
+
+
+
+
+linux文件系统第二属性
+
+lsattr chattr 
+
+
+
+
+
+touch的作用：
+
+    touch file 用于创建文件
+
+    touch -a file 修改文件访问时间 
+
+    touch -m file 修改文件内容更改时间
+
+    touch -d "timeformat" ... 还可以指定其它时间
+
+
+
+dd if=/dev/zero of=zcg.data bs=1M count=2
+
+dd if=/dev/cdrom of=zcg.iso  创建ISO文件
+
+
+
+
+
+seq 20 | head -n 9   打印文件前9行
+
+seq 20 | head -n -9  打印文件除去最后9行的所有行
+
+seq 20 | tail -n 4   打印最后4行
+
+seq 20 | tail -n +4  打印除去最开始4行之外所有的行
+
+
+
+sed 's/\w+/[&]/g' input   & 表示之前匹配到的
+
+
+
+生成序列
+{1..50}  {a..z}  {A..Z}
+
+字符串比较，最好使用[[  ]]
+
+
+
+sudo find . \( -name "*.ini" -o -name "*.conf" \)
+-regex "" 使用正则表达式
+
+find . ! -name "*.txt" -print  否定形式
+
+unix文件有三个时间：但是无创建时间
+访问时间
+修改时间
+变化时间  文件元数据（权限）修改时间按
+stat filename 查看文件的各个时间
+
+find . -type f -name "*.txt" -print0 | xargs -0 wc -l 
+这条命令，-print0  xars -0 使用都是null结束符
+
+这种情况很有可能
+xargs -I {}  s.sh -p {} -i    # -I 用于命名，然后指定使用地方
+
+可以将输出导出给子shell，这是一个好方法
+cat file.txt | ( while read arg; do eho $arg; done)
+cat file.txt | xargs 
+
+
+
+$[1+3] 执行算术运算
+$(命令)
+
+
+md5sum file1 计算校验和
+
+
+rename 是一款改名工具，功能很强大哦
+rename 's/ /_/g' *.txt   把文件名中所有的空格，替换成_
+rename 'y/[a-z]/[A-Z]' *.txt
 
 
 

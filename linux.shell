@@ -32,3 +32,8 @@ cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
 
 
 rdate -s time.nist.gov  同步时间
+
+
+-- 查看导出表
+nm -D 7z.so
+objdump -tT 7z.so
