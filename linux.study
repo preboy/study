@@ -441,5 +441,3 @@ rename 's/ /_/g' *.txt   把文件名中所有的空格，替换成_
 rename 'y/[a-z]/[A-Z]' *.txt
 
 
-
-
