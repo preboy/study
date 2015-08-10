@@ -1,0 +1,14 @@
+
+// 这个霸道啊
+for /L %%a in (1,1,100) do start cmd /c telnet localhost 1234
+
+
+for /f "tokens=1,2,3,4,5" %%i in (%%s) do (
+    echo %%i
+    echo %%j    
+    echo %%k
+    echo %%l
+    echo %%m        
+在tokens中使用了几个数字，这个地方就可以使用自%%j开始的变量，这一群变量都是自动声明的
+%%i 是手动声明的
+)

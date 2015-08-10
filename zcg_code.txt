@@ -53,7 +53,6 @@ void utils::print_stack(lua_State* L)
 
 
 
-// Õâ¸ö°ÔµÀ°¡
-for /L %%a in (1,1,100) do start cmd /c telnet localhost 1234
+
 
 
