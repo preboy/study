@@ -259,3 +259,50 @@ def funC():
 def funC():
     print( 'funC')
 # 相当于 funC = funA(x)funB(xx)(funC)
+
+
+
+
+a = "hello world"
+a[i:j]      # i<= k < j
+
+python 不会自动把字符串转换为数字
+
+range(i,j, s） 同样的问题   i <= k < j
+
+
+
+################# 生成器的例子 ##############3
+def cd(n):
+    print("begin")
+    while n > 0:
+        yield n
+        n = n - 1
+
+c = cd(10)
+
+for x in c:
+    print(x)
+
+
+
+################## 携程的例子 #######################
+
+def a():
+    print("start")
+    while True:
+        x, y = (yield)
+        print("get", x, y)
+
+
+
+一下划线开始的，比如： _foo
+不能使用  from a import * 导入
+
+__s  私有类成员
+
+
+　
+ａ　＝　ｂ　应用
+
+对于数字，字符串， 
