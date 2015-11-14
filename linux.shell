@@ -6,15 +6,14 @@ alias grep='grep --color=auto'
 alias vi='vim'
 alias cls='clear'
 alias cat='cat -n'
-alias rm='rm-rf'
-alias rm='rm -rf'
+# alias rm='rm -rf'
 
 mkdir $HOME/bin
 export PATH="$PATH:$HOME/bin"
 
 
 on centos
-export PS1="\[\033[0;32m\][\u@\h:\[\033[0m\]\[\033[0;33m\]\w\[\033[0m\]\[\033[0;32m\]]\[\033[0m\]# "
+export PS1="\[\033[0;31m\][\u@\h:\[\033[0m\]\[\033[0;32m\]\w\[\033[0m\]\[\033[0;33m\]]\[\033[0m\]$ "
 
 
 on ubuntu
@@ -36,3 +35,37 @@ rdate -s time.nist.gov  同步时间
 -- 查看导出表
 nm -D 7z.so
 objdump -tT 7z.so
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 这个是最新的
+
+\[\033[0;31m\]      \[\033[0m\]     色1    [  @ :  ]            
+\[\033[0;32m\]      \[\033[0m\]     色2    preboy   stoping
+\[\033[0;33m\]      \[\033[0m\]     色3    /usr/include
+\[\033[0;34m\]      \[\033[0m\]     色4    $                   
+
+
+export PS1="\[\033[0;35m\][\[\033[0m\]\[\033[0;32m\]\u\[\033[0m\]\[\033[0;36m\]@\[\033[0m\]\[\033[0;32m\]\h\[\033[0m\]\[\033[0;35m\]:\[\033[0m\]\[\033[0;33m\]\w\[\033[0m\]\[\033[0;35m\]]\[\033[0m\]\[\033[0;36m\]$ \[\033[0m\]"
+
+[u@h:w]$
+
+31  红
+32  绿
+33  黄
+34  蓝
+35  紫红
+36  淡蓝   
+
+在这里使用，不需要          \[  \]
+echo -e "\033[0;36mhello,world\033[0m"
