@@ -378,3 +378,152 @@ zf  zo zc 创建，打开，关闭
 zr zm   zR zM更方便的操作
 zn zN  禁止/启用折叠  zi 在他们之间切换
 
+
+
+
+
+============================================ vim ============================================
+
+N |  到第N列
+- 上一列，非 blank 字符
++ 下一列，非 blank 字符
+
+gk  gj  同k j 一样，但当wrap的时候，更有用，不会越过
+
+w W  对应 b B
+e E  对应 ge gE
+
+)  向下 句子
+(  向上 句子
+}  向下 段落
+{  向上 段落
+
+
+]] 向下 节
+[[ 向上 节      -- 这个我不懂
+
+g* = *
+g# = #  但支持部分匹配的搜索
+
+    
+z  = zt
+z. = zz
+z- = zb
+
+:set nowrap
+zh  /  zH    向前一字/半行
+zl  /  zL    向后一字/半行
+
+
+
+r file.txt    # 读取文件并输入到光标处
+r! commands   # 执行command的结果，并插入到光标处。
+
+x / X       # 删除光标后/前的单个字符
+
+D/C 删除/删除并进行插入模式光标到行尾 
+J 合并两行
+
+c{motion}  后面跟的是一个motion  caw,  ca{  然后进入插入模式
+s          只删除当前光标下的一个字符
+
+cc = S 删除整行并进入插入模式
+
+
+[count]~ 替换大小写  3~ 便可以将END替换成end
+
+[virtual]  u  U / 将选择的大写/小写
+
+g~/gu/gU {motion}  可以选择
+
+<<   左移
+>>   右移
+#  其它   <{motion}  >{motion} :center :left :right  gq{motion}
+
+
+:[range]substutite/{parttern}/{string}/[g][c]
+:[range]s] 执行上一个 :s命令
+& 在当前行上，执行上一个S
+
+:edit {file}    # 加载文件。
+:edit           # reload file.
+
+
+----  在virtual模式下，按o/O，在被选中的两端，
+
+
+yw  ye   # yw有空格，ye没有空格
+
+"*yy   复制到windows的剪贴板
+"*p    粘贴
+
+
+# split
+:split filename
+:vsplit filename 
+:close 关闭
+:new 新开一个空的
+
+ctrl+w  hlkj 
+ctrl+w  t [top]  b[bottom]
+
+
+----------------
+q{register}     # start
+action          # record keystroke
+q               # end
+@{register}     # parse
+
+"{register}p    # 可以粘贴
+
+
+
+--------  s 替换命令 -----------
+:%s 当前文件
+:s  当前行
+.   当前行
+$   最尾行
+:.,$s/yes/no   表示从当前光标，到文件结束
+
+粘贴板
+"*p
+"+p
+
+/Casting/-1         # 搜索所有Casting上的上一行
+/Casting/+1         # 搜索所有Casting上的下一行
+.+3, $-5        这也是一个合法的范围
+
+还可以使用另一种方法，
+在文件中 标识两个mark
+ma   mb
+'a, 'b   这表示在两个mark之间的范围
+
+还可以使用Visutal模式，然后按:   这样手动选择一定的范围
+则会出现： '<,'>
+实际上，< > 分别表示上一次select的起始范围，当你做新的选择的时候，它们会自然改变
+'<、'> 分别跳转到上一次选择的始末位置。
+
+.,.+4       表示选择从当前行开始的4行，
+
+
+ctrl+q  可以开始在每一行输入同样的内容。
+
+
+想要一个操作作用于一行，重启两次就行， 比如 cc dd 
+同样 gugu 可以使一事先小写 gUgU可以大写整行
+
+
+! 执行外部过滤操作 
+!5G  表示，从当前行到5行，
+!{selection}action
+也可以先在Selection模式下选择。
+
+!!  以当前行为Input 执行过滤操作。
+
+
+:read !ls-al  本来这个地方是读取一个file， 但使用了！，则表示执行一个程序的输出。
+:write !wc   也可以手工选择一段范围
+
+help ^V     # ctrl+v的帮助
+help i^V    # insert 模式下ctrl+v的帮助
+
