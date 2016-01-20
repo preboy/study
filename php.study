@@ -34,3 +34,69 @@ $_FILES
 $_ENV
 $_COOKIE
 $_SESSION
+
+
+
+PHP中的字符串，'  "  与linux中的一样， 用''括起来的内容不会解析变量  用"括起来的会解析变量
+
+PHP常量：
+define  defined  constant
+
+
+变量：
+局部变量   函数内部
+全局变量   定义在函数外，整个PHP文件有效，函数内部不可见，除非申明：global var;
+静态变量   static 开头
+可变变量   $change_name="trans"   $trans="this is show "  echo $$chang_name
+
+变量函数
+	$func = "name"
+	$func()
+
+函数引用
+	function &func() {}     $var = &func()		// 必须这样写
+
+	unset   取消引用  unset($name)
+
+
+break可以跳出多重循环，当重循环为1， 所以  break = break 1
+
+
+while   for  switch  if  都有另一种写法  : = {     endxxx = }   
+endwhile  endfor endswitch endif endforeach
+
+
+trim 去掉首尾空格，而且可选字符也去掉
+addslashes   转义字符串
+
+正则表达式函数  PCRE  效率高于POSIX 有七个函数
+preg_xxx
+
+PHP数组下标从0开始  跟lua不一样
+
+print_r( explode('、', 时装、'休闲、职业装') )   转变成数组
+
+
+array_push   array_pop   妈的，这两个东西都有啊
+array_unique   去重
+
+bool checkdate(m, d, y)
+
+
+
+
+------------------ 问题 ---------------------
+
+覆盖  重载
+对象的赋值、克隆
+
+
+
+
+
+
+
+
+
+
+
