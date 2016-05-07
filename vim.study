@@ -535,5 +535,107 @@ ctrl+q  可以开始在每一行输入同样的内容。
 
 help ^V     # ctrl+v的帮助
 help i^V    # insert 模式下ctrl+v的帮助
->>>>>>> 8aff88097e007e17177da19799a679a7cdabfeb2
+
+
+ctrl+o 在插入模式中进入普通模式，等待一个命令的输入
+<ctrl+o>zz
+ctrl+r 0  在编辑模式下，表示把reg0中的内容放置到该处，
+gv 重新选择上一次选择的部分(visual模式下)
+普通模式下gU{motion} = 可视模式下U
+
+:数字  移动光标到指定行
+.,$p  表示打印当前行到结尾处
+:%    所有行
+
+:t(copy) :m(move)  {address} 复制或移动range到 address
+
+:%normal A;  在每一行最后都添加一个;   (normal会移动光标到行首)
+:%normal @q   这个应该很强大
+
+@: 重复上次执行的 Ex命令
+
+Ex命令中，输入了一般可以 连续tab 或者 CTRL+D来查看列表 或者在命令选项也可以用Ctrl+d查看
+ctrl+r ctrl+w 表示插入当前光标下的单词
+:%//<ctrl+r><ctrl+w>/g表示把所有高亮的替换为当前光标下的单词
+ 
+ :write | !node %  保存并执行当前文件
+
+
+ 缓冲区
+ :bprev  :bnext   :bfirst  :blast
+ :ls   列表
+ :buffer N   跳转
+
+ :bufdo      在:ls的列表中执行一个命令
+ :argdo      的args的列表中执行一个命令
+
+ args *.*            当前目录下所有文件
+ args **/*           会递归所有文件
+
+
+ 参数列表：  (注意与缓冲区的对比)
+ :next  :prev    跳转
+ args {arglist}  执行特殊命令
+
+
+ 窗口
+ ctrl+w  s   水平新窗口仍旧显示当前文件      :split {file}  水平显示新文件
+ ctrl+w  v   垂直新窗口仍旧显示当前文件      :vsplit {file} 垂直显示新文件
+
+ :close 关闭当前活动窗口
+ :only  关闭所有，除了当前活动窗口
+
+ 如果当前标签页不止一个窗口，我们可以移动一个到新的标签页  ctrl+w T 移动当前
+
+ tabedit {filename}  create new tab page
+ <ctrl+w> T          move current windows to a new tab page
+ :tabclose           close current tab page
+ :tabonly            only maintain current tab page
+ 类似也有一套跳转的命令，参照上面
+ :tabnext    gt
+ :tabprev    gT
+
+
+ 多级目录：
+ lcd  d:\workspace
+ set path+=**
+ find lua_re<tab>
+
+
+ :edit .         :e.         当前工作目录
+ :Explore .      :E          当前活动缓冲区所在的目录
+
+ 实际行与屏幕行
+ hjkl
+ gj  gk g0
+
+fF{char}  之后可以通过 ; , 来回跳转  查找
+{action}Tt{char}      一般删除，修改与T调用
+
+aw  一个单词
+aW  一个字串
+is as  句子
+ip ap   段落
+
+marks标记跳转
+m[a-zA-Z] 小写只对该缓冲区有效，大写则对全域有效
+:marks 显示标记
+`. 上次修改位置
+`^ 上次退出插入模式位置
+`< `> 上次可视模式选择的开始、结束
+
+
+change列表
+:changes 显示列表
+g;  g,  在列表中向前向后跳转
+gi 会先调转到`^的位置，然后进入插入模式
+
+
+set path?  显示  .,,  其中.表示当前目录，,,表示工作目录
+
+
+<ctrl+r><ctrl+w> 对当前正在搜索匹配的单词补全
+
+
+
 
