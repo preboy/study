@@ -16,3 +16,102 @@
 最好使用;结尾   可以增加解析的性能
 
 
+3.125e7 = 31250000
+
+javascript中字符串用" or '  来引用， 他们之间没有任何区别，不想其他的语言
+字符串是16位的unicode编码，不是ansi编码
+
+
+Object有方法
+    hasOwnProperty(propertyName)  检测在当前对象实例中是否存在特定的属性（注意不是在原型中查找）
+    isPrototypeOf(object)  原型检测
+
+    ~x    // 对x取负值，然后-1 ~25 = -26
+    a ^ b
+    a | b
+    a ^ b   异或
+    a << 3  左移
+    a >> 3  右移
+    a >>> 3 无符号右移
+
+    a && b    a || b   逻辑操作， 属于短路操作
+
+    全相等 全不等 :   区别于常规：在比较之前不转换类型     :  我理解：线比较类型在比较值
+    ===    未经过转换就相等 返回true
+    !==    未经过转换就不相等 返回true
+        
+
+    with语句已经不建议使用了
+    switch 他的case 不局限与整数了，可以是任何类型
+
+数组：
+    var a = new Array(10);
+    var b = new ArrY(1,2,3,4,5);
+    var c = Array();
+    var d = [1,2,3,4,5];
+
+    if (value is instanceof Array){} 
+    Array.isArray(value)  这个效果更好
+
+数组栈：
+    var arr = new Array();
+    arr.push(1,2,3);
+    arr.pop()
+数组队列：
+    arr.push(1,2,3);
+    arr.shift()  返回数组第一个值，并从数组中删除
+
+    push()   and  shift()   构成队列
+    unshift() and  pop()    构成反向队列
+
+其他方法：
+    sort()          // 内部实现是通过元素的tostring 方法   或者   arr.sort(function(e1, e2){return e1 > e2;})
+    reverse()  
+
+    concat
+    slice
+    splice  强大的方法   splice(起始位置， 要删除的个数， 要添加的值....)
+    indexOf()  lastIndexOf()   -- 返回-1表示没有找到
+
+五个迭代函数：参数一样
+    every(function(item, index, src_arr), opt_this)
+    filter()
+    forEach()
+    map()
+    some()
+
+    reduce(function(){prev, curr, index, array}, opt_base)   // 从第二项开始
+    reduceRight()
+
+
+
+
+函数：
+
+    函数声明
+    function f() {}
+
+    函数表达式
+    var f = function(){};
+
+    Function("", "", ...)   最后一个事函数体的字符串，其他的是参数
+
+    函数内部，有两个特殊对象 arguments   this环境   caller调用我的那个函数,
+    arguments.callee = 当前的函数对象
+
+
+面向对象：
+    Object.defineProperty(obj, "name",{
+        writable:false, // 是否可写
+        value:"Preboy", 
+        enumerable,     // 能否用for in 得到
+        configurable,   // 能否delete删除...
+    })
+
+
+Object.getPrototypeOf() 返回【Prototype】，即是  __proto__
+
+Object.getOwnPropertyDescriptor() 只能用于实例，如果查找原型，则需要到原型对象上去调用该函数
+
+alert( "name" in obj)   // 无论在实例还是在原型中，只要返回true都表示能够找到
+
