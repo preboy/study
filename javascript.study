@@ -1,117 +1,311 @@
 
 ============================================ javascript ============================================
+------ javascript ----
 
-�������ⲿ�ű��Ĵ��룬��<head>���ƶ�<body>�У�������ҳ�濴������ظ��졣
+脚本开关 或者 函数第一天加上 "use strict"
+
+
+不能定义名为 eval  、arguments 的变量
+
+
+
+Undefined  Null Boolean Number String   Object  六种基本类型
+
+typeof varname		// 变量名  typeof是操作符而不是函数名
+
+函数不是一种类型， 但有一些特殊属性
+
+typeof null	== Object
+
+
+Number()   parseInt()  parseFloat() 用于非数字与数据的转换
+
+字符中 " ' 他们之间没有区别， 与PHP不一样
+
+boolean  number  string object 都有一个toString方法
+
+var num = 10;  num.toString(2);	// 显示二进制
+
+
+
+Object的方法，属性：
+	constructor
+	hawOwnProperty(propertyName)	用于检测属性是否在对象实例中，（而不是原型中）
+	isPrototypeOf(object)  
+	propertyIsEnumberable(propertyname)
+	toLocaleString()
+	toString()
+	valueOf()
+
+~   Not  按位取反
+&   And  
+|   Or
+^   Xor  异或
+<<  并不会影响符号位，-2 << 5 是64
+>>
+>>>  无符号右移， 连符号位一起右移
+
+!  &&  ||   逻辑操作符			采用的是短路的方式
+
+*  / %  
+
+===   !== 全等  、  全不等
+
+
+,  与C++中的一样，
+
+
+break   continue  可以与  label一起使用，难道javascript没有goto语句？
+
+with (expression)  statement;   将代码的作用域设置到一个特定对象中
+with 是不建议使用的东西了
+
+
+switch (express){}  
+可以使用字符串，还有一种写法
+
+var num = 10;
+switch(true)
+{
+	case num < 10:
+	break;
+	case num > 10:
+	break;
+}
+
+
+function sayHello()
+{
+	arguments[0] ... 他们是参数  
+	arguments[1] = 20 还可以用于返回值，像C++中的引用
+}
+
+instanceof   ( 检测是否某一个类型）			a instanceof  b   对象a是否是b的实例
+
+javascript中没有块级作用域
+
+
+
+array  也有栈的方法  
+	push     添加新元素并返回长度
+	pop	 返回项
+	length   返回长度
+
+array 也有队列的方法
+	push
+	shift  返回项 ，
+	这一组， unshift    pop  你猜猜是什么意思？
+
+
+function sum(var p1, var p2 ) { return p1 + p2 }	// 这是函数声明				执行之前就已经可用了
+var sum = function (var p1, var p2){ return p1 + p2 }   // 这是函数表达式			在执行到该行代码时才可用
+
+
+// 但是在严格模式下，则不推荐这些
+arguments.callee	// 指定含有arguments的这个函数, 以后即使改函数名字，或改函数调用名字，都可以了。
+this		//指定调用该函数的环境   如全局环境  、 对象环境
+arguments.callee.caller		// 调用当前函数的函数引用， 如果是全局调用当前函数，则为null
+arguments.caller
+
+每个函数都有两个属性
+length	表示希望接收命名参数的个数
+prototype	
+
+每个函数都包括两个非继承而来的方法：apply  call	,   在特定的作用域中调用函数，相当于设置了this值。
+第一个参数，代表this
+funcname.call(o or this, other params...)
+这样，对象与方法就不需要有任务耦合联系了
+var x = funcname.bind(o)   将o绑定
+x()
+
+
+string的方法：
+	str.charAt(1);		单字符
+	str.charCodeAt(1);	数字
+	str[1]	
+	substr
+	substring
+	slice
+
+
+------------------------- javascript ----------------------------
+
+将包含外部脚本的代码，从<head>中移动<body>中，可以让页面看来起加载更快。
 
 <script src="test.js",  defer="defer" ></script>
-�ű������ӵ�</html>֮����ִ��
+脚本将迟延到</html>之后再执行
 
 <script src="test.js",  async="async" ></script>
-����������Ǹ�������˼
+这个与上面那个差不多的意思
 
-�ϸ�ģʽ
+严格模式
 "use strict"
-�������ű��Ķ�������    Ҳ�����ں����Ŀ�ͷ������  
+在整个脚本的顶部加入    也可以在函数的开头处添加  
 
-���ʹ��;��β   �������ӽ���������
+最好使用;结尾   可以增加解析的性能
 
 
 3.125e7 = 31250000
 
-javascript���ַ�����" or '  �����ã� ����֮��û���κ����𣬲�������������
-�ַ�����16λ��unicode���룬����ansi����
+javascript中字符串用" or '  来引用， 他们之间没有任何区别，不想其他的语言
+字符串是16位的unicode编码，不是ansi编码
 
 
-Object�з���
-    hasOwnProperty(propertyName)  ����ڵ�ǰ����ʵ�����Ƿ�����ض������ԣ�ע�ⲻ����ԭ���в��ң�
-    isPrototypeOf(object)  ԭ�ͼ��
+Object有方法
+    hasOwnProperty(propertyName)  检测在当前对象实例中是否存在特定的属性（注意不是在原型中查找）
+    isPrototypeOf(object)  原型检测
 
-    ~x    // ��xȡ��ֵ��Ȼ��-1 ~25 = -26
+    ~x    // 对x取负值，然后-1 ~25 = -26
     a ^ b
     a | b
-    a ^ b   ���
-    a << 3  ����
-    a >> 3  ����
-    a >>> 3 �޷�������
+    a ^ b   异或
+    a << 3  左移
+    a >> 3  右移
+    a >>> 3 无符号右移
 
-    a && b    a || b   �߼������� ���ڶ�·����
+    a && b    a || b   逻辑操作， 属于短路操作
 
-    ȫ��� ȫ���� :   �����ڳ��棺�ڱȽ�֮ǰ��ת������     :  �����⣺�߱Ƚ������ڱȽ�ֵ
-    ===    δ����ת������� ����true
-    !==    δ����ת���Ͳ���� ����true
+    全相等 全不等 :   区别于常规：在比较之前不转换类型     :  我理解：线比较类型在比较值
+    ===    未经过转换就相等 返回true
+    !==    未经过转换就不相等 返回true
         
 
-    with����Ѿ�������ʹ����
-    switch ����case �������������ˣ��������κ�����
+    with语句已经不建议使用了
+    switch 他的case 不局限与整数了，可以是任何类型
 
-���飺
+数组：
     var a = new Array(10);
     var b = new ArrY(1,2,3,4,5);
     var c = Array();
     var d = [1,2,3,4,5];
 
     if (value is instanceof Array){} 
-    Array.isArray(value)  ���Ч������
+    Array.isArray(value)  这个效果更好
 
-����ջ��
+数组栈：
     var arr = new Array();
     arr.push(1,2,3);
     arr.pop()
-������У�
+数组队列：
     arr.push(1,2,3);
-    arr.shift()  ���������һ��ֵ������������ɾ��
+    arr.shift()  返回数组第一个值，并从数组中删除
 
-    push()   and  shift()   ���ɶ���
-    unshift() and  pop()    ���ɷ������
+    push()   and  shift()   构成队列
+    unshift() and  pop()    构成反向队列
 
-����������
-    sort()          // �ڲ�ʵ����ͨ��Ԫ�ص�tostring ����   ����   arr.sort(function(e1, e2){return e1 > e2;})
+其他方法：
+    sort()          // 内部实现是通过元素的tostring 方法   或者   arr.sort(function(e1, e2){return e1 > e2;})
     reverse()  
 
     concat
     slice
-    splice  ǿ��ķ���   splice(��ʼλ�ã� Ҫɾ���ĸ����� Ҫ���ӵ�ֵ....)
-    indexOf()  lastIndexOf()   -- ����-1��ʾû���ҵ�
+    splice  强大的方法   splice(起始位置， 要删除的个数， 要添加的值....)
+    indexOf()  lastIndexOf()   -- 返回-1表示没有找到
 
-�����������������һ��
+五个迭代函数：参数一样
     every(function(item, index, src_arr), opt_this)
     filter()
     forEach()
     map()
     some()
 
-    reduce(function(){prev, curr, index, array}, opt_base)   // �ӵڶ��ʼ
+    reduce(function(){prev, curr, index, array}, opt_base)   // 从第二项开始
     reduceRight()
 
 
 
 
-������
+函数：
 
-    ��������
+    函数声明
     function f() {}
 
-    ��������ʽ
+    函数表达式
     var f = function(){};
 
-    Function("", "", ...)   ���һ���º�������ַ������������ǲ���
+    Function("", "", ...)   最后一个事函数体的字符串，其他的是参数
 
-    �����ڲ���������������� arguments   this����   caller�����ҵ��Ǹ�����,
-    arguments.callee = ��ǰ�ĺ�������
+    函数内部，有两个特殊对象 arguments   this环境   caller调用我的那个函数,
+    arguments.callee = 当前的函数对象
 
 
-�������
+面向对象：
     Object.defineProperty(obj, "name",{
-        writable:false, // �Ƿ��д
+        writable:false, // 是否可写
         value:"Preboy", 
-        enumerable,     // �ܷ���for in �õ�
-        configurable,   // �ܷ�deleteɾ��...
+        enumerable,     // 能否用for in 得到
+        configurable,   // 能否delete删除...
     })
 
 
-Object.getPrototypeOf() ���ء�Prototype��������  __proto__
+Object.getPrototypeOf() 返回【Prototype】，即是  __proto__
 
-Object.getOwnPropertyDescriptor() ֻ������ʵ�����������ԭ�ͣ�����Ҫ��ԭ�Ͷ�����ȥ���øú���
+Object.getOwnPropertyDescriptor() 只能用于实例，如果查找原型，则需要到原型对象上去调用该函数
 
-alert( "name" in obj)   // ������ʵ��������ԭ���У�ֻҪ����true����ʾ�ܹ��ҵ�
+alert( "name" in obj)   // 无论在实例还是在原型中，只要返回true都表示能够找到
 
+
+
+---------------- es6--------------------
+
+var { foo: foo, bar: bar } = { foo: "aaa", bar: "bbb" };
+
+var {x = 3} = {x: undefined};   // x = 3
+var {x = 3} = {x: null};        // x = null
+默认值生效的条件是，对象的属性值严格等于undefined。
+
+下面这一行会报错：因为取foo的时候没有取到，还要接着去他的bar
+var {foo: {bar}} = {baz: 'baz'}
+
+
+let baz;
+({bar: baz} = {bar: 1}); // 成功   括号(必不可少，否则被解析成语句块去了
+
+var x;
+{x} = {x: 1};           // 错误
+({x} = {x: 1});         // 正确
+
+
+let { log, sin, cos } = Math;       // 这一句很方便哦
+
+// 字符串也可以解析提取：
+let {length : len} = 'hello';
+
+
+作用：
+    交换变量
+[x, y] = [y, x];
+
+
+
+// 可以这样做
+for (let [key, value] of map) {
+  console.log(key + " is " + value);
+}
+
+
+
+ES6 Unicode 的表示方法：
+
+"\u{20BB7}"
+// "𠮷"
+
+"\u{41}\u{42}\u{43}"
+// "ABC"
+
+
+模板字符串：  用``反引号括起来的东西
+var name = "Bob", time = "today";
+`Hello ${name}, how are you ${time}?`    之间可以包含变了，是不是很像PHP、LINUX SHELL呢？
+${}  内部可以放任何javascript表达式
+
+
+数组：
+Array.from({ length: 3 });      对象必须具有length属性，  或者是Iterator
+[...argument] 也可转换成数组， 他使用的是iterator           // rest参数
+
+...[1,2,3]  扩展运算符 rest参数的逆运算，将数组转换成用逗号，分隔的参数序列
+
+
+
+------------------- nodejs-----------------------
