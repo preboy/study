@@ -728,3 +728,45 @@ g,		go newer changes
 :retab		把所有的tab替换成<space>
 
 
+
+----------- vim help
+p   P
+]p  ]P  按照当前行的 indent
+gp   gP 光标的位置变化为新行之后
+
+
+在V模式下v V 可以退出V模式
+gv  选择上次选择的 
+
+
+:iab   :iunab  :inoreab
+:cab   :cunab  :cnoreab
+
+
+u  ctrl-r   U (撤销上次修改做在行的所有操作）
+
+
+在命令模式下：
+c-w  删除单词  c-u  删除整行
+c-b  光标行首   c-e  光标置于行尾
+c-left/right    or  s-left/right  移动光标跳过一个单词
+ctrl-d  列出所有的匹配（前提是输入了一部分 如  set file ctrl-d）
+ctrl-n  ctrl-p  还可以翻页  ctrl-l 插入
+
+
+:set [no]autowrite          自动保存了
+ctrl-^ 在最近的两个文件之间跳转
+`"      上次离开笨文件的位置()
+`.      上次修改的位置
+
+
+
+\a      [a-z]
+\d     [0-9]
+\h     [a-zA-Z]         
+\s     [ tab 空格]
+\l     [小写a-z]
+\n      line break
+\_s     空字符or  line break
+\w    [0-9a-zA-Z_]
+
