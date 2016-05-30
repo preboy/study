@@ -711,3 +711,20 @@ C-W r R x 交换窗口位置
 前面都可以加s  开如 :sbnext 在新窗口中打开
 
 map \p xxxx    " 以\开头映射命令    p可以是字符串如zhang
+
+
+q:  编辑:历史命令
+q/  编辑/历史命令
+q?  编辑?历史命令	
+
+g{char}		extend comands
+z{char}		comands starting from z
+{N}|		光标跳转到第N列
+
+g;		go older changes
+g,		go newer changes
+:changes	list all changes table
+
+:retab		把所有的tab替换成<space>
+
+
