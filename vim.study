@@ -652,3 +652,62 @@ reg [a-z] [A-Z]  小写的覆盖，大写的追加到reg
 可以先y好，然后在v模式下选择文本，直接p替换，这样比较好。
 
 
+---------- repeat -------------
+
+gd	本函数内	定义
+gD	本文件内	定义
+
+mark:
+``	last jump
+`"	last edit
+`.	last change
+`0-9	vim edit
+
+`开头 与 '开头一样，不过'开关的，在第一个非空字符中
+
+:args 显示文件参数列表 
+:all  :sall  打开参数列表中所有的文件
+:wnext  :wprev(相同效果:wN) 保存并前往前一个/后一个文件
+:n  开始编辑下一个文件
+:N  开始编辑上一个文件
+:first  :last 
+或者以s开头的上术命令，在新窗口中打开，这个更有作用哦
+
+
+:write  写到文件
+:update 如果有修改，则写到文件
+
+:au 列出所有的自动命令
+:au cmd  列出特定的
+:au!  删除。。。。
+
+
+:split   ==  C-W s
+:split {file}
+:sfind  在'path'中查找并打开文件
+C-W  ]  新窗口，跳到当前光标下的tag  
+C-W  f  新窗口，跑到当前光标下的文件
+
+C-W  n == :new
+C-W  q == quit
+C-W  c == :close
+C-W  ^ 编辑另一个文件(当前缓冲区列表)
+C-W  o 只保留当前窗口
+
+C-W w
+C-W C-W 在各个窗口之间切换
+
+C-W  + - < >  调节窗口大小
+C-W r R x 交换窗口位置
+
+:ball   buffer列表中的每个文件打开一个窗口，
+
+:bfirst  
+:blast
+:bnext
+:bprev   == :bNext
+:buffer N
+:bmod 打开上一个编辑过的
+前面都可以加s  开如 :sbnext 在新窗口中打开
+
+map \p xxxx    " 以\开头映射命令    p可以是字符串如zhang
