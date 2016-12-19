@@ -790,3 +790,20 @@ ctrl-^ 在最近的两个文件之间跳转
 :copen cw
 :cclose
 
+在命令模式下 Ctrl-R，可以粘贴寄存器中的内容
+这样我就可以先复制一段文件，然后弄到/后面去搜索了
+
+
+重读文件 :e   :e!
+
+:%retab		可以将TAB转换为空格
+
+:vimgrep/pattern/ %		' current file
+:vimgrep/pattern/ *		' 当前目录下所有文件
+:vimgrep/pattern/ **		' 当前目录及子目录
+:vimgrep/pattern/ *.c
+
+:cn
+:cp
+:copen cw
+:cclose

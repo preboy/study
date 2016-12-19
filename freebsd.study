@@ -1,0 +1,12 @@
+安装了FreeBSD之后的基本设置
+
+--- FreeBSD 颜色  csh
+
+set prompt="%{\e[32;1m%}%n%{\e[37m%}@%{\e[33m%}%m%{\e[37m%}:%{\e[36m%}%~%{\e[37m%}"\$"%{\e[0m%} "	-- 用户名显示不正确
+# root variation:
+set prompt="%{\e[31;1m%}root%{\e[37m%}@%{\e[33m%}%m%{\e[37m%}:%{\e[36m%}%/%{\e[37m%}#%{\e[0m%} "
+
+
+将preboy用户加到/etc/group 中的wheel组中，这样就可以使用 su切换了
+将chsh [username] 或者vipw 更改用户shell为bash 然后就可以使用有颜色的提示符了
+
