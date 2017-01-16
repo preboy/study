@@ -3,10 +3,47 @@
 --- FreeBSD 颜色  csh
 
 set prompt="%{\e[32;1m%}%n%{\e[37m%}@%{\e[33m%}%m%{\e[37m%}:%{\e[36m%}%~%{\e[37m%}"\$"%{\e[0m%} "	-- 用户名显示不正确
+
 # root variation:
 set prompt="%{\e[31;1m%}root%{\e[37m%}@%{\e[33m%}%m%{\e[37m%}:%{\e[36m%}%/%{\e[37m%}#%{\e[0m%} "
 
 
 将preboy用户加到/etc/group 中的wheel组中，这样就可以使用 su切换了
 将chsh [username] 或者vipw 更改用户shell为bash 然后就可以使用有颜色的提示符了
+
+修改  /etc/group 文件：
+将preboy 加到wheel组，这样才可以直接 su 到 root
+
+
+How to install FreeBSD on linode
+https://www.linode.com/docs/tools-reference/custom-kernels-distros/install-freebsd-on-linode
+
+.profile中
+将PAGER改为less
+PAGER=less;     export PAGER
+
+
+.bash_profile中加入如下:
+
+alias ls='ls -GF'
+alias ll='ls -AGFl'
+alias l='ls -GFl'
+alias vi='vim'
+alias grep='grep --colour=auto'
+
+export PS1="\[\033[0;35m\][\[\033[0m\]\[\033[0;32m\]\u\[\033[0m\]\[\033[0;36m\]@\[\033[0m\]\[\033[0;32m\]\h\[\033[0m\]\[\033[0;35m\]:\[\033[0m\]\[\033[0;33m\]\w\[\033[0m\]\[\033[0;35m\]]\[\033[0m\]\[\033[0;36m\]$ \[\033[0m\]"
+export MANWIDTH=180
+export MANPAGER='less -sRgMIJ'
+
+
+
+// 把下一行加到 /usr/local/etc/pkg.conf中最后，增加一个别名
+rinfo: rquery "%n - %v\n%e",
+%?代表的意思如下：
+%n      pkg-name
+%e      description
+%v      version
+
+pkg rquery -x %n" pkg-name    # query by name.support regex
+
 
