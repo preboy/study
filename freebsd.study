@@ -19,11 +19,11 @@ How to install FreeBSD on linode
 https://www.linode.com/docs/tools-reference/custom-kernels-distros/install-freebsd-on-linode
 
 .profile中
-将PAGER改为less
-PAGER=less;     export PAGER
+. bashrc
 
 
-.bash_profile中加入如下:
+
+新建立.bashrc中加入如下:
 
 alias ls='ls -GF'
 alias ll='ls -AGFl'
@@ -34,7 +34,7 @@ alias grep='grep --colour=auto'
 export PS1="\[\033[0;35m\][\[\033[0m\]\[\033[0;32m\]\u\[\033[0m\]\[\033[0;36m\]@\[\033[0m\]\[\033[0;32m\]\h\[\033[0m\]\[\033[0;35m\]:\[\033[0m\]\[\033[0;33m\]\w\[\033[0m\]\[\033[0;35m\]]\[\033[0m\]\[\033[0;36m\]$ \[\033[0m\]"
 export MANWIDTH=180
 export MANPAGER='less -sRgMIJ'
-
+export PAGER=less;
 
 
 // 把下一行加到 /usr/local/etc/pkg.conf中最后，增加一个别名
@@ -47,3 +47,25 @@ rinfo: rquery "%n - %v\n%e",
 pkg rquery -x %n" pkg-name    # query by name.support regex
 
 
+
+
+# 开启 shadowsocks
+
+安装python  pip   
+pip install shadowsocks
+
+shadowsocks.json内容如下：
+{
+    "server":"真实的IP地址",
+    "server_port":8388,
+    "local_port":1080,
+    "password":"barfoo!",
+    "timeout":600,
+    "method":"chacha20-ietf-poly1305"
+}
+
+ipfw disable firewall 
+
+ssserver -c shadowsocks.json -d start
+
+但是ipfw 直接禁用掉防火墙，这个不好啊
