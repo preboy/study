@@ -38,6 +38,7 @@ objdump -tT 7z.so
 
 
 
+date +"%Y%m%d" Êä³ö 20170512
 
 
 
