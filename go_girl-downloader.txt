@@ -1,0 +1,125 @@
+package main
+
+import (
+        _ "bytes"
+        "fmt"
+        "io"
+        "io/ioutil"
+        "net/http"
+        "os"
+        // "path/filepath"
+        "regexp"
+         "strconv"
+        _ "time"
+)
+
+const (
+        STARTURL    string = "http://www.mzitu.com/japan" //妹子图模块列表页url
+)
+
+var (
+        c5 chan int      //通道：负责传输当前下载数
+        last_img string
+)
+
+func init() {
+        c5 = make(chan int, 10000)
+}
+func main() {
+
+        getPage(STARTURL)
+
+        // time.Sleep(time.Second*1000)
+
+        num := 0
+        for x := range c5 {
+                num += x
+                fmt.Println("下载数量:", num)
+        }
+
+}
+
+//下载html
+func getHtml(url string) (error, string, error) {
+        response, err := http.Get(url)
+        defer response.Body.Close()
+        html, err1 := ioutil.ReadAll(response.Body)
+        return err, string(html), err1
+}
+
+
+//获取最大分页
+func getPage(url string) (page int) {
+        _, html, _ := getHtml(url)
+
+        reg, _ := regexp.Compile("http://www.mzitu.com/([0-9]+)")
+
+        s := reg.FindAllStringSubmatch(html, 200)
+
+        // fmt.Println("共", len(s), "页", s)
+
+        for _, vv := range s {
+        // fmt.Println("ddddd", vv)
+                download(vv[0], vv[1])
+        }
+
+        // page, _ = strconv.Atoi(s[len(s)-1][1])
+
+        return
+
+}
+
+//下载图片
+func download(url string, page string) {
+
+        for i := 1; i < 100; i++ {
+        
+       newurl := url+"/"+strconv.Itoa(i)
+
+                _, html, _ := getHtml(newurl)
+                reg, _ := regexp.Compile("main-image.*(http://i.meizitu.net.*.jpg)")
+                iterms := reg.FindAllStringSubmatch(html, 100)
+                
+                var x bool 
+                for _, vv := range iterms {
+                        x = SaveImage(newurl, vv[1], page, i)
+                }
+
+                if x == false {
+                        break
+                }
+        }
+
+}
+
+func SaveImage(url string, img string, page string, idx int) bool {
+
+        if last_img == img{
+                return false
+        }
+
+        last_img = img
+
+        fmt.Println("download image: ", url, img)
+
+        res, err := http.Get(img)
+        defer res.Body.Close()
+        if err != nil {
+                fmt.Printf("%d HTTP ERROR:%s", err)
+                return false
+        }
+
+        //根据URL文件名创建文件
+        filename := page + "_" + strconv.Itoa(idx)+ ".jpg"
+        dst, err := os.Create(filename)
+        if err != nil {
+                fmt.Println("%d HTTP ERROR:%s", err, dst)
+                return false
+        }
+        // 写入文件
+        io.Copy(dst, res.Body)
+
+        dst.Close()
+
+        return true
+}

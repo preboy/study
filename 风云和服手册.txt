@@ -1,0 +1,73 @@
+风云合服手册
+
+一、游戏停服
+
+二、确认要合服数据库的关键记录
+确认要合并服中 guild_battle表（只有一条记录）里面的id字段数据不一样，否则修改其中任意一个id
+确认要合关服中 misc表（只有一条记录）里面的id字段数据不一样，否则修改其中任意一个id
+（注意：如出现重复的数据，则不能合区成功）
+
+三、对数据库中相应数据进行备份
+此处把/data/mergedb做为备分数据存放位置；下面操作为进入此目录后的操作
+
+1、备份主数据库（目标数据库）：此为完整数据库备份，包含数据和结构
+如：mysqldump -h10.137.214.176 -ufy -pfy -R --default-character-set=gbk --single-transaction fy101_world >world101.sql
+
+2、备份被合区的数据库数据：此只为数据
+如：mysqldump -h10.137.218.197 -ufy -pfy -t --compact --default-character-set=gbk --skip-extended-insert fy106_world account > world106.sql
+     mysqldump -h10.137.218.197 -ufy -pfy -t --compact --default-character-set=gbk --ignore-table=fy996_world.account fy106_world >> world106.sql
+如有多个服要合并，修改服务器id后重做上两步
+
+3、对数据进行合并
+如上把102合并至101：
+mysql -h10.137.217.38 -ufy -pfy -f --default-character-set=gbk fy996_world < world106.sql
+如有多个服要合并至101，个改上语句的参数后再次执行则可
+
+四、更新服务端，重启服务器，登录验证
+
+（如合区不成功，则还原目标数据库，找到原因后重做上面的步骤及可）
+mysql -h10.137.214.176 -ufy -pfy -f --default-character-set=gbk fy101_world < world101.sql
+
+mysql -h10.254.207.120 -uroot -pabc,.123 -f --default-character-set=gbk fy115_world < world115_20160909.sql
+
+
+服务器配置变更说明
+1、COPY原有服务端上的/home/game/game_publish/fy_publish_106_109至合区目录
+config.lua
+config_gen.lua
+整个conf文件夹
+2、修改 config.lua 文件中的配置  IP 修改数据库联接
+3、运行./config_gen.lua
+
+--下面有些内容为运行后生成
+4、cd conf 运行 ./enode create.lua 2 1 (2 1 指的是配置中有2组区服 共用一个跨服   4 1 指的是配置中有4组区服 共用一个跨服 1 1 指开一个区服 **开区必开跨服)
+5、修改/conf/output/中除server_0的所有有pack_3的worldserver.conf
+
+allow_login_world = 1        关闭预创建
+
+修改UNameServer为
+UNameServer =
+        {
+            ip = "10.253.19.140",
+            port = 6700,
+            timeout = 5,
+        },
+7、打包文件夹conf
+tar -zcvf conf.tar.gz conf  (以上所有目的为生成此文件，此文件生成后，后期可重用)
+8、运行 ./config_conf.lua(此为原来运行后自动生成文件)
+
+
+更新新服服务器版本
+./update_bin.lua
+开启服务端
+./tmp_start.lua
+./start.lua
+
+
+
+特别经验：
+合服的时候，合服工具，应该写多条SQL语句，而不是写在一条里面，
+不然一个出错，后面所有的数据，都出错，  --来源于风云合服，帮会丢失100多个
+
+
+

@@ -441,3 +441,38 @@ rename 's/ /_/g' *.txt   把文件名中所有的空格，替换成_
 rename 'y/[a-z]/[A-Z]' *.txt
 
 
+
+lsof  这个功能很强大
+pwdx  查看目录
+
+安装 mlocalte
+修改时间：   -- tzselect无效，不知道为什么
+按照网上的修改方法，之前是EDT时间，修改之后变成UTC时间了，不是CST时间。
+参考的这个：
+mv /etc/localtime /etc/localtime.bak
+ln -s /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+
+
+
+
+convert tab to space or reserved
+expand/unexpand
+
+
+
+时区同步：
+tzselect  交互式选择
+cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+
+
+rdate -s time.nist.gov  同步时间
+
+
+-- 查看导出表
+nm -D 7z.so
+objdump -tT 7z.so
+
+
+date +"%Y%m%d" 输出 20170512
+
+

@@ -359,3 +359,42 @@ developer.mozilla.org
     该方法返回一个数组，它包含了对象 o 所有拥有的属性（无论是否可枚举）的名称。
 
 
+
+
+
+
+javascript 中，调试函数： console.log("ddd")  可以在web browser的F12中查看
+
+break  continue 都可以带标签，但break可以像goto一样
+
+typeof 2.34  返回类型 number
+
+在js中，"debugger"就是设置断点
+
+var obj = JSON.parse(text);
+
+<a href="javascript:void(0)">单击此处什么也不会发生</a> 
+操作符指定要计算一个表达式但是不返回值。 
+
+(function(){})()  函数自调，必须使用()把函数体转换成一个表达式。
+
+arguments 在函数内部，表示函数的参数
+arguments.length
+
+变量声明是如果不使用 var 关键字，那么它就是一个全局变量，即便它在函数内定义
+
+为任意元素设置事件
+obj.addEventListener('click', function, useCapture)
+
+-- 添加子元素
+var para=document.createElement("p");
+var node=document.createTextNode("This is new.");
+para.appendChild(node);
+var element=document.getElementById("div1");
+element.appendChild(para);
+
+
+
+HTML 
+  <hr>  水平线
+  target='_blank'

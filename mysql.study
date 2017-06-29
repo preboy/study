@@ -1,0 +1,34 @@
+mysql -h127.0.0.1 -udev -pdev -f --default-character-set=gbk dev_world < world113_201608092358.sql
+
+CREATE USER fy@'%' IDENTIFIED BY 'fy';
+create database fy_world  DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
+grant all privileges on *.* to 'fy'@'%' identified by 'fy' with grant option;
+
+
+
+use fy_uname;
+source ~/sh/fy_uname.sql;
+
+如果想让mysqldump程序生成的INSERT语句每条只插入一个数据行，可以使用--skip-extended-insert选项。
+
+
+
+mysql -h127.0.0.1 -utest -ptest test_world << EOF | tail -n +1
+select * from account
+EOF
+
+
+修改密码：
+SET PASSWORD FOR 'wordpressusername'@'hostname' = OLD_PASSWORD('password');
+
+刚装好的mysql(mariadb)，进入的时候要输入  sudo mysql -u root  (万不可缺少sudo）
+
+
+
+
+-- 计算宝宝100天的mysql方法
+select DATE_ADD('2014-04-07',interval 100 day)
+
+
+新安装mysql之后，首次进入
+sudo mysql -u root -p   # 一定要有sudo不要死不进去

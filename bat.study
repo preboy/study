@@ -15,3 +15,10 @@ for /f "tokens=1,2,3,4,5" %%i in (%%s) do (
 
 
 if not "%1"=="" set HOST=%1
+
+
+
+在windows批处理文件中，
+set /p a="请输入参数"
+结果之后，环境变量a=所输入的值
+

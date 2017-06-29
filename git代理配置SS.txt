@@ -1,0 +1,10 @@
+git´úÀíÅäÖÃss
+
+C:\Users\Preboy>more .gitconfig
+[user]
+        name = preboy
+        email = preboy@126.com
+[https]
+        proxy = http://127.0.0.1:1080
+[http]
+        proxy = http://127.0.0.1:1080

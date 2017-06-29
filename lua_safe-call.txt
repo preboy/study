@@ -1,0 +1,60 @@
+-- 以下这段代码，可防止一个错误导致其它所有函数都不执行的BUG
+--[[
+local priv_a = function()
+    if 1 > nil then
+        print("dd")
+    end
+end
+local priv_b = function()
+    priv_a()
+end
+local priv_c = function()
+    priv_b()
+end
+
+local func_1 = function()
+    print(" in func_1 ")
+end
+local func_2 = function()
+    priv_c()
+    print(" in func_2 ")
+end
+local func_3 = function()
+    print(" in func_3 ")
+end
+local func_4 = function()
+    print(" in func_4 ")
+end
+local func_5 = function()
+    print(" in func_5 ")
+end
+
+local msgh = function()
+    print(debug.traceback())
+end
+
+event_func = function(...)
+    
+    local tab = 
+    {
+        func_1,
+        func_2,
+        func_3,
+        func_4,
+        func_5,
+    }
+
+    for idx, func in ipairs(tab) do
+        xpcall (func, msgh,  ...)
+    end
+    
+end
+
+a = function()
+    event_func()
+end
+b = function()
+    a()   
+end
+b()
+--]]
