@@ -259,7 +259,7 @@ I can switch _ENV in time every entry.
 _ENV = { _G = _G }
 
 table, function, thread, fulluserdata 是对象，只能引用，
-元表中如果有__metatale，则getmetatable返回它，不返回元表本身。
+元表中如果有__metatable，则getmetatable返回它，不返回元表本身。
 query metamethod are alway raw, does not invoke other metamethod.
 
 
@@ -362,4 +362,142 @@ void utils::print_stack(lua_State* L)
 #endif
 	lua_pop(L, 2);
 }
+
+
+
+---------- C++ DLL for lua --------------
+-- 1 首先 C++ DLL 看例子:
+
+// luaext.cpp : Defines the exported functions for the DLL application.
+
+#include "stdafx.h"
+
+#include <iostream>
+using namespace std;
+
+#include "lua.hpp"
+
+
+bool is_valid(const char* str)
+{
+    unsigned char tmp = 0;
+    if (::strcmp(str, "") == 0)
+        return false;
+    if (!str)
+        return false;
+    int charnum = 0;
+    while (*str != '\0')
+    {
+        if (tmp == 0)
+        {
+            if (*str > 0 && *str < 128)
+            {
+                if (*str<'0')
+                    return false;
+                else if (*str>'9' && *str<'A')
+                    return false;
+                else if (*str>'Z' && *str<'a')
+                    return false;
+                else if (*str>'z')
+                    return false;
+                ++str;
+                ++charnum;
+            }
+            else
+            {
+                if (((unsigned char)*str) == 0x7F || ((unsigned char)*str) == 0xFF)
+                    return false;
+                tmp = *str;
+                ++str;
+            }
+        }
+        else //big5 编码字符判断
+        {
+            if (((unsigned char)*str) == 0x7F || ((unsigned char)*str) == 0xFF)
+                return false;
+            unsigned char c1 = tmp;
+            unsigned char c2 = *str;
+            tmp = 0;
+            bool ok = false;
+
+            if (c1 >= 0xA1 && c1 <= 0xF9)
+            {
+                if (c2 >= 0x40 && c2 <= 0x7E)
+                    ok = true;
+                else if (c2 >= 0xA1 && c2 <= 0xFE)
+                    ok = true;
+            }
+
+            if (ok)
+            {
+                ++str;
+                ++charnum;
+            }
+            else
+                return false;
+        }
+    }
+    return tmp == 0;
+}
+
+
+int exp_valid(lua_State *L)
+{
+    int n = lua_gettop(L);
+    if (n < 1)
+    {
+        std::cout << "need 1 pateram" << std::endl;
+        return 0;
+    }
+
+    const char* str = lua_tostring(L, 1);
+    if (!str)
+    {
+        std::cout << "invalid input string !!!" << std::endl;
+        return 0;
+    }
+    
+    bool ret = is_valid(str);
+    lua_pushboolean(L, (int)ret);
+    
+    return 1;
+}
+
+int exp_sleep(lua_State *L)
+{
+    int milli_sec = (int)lua_tointeger(L, 1);
+    if (milli_sec > 0)
+    {
+        Sleep(milli_sec);
+    }
+
+    return 0;
+}
+
+const struct luaL_Reg funcs[] =
+{
+    { "valid", exp_valid },
+    { "sleep", exp_sleep },
+    { nullptr, nullptr },
+};
+
+
+extern "C" __declspec(dllexport) 
+int luaext(lua_State* L)
+{
+    luaL_newlib(L, funcs);
+    return 1;
+}
+
+
+-- 2 其次：Lua 看例子:
+
+s = "兵ンID" 
+
+f = package.loadlib("E:/WorkSpace/lua/luaext.dll", "luaext") 
+t = f()
+
+print( t.valid(s) )
+print( t.sleep(3*1000) )
+
 
