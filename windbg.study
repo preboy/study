@@ -1,0 +1,75 @@
+
+!teb   获得线程环境块
+!thread 获得当前线程信息
+使用 !module.extension 则DLL被隐式加载。
+.load xxx  来显示加载扩展DLL
+
+cdb.exe -p<pid>
+cdb.exe -pn <映像名>   失败，如果有重名
+windbg -z dump_file
+lm :  list modules
+!lmi ntdll.dll
+!dh 可以查看更多信息
+
+.reload  (清空之前加载的符号文件，主要是为了下次使用时自动加载) 重新加载符号
+.reload <module>
+.reload /f <module> 强制立刻重新加载
+
+.sym noisy 启动详细日志
+x gameserver_d!main  这样就会有符号了，被强制加载哦，
+x *!*same*  加载很多   好卡，好久
+__imp 前缀的是实现文件，其它的是引入
+
+ln  = list near 尽可以列出特定地址相关的符号
+    据说这个东西很有用,可以查看堆、栈相关的东西。
+ln address
+
+
+.srcpath 修改源代码位置，如果在编译的机器上调试，则会自动找到源代码
+.srcnoisy <1|0> 启用查找正确源代码文件的一种详细方式
+.srcfix 将源文件路径添加到系统路径，下次好不再设置了。
+
+
+
+r 显示所有寄存器的值
+reax rax
+rm  register的屏蔽信息
+
+伪寄存器
+$ip     eip
+$tpid   pid
+$t0 ~ $t19
+$ra 函数的返回地址
+$retreg 主要的值寄存器 函数返回之后，结果放到这个上面，其实就是 eax, rax
+$csp 当前的栈指针， 就是esp rsp 等
+$proc 当前的进程 PEB的地址，  或者内核中的EPROCESS
+$thread 当前线程  TEB   或内核中的ETHREAD
+$tpid  pid
+$tid   tid
+
+
+u .  反汇编当前$ip地址上的8条介指令
+uf . 反汇编当前$ip的整个函数
+ub.  $ip之前
+u.L2 $ip之后的2条
+
+k显示堆栈信息
+kP kp 5 显示，栈中前5个函数的参数，
+kb 5显示，
+
+~0 bp ....  表示在线程0号设置断点
+bl
+g
+bc * 清理
+
+bn ntdll!RtlAlocateHeap
+bm 02sample!*test*
+bu ole32:CoInitializeEx 延迟断点，在
+
+dv 显示局部变量
+dt display type 
+
+dt Stuct @eax
+
+!address * 
+学习到了第二章address处

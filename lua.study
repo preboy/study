@@ -258,6 +258,9 @@ I can switch _ENV in time every entry.
 
 _ENV = { _G = _G }
 
+table, function, thread, fulluserdata 是对象，只能引用，
+元表中如果有__metatale，则getmetatable返回它，不返回元表本身。
+query metamethod are alway raw, does not invoke other metamethod.
 
 
 --------------------- new lib study ----------------

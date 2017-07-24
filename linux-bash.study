@@ -611,3 +611,7 @@ echo `ls -d $*` | xargs -n 1 cat -n
 
 strings filename  # 查看文件中所有可以打印的字符串
 
+
+pstack 打印某个进程的堆栈
+
+
