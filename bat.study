@@ -1,4 +1,9 @@
 
+rem 进入到盘符根目录
+cd %~dp0
+%~d0
+
+
 // 这个霸道啊
 for /L %%a in (1,1,100) do start cmd /c telnet localhost 1234
 
@@ -13,6 +18,20 @@ for /f "tokens=1,2,3,4,5" %%i in (%%s) do (
 %%i 是手动声明的
 )
 
+例如：
+set servers="1 log logserver.exe logserver.conf  111" "1 data dataserver.exe dataserver.conf 222"
+
+ for %%s in (%servers%) do (
+    for /f "tokens=1,2,3,4,5" %%i in (%%s) do (
+	   echo  %%i
+           echo  %%j
+           echo  %%k
+           echo  %%l
+           echo  %%m
+       )
+ )
+
+
 
 if not "%1"=="" set HOST=%1
 
@@ -23,4 +42,4 @@ set /p a="请输入参数"
 结果之后，环境变量a=所输入的值
 
 start "title" /MIN  ....
-XCOPY /D ....
+XCOPY /D ....   只复制更新的文件
