@@ -1,0 +1,6 @@
+
+1
+php 中使用 mysql_pconnect(...) 失败，返回2003  Can't connect to Mysql on '...'
+需要在shell下执行 setsebool httpd_can_network_connect 1
+可能还是设置的问题，需要在哪儿搞个设置
+好像是selinux的
