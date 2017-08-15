@@ -615,3 +615,29 @@ strings filename  # 查看文件中所有可以打印的字符串
 pstack 打印某个进程的堆栈
 
 
+
+-- 读取整个文件并赋值到变量a
+a=$(<a.sh)
+
+
+Linux中高效编写Bash脚本的10个技巧  (http://os.51cto.com/art/201708/548109.htm?utm_source=tuicool&utm_medium=referral)
+
+1、 脚本中多写注释
+2、 当运行失败时使脚本退出
+    # 如果命令运行失败让脚本退出执行 
+    set -o errexit 
+    # 或 
+    set -e
+    
+3、 当 Bash 用未声明变量时使脚本退出
+    # 若有用未设置的变量即让脚本退出执行 
+    set -o nounset 
+    # 或 
+    set -u 
+4、 使用双引号来引用变量
+5、 在脚本中使用函数
+6、 字符串比较时用 = 而不是 ==
+7、 用 $(command) 而不是老旧的 command(`xxx`) 来做代换
+8、 用 readonly 来声明静态变量
+9、 环境变量用大写字母命名，而自定义变量用小写
+

@@ -1,6 +1,80 @@
 
-1
+CASE-1
 php 中使用 mysql_pconnect(...) 失败，返回2003  Can't connect to Mysql on '...'
 需要在shell下执行 setsebool httpd_can_network_connect 1
 可能还是设置的问题，需要在哪儿搞个设置
 好像是selinux的
+
+
+
+CASE-2
+// lua本身的问题，在台湾BIG5字符中，遇到\(0x5C)需要做特殊处理，做如下修改之后，lua的print不再有效果
+static void read_string (LexState *ls, int del, SemInfo *seminfo) {
+  save_and_next(ls);  /* keep delimiter (for error messages) */
+  while (ls->current != del) {
+    switch (ls->current) {
+      case EOZ:
+        lexerror(ls, "unfinished string", TK_EOS);
+        break;  /* to avoid warnings */
+      case '\n':
+      case '\r':
+        lexerror(ls, "unfinished string", TK_STRING);
+        break;  /* to avoid warnings */
+      case '\\': {  /* escape sequences */
+        int c;  /* final character to be saved */
+        // zcg debug
+        unsigned char pp = *((char*)(ls->z->p) - 2);
+        if (pp >= 0xA1 && pp <= 0xF9)
+        {
+            save_and_next(ls);
+            continue;
+        }
+        // zcg debug end
+        save_and_next(ls);  /* keep '\\' for error messages */
+        switch (ls->current) {
+          case 'a': c = '\a'; goto read_save;
+          case 'b': c = '\b'; goto read_save;
+          case 'f': c = '\f'; goto read_save;
+          case 'n': c = '\n'; goto read_save;
+          case 'r': c = '\r'; goto read_save;
+          case 't': c = '\t'; goto read_save;
+          case 'v': c = '\v'; goto read_save;
+          case 'x': c = readhexaesc(ls); goto read_save;
+          case 'u': utf8esc(ls);  goto no_save;
+          case '\n': case '\r':
+            inclinenumber(ls); c = '\n'; goto only_save;
+          case '\\': case '\"': case '\'':
+            c = ls->current; goto read_save;
+          case EOZ: goto no_save;  /* will raise an error next loop */
+          case 'z': {  /* zap following span of spaces */
+            luaZ_buffremove(ls->buff, 1);  /* remove '\\' */
+            next(ls);  /* skip the 'z' */
+            while (lisspace(ls->current)) {
+              if (currIsNewline(ls)) inclinenumber(ls);
+              else next(ls);
+            }
+            goto no_save;
+          }
+          default: {
+            esccheck(ls, lisdigit(ls->current), "invalid escape sequence");
+            c = readdecesc(ls);  /* digital escape '\ddd' */
+            goto only_save;
+          }
+        }
+       read_save:
+         next(ls);
+         /* go through */
+       only_save:
+         luaZ_buffremove(ls->buff, 1);  /* remove '\\' */
+         save(ls, c);
+         /* go through */
+       no_save: break;
+      }
+      default:
+        save_and_next(ls);
+    }
+  }
+  save_and_next(ls);  /* skip delimiter */
+  seminfo->ts = luaX_newstring(ls, luaZ_buffer(ls->buff) + 1,
+                                   luaZ_bufflen(ls->buff) - 2);
+}
