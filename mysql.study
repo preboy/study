@@ -32,3 +32,20 @@ select DATE_ADD('2014-04-07',interval 100 day)
 
 新安装mysql之后，首次进入
 sudo mysql -u root -p   # 一定要有sudo不要死不进去
+
+
+存储过程调试：
+在你的存储过程中加入：
+select var1, var2;
+然后在mysql下，call  produce_name(param_in, @param_out);  则发现有打印
+
+
+在navicat中调试：
+call produce_name('111', @result);
+select @result;
+或者在运行中输入参数即可（不需要也无法"select @result"这一句了）
+
+
+date time问题：
+select from_unixtime(1234523, "%Y%m%d");
+select unix_timestamp(date); 得整数

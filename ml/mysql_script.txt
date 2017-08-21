@@ -1,0 +1,174 @@
+表：
+CREATE TABLE `t_code` (
+  `code` varchar(32) NOT NULL,
+  `prefix` varchar(4) DEFAULT NULL,
+  `seq_id` int(11) DEFAULT NULL,
+  `server_id` int(11) DEFAULT NULL,
+  `rep` int(11) DEFAULT NULL,
+  `date_begin` datetime DEFAULT NULL,
+  `date_end` datetime DEFAULT NULL,
+  `data` varchar(128) DEFAULT NULL,
+  `used` int(11) DEFAULT NULL,
+  `date_gen` datetime DEFAULT NULL,
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `t_code_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) DEFAULT NULL,
+  `seq_id` int(11) DEFAULT NULL,
+  `code` varchar(32) DEFAULT NULL,
+  `date_t` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+存储过程：
+CREATE DEFINER=`root`@`%` PROCEDURE `p_code_occupy`(`c` varchar(32), `sid` int , `pid` int, OUT `ret` int, OUT dat varchar(128))
+proc_lable :BEGIN
+    #Routine body goes here...
+    DECLARE _code   VARCHAR(32)  DEFAULT '';
+		DECLARE _code2  VARCHAR(32)  DEFAULT '';
+    DECLARE _data   VARCHAR(128) DEFAULT '';
+    DECLARE _debug  VARCHAR(128) DEFAULT '';
+
+    DECLARE _seq    int DEFAULT 0;
+    DECLARE _sid    int DEFAULT 0;
+    DECLARE _rep    int DEFAULT 0;
+    DECLARE _used   int DEFAULT 0;
+
+    DECLARE _begin  int DEFAULT 0;
+    DECLARE _end    int DEFAULT 0;
+		DECLARE _now    int DEFAULT 0;
+
+    DECLARE _id     int  DEFAULT 0;
+
+  # 查找激活码信息
+    SELECT `code`, `seq_id`, `server_id`, `rep`, `used`,  unix_timestamp(`date_begin`),  unix_timestamp(`date_end`), `data` from t_code where `code` = c into _code, _seq, _sid, _rep, _used, _begin, _end, _data;
+    select unix_timestamp(now()) into _now;
+
+    set _debug = CONCAT(_code, "+", _seq, "+", _sid, "+", _rep, "+", _used, "+", _begin, "+", _end, "+", _data, "+", _now);
+
+    IF LENGTH(_code) < 5 THEN
+        SET ret = 1;
+        SET dat = CONCAT('"not found the code": ', _debug);
+        # SELECT ret, dat;
+        LEAVE proc_lable;
+    END IF;
+
+    # 是否使用過同批次的激活碼
+    SELECT `code` FROM t_code_log where `pid` = pid and `seq_id` = _seq into _code2;
+    IF LENGTH(_code2) > 0 THEN
+        SET ret = 2;
+        set dat = CONCAT('"used with some seqid": ', _debug);
+        # SELECT ret, dat;
+        LEAVE proc_lable;
+    END IF;
+    
+    # 可否重複使用
+    IF _rep = 0 and _used <> 0 then
+        SET ret = 3;
+        set dat = CONCAT('"be occupied": ', _debug, _code2);
+        # SELECT ret, dat;
+        LEAVE proc_lable;
+    END IF;
+    
+    # 服務器ID是否合法 
+    if _sid <> 0 THEN
+        IF _sid <> sid THEN
+            SET ret = 4;
+            set dat = CONCAT('"sid invalid": ', _debug);
+            # SELECT ret, dat;
+            LEAVE proc_lable;
+        END IF;
+    END IF;
+    
+    # 時間是否合法
+    if _begin <> 0 and _now < _begin THEN
+        SET ret = 5;
+        set dat = CONCAT('"begin time invalid": ', _debug);
+        # SELECT ret, dat;
+        LEAVE proc_lable;
+    END IF;
+    
+    if _end <> 0 and _now > _end THEN
+        SET ret = 6;
+        set dat = CONCAT('"end time invalid": ', _debug);
+        # SELECT ret, dat;
+        LEAVE proc_lable;
+    END IF;
+    
+    # 开始使用
+    UPDATE t_code set `used` = 1 where `code` = c;
+    INSERT into t_code_log (`pid`, `seq_id`, `code`, `date_t`) VALUES( pid, _seq, c, now());
+    
+		set ret = 0;
+		set dat = _data;
+    #SELECT 0, _data;
+END
+
+
+函数s:
+CREATE DEFINER=`root`@`%` FUNCTION `f_random_string`(n int) RETURNS varchar(32) CHARSET utf8
+BEGIN
+        #Routine body goes here...
+    DECLARE char_base VARCHAR(36) DEFAULT "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        DECLARE ret_str VARCHAR(32) DEFAULT "";
+        DECLARE i int DEFAULT 0;
+    
+        WHILE i < n DO
+            set ret_str = CONCAT(ret_str, SUBSTR(char_base, FLOOR(1+RAND()*36), 1));
+            set i = i + 1;
+        end WHILE;
+    
+    RETURN ret_str;
+END
+
+
+CREATE DEFINER=`root`@`%` FUNCTION `f_get_seqid`() RETURNS int(11)
+BEGIN
+    #Routine body goes here...
+    DECLARE max_seq_id int DEFAULT  0;
+   
+    SELECT max(seq_id) from t_code into max_seq_id;
+  
+    if ISNULL(max_seq_id) THEN
+        set max_seq_id = 1000;
+    END IF;
+
+    set max_seq_id = max_seq_id + 1;
+
+    RETURN max_seq_id;
+END
+
+
+CREATE DEFINER=`root`@`%` FUNCTION `f_code_create`(cnt int, prefix varchar(4), s_id int, rep int, date_begin datetime, date_end datetime, data varchar(128)) RETURNS int(11)
+BEGIN
+    #Routine body goes here...  
+    DECLARE i int DEFAULT 0;
+    DECLARE c VARCHAR(32) DEFAULT "";   
+    DECLARE seq_id int DEFAULT 0;
+
+    # get seq_id
+    set seq_id = f_get_seqid();
+
+    while i < cnt DO
+        set c = CONCAT(prefix, seq_id, f_random_string(16), i);
+        INSERT INTO t_code(`code`, `prefix`, `seq_id`, `server_id`, `rep`, `date_begin`, `date_end`, `data`, `used`, `date_gen`) VALUES(c, prefix, seq_id, s_id, rep, date_begin, date_end, data, 0, now());
+        set i = i + 1;
+    END WHILE;
+
+    RETURN 0;
+END
+
+
+测试
+1. select  f_code_create(5, "DX", 110, 0, "2017-8-12 00:00:00", "2017-9-12 00:00:00", "ddddddddddddddaaaaaaattttttaaaaaaaa");
+
+2. call p_code_occupy ('ZCG1001XSWT50A6PSIWQNUX5', 101, 5555, @ret, @dat);
+SELECT @ret, @dat;
+
+
+3. UPDATE t_code set date_begin = "2017-8-12 00:00:00", date_end = "2017-9-11  00:00:00" where `code` = 'ZCG1001XSWT50A6PSIWQNUX5';
+
