@@ -78,3 +78,10 @@ static void read_string (LexState *ls, int del, SemInfo *seminfo) {
   seminfo->ts = luaX_newstring(ls, luaZ_buffer(ls->buff) + 1,
                                    luaZ_bufflen(ls->buff) - 2);
 }
+
+
+
+win7 远程桌面连接慢的问题
+运行 gpedit.msc
+计算机配置	管理模板	系统	inter通信管理，  在右侧选择 限制internet通信 启用，（一般局域网哈）
+
