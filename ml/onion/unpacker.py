@@ -66,6 +66,7 @@ class DataUnpacker():
     def read_string(self):
         text = []
         idx = self._offset
+        cnt = 0
         while True:
             b = self._data[idx]
             if idx == 140:
@@ -76,8 +77,12 @@ class DataUnpacker():
             else:
                 text.append(b)
                 idx += 1
+                cnt += 1
+
+        ss = struct.unpack_from("{0}c".format(cnt), self._data, self._offset)
         self._offset += len(text) + 1
-        return bytes(text).decode("gbk")
+        return "".join(ss)
+        # return "".join(str(text).encode("big5"))
 
     def read_float(self):
         v = self.read_uint32()
