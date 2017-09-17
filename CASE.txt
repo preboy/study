@@ -91,3 +91,12 @@ PHP配置REDIS
 在 /etc/php.ini 加入extension=redis.so  
 sudo service php-fpm restart
 查看phpinfo();中是否包含redis
+
+
+
+
+备份PUTTY配置的方法
+1. 开始->运行(Win+R)->regedit
+2. 找到 HKEY_CURRENT_USER\Software\SimonTatham
+3. 在 SimonTatham 这个节点上点击右键，选择导出，保存。
+如果你想恢复配置信息，只需要双击保存的这个文件，导入注册表信息即可
