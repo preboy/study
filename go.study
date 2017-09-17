@@ -16,3 +16,19 @@ import ××× 这里使用的也不是包名，也是路径名
 
 先从go env 中拷贝 : set GOPATH=xxx
 然后  粘贴到控制台 set GOPATH=xxx;newpath    # 这样就可以go build go install了
+
+
+
+使用指针作为接收者声明的方法，只能在接口类型的值是一个指针的时候被调用。
+使用值作为接收者声明的方法，在接口类型的值为值或者指针时，都可以被调用
+
+godoc fmt 查看fmt包的帮助文档
+
+GOPATH可以设置多个目录
+
+
+ 数组
+ var arr [5] int
+ var arr [...] int { 1,2,3,4,5}
+
+ var arr [4] int { 1:10, 2:20}
