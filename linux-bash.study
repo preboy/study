@@ -641,3 +641,21 @@ Linux中高效编写Bash脚本的10个技巧  (http://os.51cto.com/art/201708/54
 8、 用 readonly 来声明静态变量
 9、 环境变量用大写字母命名，而自定义变量用小写
 
+
+
+============================ SHELL快捷键 ============================
+
+shell   bind -p 列出
+ctrl+a/e  行首/尾
+ctrl+h/d  删除前/后一字符
+ctrl+u/k  删除至行首/尾
+ctrl+r    历史查找
+ctrl+f/b  光标前/后移一字符
+alt +f/b  光标前/后移一单词
+ctrl+p/n  历史记录中的上/下一条
+alt+l/u+c 改变大小写
+ctrl+t       修改前后两字符 = xp
+
+
+screen中:
+ctrl+a [ 复制模式

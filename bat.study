@@ -43,3 +43,8 @@ set /p a="请输入参数"
 
 start "title" /MIN  ....
 XCOPY /D ....   只复制更新的文件
+
+
+rem: 加载网络硬盘
+net use z: /del
+net use z:  \\172.31.244.4\d$\zcg abc,.123 /user:administrator

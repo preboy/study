@@ -302,98 +302,52 @@ let 中不需要使用$符号
 
 
 错误，输出，都重定向
-
 2 > &1 
-
 &>  
 
-
-
 数组长度
-
 ${#a[@]}
 
 
-
-
-
 declare -A a
-
 数组索引
-
 ${!a[@]}
-
-
 
 
 
 $\command  这样使用之后，不忽略了alias，而是直接使用命令
 
 
-
-
-
 以调试方式
-
 bash -x script.sh
 
-
-
 文件权限制  w r x
-
 执行位特殊权限：
-
     拥有者   setuid
-
     同组     setgid 
-
     粘滞位: 目录还有一个权限，在其它位的x, 表示只有目录的创建者才有限制删除文件。tT  
-
-
 
     chmod chown  ... -R 以递归执行下去
 
 
-
-
-
 linux文件系统第二属性
-
 lsattr chattr 
 
 
-
-
-
 touch的作用：
-
     touch file 用于创建文件
-
     touch -a file 修改文件访问时间 
-
     touch -m file 修改文件内容更改时间
-
     touch -d "timeformat" ... 还可以指定其它时间
 
-
-
 dd if=/dev/zero of=zcg.data bs=1M count=2
-
 dd if=/dev/cdrom of=zcg.iso  创建ISO文件
 
 
-
-
-
 seq 20 | head -n 9   打印文件前9行
-
 seq 20 | head -n -9  打印文件除去最后9行的所有行
-
 seq 20 | tail -n 4   打印最后4行
-
 seq 20 | tail -n +4  打印除去最开始4行之外所有的行
-
-
 
 sed 's/\w+/[&]/g' input   & 表示之前匹配到的
 
