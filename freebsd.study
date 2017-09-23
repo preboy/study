@@ -44,7 +44,7 @@ export PS1="\[\033[0;35m\][\[\033[0m\]\[\033[0;32m\]\u\[\033[0m\]\[\033[0;36m\]@
 export MANWIDTH=180
 export MANPAGER='less -sRgMIJ'
 export PAGER=less;
-
+export TERM=screen
 
 // 把下一行加到 /usr/local/etc/pkg.conf中最后，增加一个别名
 rinfo: rquery "%n - %v\n%e",
@@ -78,3 +78,13 @@ ipfw disable firewall
 ssserver -c shadowsocks.json -d start
 
 但是ipfw 直接禁用掉防火墙，这个不好啊
+
+
+
+# Add follow line in .bashrc, quit vim or less will clear verbose text
+export TERM=screen
+但是more不行
+
+
+.profile中加入
+. .bashrc
