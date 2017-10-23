@@ -35,8 +35,8 @@ OK
 新建立.bashrc中加入如下:
 
 alias ls='ls -GF'
-alias ll='ls -AGFl'
-alias l='ls -GFl'
+alias ll='ls -AGFlh'
+alias l='ls -GFlh'
 alias vi='vim'
 alias grep='grep --colour=auto'
 
@@ -65,12 +65,12 @@ pip install shadowsocks
 
 shadowsocks.json内容如下：
 {
-    "server":"真实的IP地址",
+    "server":"0.0.0.0",
     "server_port":8388,
     "local_port":1080,
     "password":"barfoo!",
     "timeout":600,
-    "method":"chacha20-ietf-poly1305"
+    "method":"rc-md5"
 }
 
 ipfw disable firewall 
