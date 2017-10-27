@@ -27,11 +27,11 @@ import ××× 这里使用的也不是包名，也是路径名
 
 godoc fmt 查看fmt包的帮助文档
 
+
 GOPATH可以设置多个目录
 
 
- 数组
- var arr [5] int
- var arr [...] int { 1,2,3,4,5}
-
- var arr [4] int { 1:10, 2:20}
+数组 声明 初始化：
+var arr [5] int
+var arr [...] int { 1,2,3,4,5}
+var arr [4] int { 1:10, 2:20}

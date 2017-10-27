@@ -4,98 +4,78 @@
 git log --pretty=oneline
 
 
-理发当前节点到 另一个节点，  也就是在一条线上任意选择
+从当前节点跳转到另一个节点，  也就是在一条线上任意节点上移动
 $ git reset --hard HEAD^
 $ git reset --hard 3628164
-
 
 
 在GIT上添加
 $ git remote add origin git@github.com:michaelliao/learngit.git
 
 
+git checkout -- file  # 可以丢弃工作区中已修改的文件
+git checkout 其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
 
 
-
-
-
-
-
-git checkout -- file可以丢弃工作区的修改：
-    eg.    git checkout -- readme.txt  
-
-
-命令git reset HEAD file可以把暂存区的修改撤销掉（unstage），重新放回工作区
-
-git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+命令git reset HEAD file 可以把暂存区的修改撤销掉（unstage），重新放回工作区
 
 
 创建分支并切换：
-git checkout -b dev = 
-（ $ git branch dev
-   $ git checkout dev ）
+git checkout -b dev
+=== 相当于 ===
+git branch dev
+git checkout dev
+
 
 查看分支：
 git branch
+
 
 切换分支：
 git checkout master
 
 
 合并分支：
-    git merge dev
+git merge dev
+
 
 删除分支：
 $ git branch -d dev
 
 
-                    Git鼓励大量使用分支：
-
-                    查看分支：git branch
-
-                    创建分支：git branch name
-
-                    切换分支：git checkout name
-
-                    创建+切换分支：git checkout -b name
-
-                    合并某分支到当前分支：git merge name
-
-                    删除分支：git branch -d name
+网友特妈的经验
+        Git鼓励大量使用分支：
+        查看分支：git branch
+        创建分支：git branch name
+        切换分支：git checkout name
+        创建+切换分支：git checkout -b name
+        合并某分支到当前分支：git merge name
+        删除分支：git branch -d name
 
 
+git log                 # 也可以看到分支的合并情况：
+用git log --graph       # 命令可以看到分支合并图。
+git log --graph --pretty=oneline --abbrev-commit
 
-用带参数的git log也可以看到分支的合并情况：
-用git log --graph命令可以看到分支合并图。
- git log --graph --pretty=oneline --abbrev-commit
 
 首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
 
 
-
-Git还提供了一个stash功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：
-$ git stash
-
-查看保存的工作现场：
-$ git stash list
-
-一是用git stash 【apply】恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
-另一种方式是用git stash pop，恢复的同时把stash内容也删了：
+Git还提供了一个stash功能：
+git stash           # 可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+git stash list      # 查看保存的工作现场：
+git stash apply     # 恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除
+git stash pop       # 恢复的同时把stash内容也删了
 
 
-如果要丢弃一个没有被合并过的分支，可以通过git branch -D name强行删除。
-
-
-要查看远程库的信息，用git remote：
+git branch -D name  # 如果要丢弃一个没有被合并过的分支
 
 
 推送分支：
 $ git push origin master
 
 
-
 因此，多人协作的工作模式通常是这样：
-
 1.首先，可以试图用git push origin branch-name推送自己的修改；
 2.如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
 3.如果合并有冲突，则解决冲突，并在本地提交；
@@ -104,44 +84,20 @@ $ git push origin master
 这就是多人协作的工作模式，一旦熟悉了，就非常简单。
 
 
+标签 TAG
+git tag name            # 打一个新标签
+git tag                 # 查看
+git tag v0.9 6224937    # 往某一个NODE上打标签
+git tag -a v0.1 -m "version 0.1 released" 3628164   # 创建带有说明的标签，用-a指定标签名，-m指定说明文字：
+git tag -d v0.1         # 如果标签打错了，也可以删除
 
-查看远程库信息，使用git remote -v；
-本地新建的分支如果不推送到远程，对其他人就是不可见的；
-从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
-在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
-建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
-从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
-
-
-
-敲命令git tag name就可以打一个新标签
-$ git tag           查看
-$ git tag v0.9 6224937  往某一个NODE上打标签
-
-
-
-还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：
-$ git tag -a v0.1 -m "version 0.1 released" 3628164
-
-如果标签打错了，也可以删除：
-$ git tag -d v0.1
 创建的标签都只存储在本地，不会自动推送到远程。所以，打错的标签可以在本地安全删除
 
 
-
-
-
-命令git push origin tagname可以推送一个本地标签；
-命令git push origin --tags可以推送全部未推送过的本地标签；
-命令git tag -d tagname可以删除一个本地标签；
-命令git push origin :refs/tags/tagname可以删除一个远程标签。
-
-
-
-
-
-
-
+git push origin tagname     # 可以推送一个本地标签；
+git push origin --tags      # 可以推送全部未推送过的本地标签；
+git tag -d tagname          # 可以删除一个本地标签；
+git push origin :refs/tags/tagname # 可以删除一个远程标签；
 
 
 
@@ -149,82 +105,63 @@ $ git tag -d v0.1
 http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
 
 
-
-
-
-
-
-git stash 保存现在
-git checkout 要切换的分支
+# 一次比较常规的操作几率
+git stash           # 保存现在
+git checkout        # 要切换的分支
 git checkout -b newbug
-do....
+do somthing ....
 git merge --no-ff newbug
-
 get checkout dev
 get stash pop
 
 
-
- clone 远程上的其它分支，
-$ git checkout -b dev origin/dev
+# clone 远程上的其它分支，
+git checkout -b dev origin/dev
 
 
 设置本地与远程的关系：
-$ git branch --set-upstream dev origin/dev
+git branch --set-upstream dev origin/dev
 
 
 
+# ==================== 再读git网站 ====================
 
---==================== 再读git网站
-
-在Git中，用HEAD表示当前版本  
+在Git中，用HEAD表示当前版本
 HEAD^ 表示上一个版本
 HEAD^^ 表示上上一个版本
 当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
 
 主要使用：git reset --hard  HEAD^ 之类的命令来回退
-git reflog 可看最近的操作栈，然后找回commit id， 方便再前进。
+git reflog              # 可看最近的操作栈，然后找回commit id， 方便再前进。
 
-git diff file.txt 查看文件工作区与stage中的区别
-git diff HEAD -- file.txt 查看文件与仓库中的区别
-
-git checkout  -- file.txt : 把工作区已修改的内容（未暂时），恢复  包括删除的文件找回，一键还原.
-git reset HEAD file.txt  把已暂时的内容，更改为未暂存   (把暂存区的修改回退到工作区)    -- git reset 还可以回退版本哦
-第三种回复： 把commit的东西再回复，这个时间就要使用 git reset -- hard HEAD^ 之类的了，见上10行左右。
-
-
-git remote add origin git@server-name:path/repo-name.git；
-    这是关联远程仓库与本地仓库的方法
-
-git push -u origin master
-    第一次推送使用，会关联本地与远程的master
-    非第一次使用： git push origin master
+git diff file.txt           # 查看文件工作区与stage中的区别
+git diff HEAD -- file.txt   # 查看文件与仓库中的区别
+git checkout  -- file.txt   # 把工作区已修改的内容（未暂时），恢复  包括删除的文件找回，一键还原.
+git reset HEAD file.txt     # 把已暂时的内容，更改为未暂存   (把暂存区的修改回退到工作区)
+git reset -- hard HEAD^     # 把commit的东西再恢复
 
 
-branch:     开始新的工作时创建分支，工作分成时合并，删除分支
-git checkout -b dev     -- 创建交切换
-    ==
-    git branch dev      -- 创建
-    git checkout dev    -- 切换
-    
-git branch  -- 查看分支
-git branch -d dev -- 删除分支
-git branch -D dev -- 强行删除分支
-git merge dev  -- 将dev合并到当前分支。
+git remote add origin git@server-name:path/repo-name.git        # 这是关联远程仓库与本地仓库的方法
+
+推送
+git push -u origin master   # 第一次推送使用，会关联本地与远程的master
+git push origin master      # 非第一次推送
 
 
+### branch:     开始新的工作时创建分支，工作完成时合并+删除分支
+
+git branch              # 查看分支
+git branch -d dev       # 删除分支
+git branch -D dev       # 强行删除分支
+git merge dev           # 将dev合并到当前分支。
 
 
-git stash       -- 保存现场
-git stash list  -- 查看现场
-git stash apply -- 恢复现场，偶或并不删除，再需要使用 git stash drop 来删除
-git stash pop   -- 恢复，同时删除
+git stash               # 保存现场
+git stash list          # 查看现场
+git stash apply         # 恢复现场，偶或并不删除，再需要使用 git stash drop 来删除
+git stash pop           # 恢复，同时删除
 git stash apply stash@{0}  -- 同时可以在多个stash中恢复，
-    通常我们保存现场，然后切换回master分支，再新建bug分支，修复完之后合并，删除bug分支，再切换回工作区，并回复stash
-
-
-git branch --set-upstream dev origin/dev
-    设置本地与远程分支的链接。
+### 通常我们保存现场，然后切换回master分支，再新建bug分支，修复完之后合并，删除bug分支，再切换回工作区，并回复stash
 
 
 分支开发：
@@ -237,20 +174,22 @@ git branch --set-upstream dev origin/dev
 
 
 tag
-git tag  -- 列出标签
-git tag  tagname    -- 在最新的commit打标签
-git tag  tagname 3453453  在某一次commit上打标签
-git show tagname 显示标签commit的东西
-git tag -d v0.1  删除标签
+git tag                     # 列出标签
+git tag  tagname            # 在最新的commit打标签
+git tag  tagname 3453453    # 在某一次commit上打标签
+git show tagname            # 显示标签commit的东西
+git tag -d v0.1             # 删除标签
 
 
-git push origin tagname    -- 推送某个标签
-git push origin --tags  -- 推送所有的标签
+git push origin tagname     # 推送某个标签
+git push origin --tags      # 推送所有的标签
+
 
 删除远程标签：
-    git tag -d v0.9   -- 先删除本地
+    git tag -d v0.9         # 先删除本地
     git push origin :refs/tags/v0.9     推送无远程 可能refs 是固定的吗？
 
 
 
-
+--------------- 龙哥的奇淫巧技 ---------------
+git pull --rebase       先拉，然后在把自己的修改追加到后面
