@@ -35,3 +35,13 @@ GOPATH可以设置多个目录
 var arr [5] int
 var arr [...] int { 1,2,3,4,5}
 var arr [4] int { 1:10, 2:20}
+
+
+在windows上搞一个批处理文件放到%PATH%下，内容如下：
+@echo off
+set GOPATH=%cd%
+echo GOPATH=%GOPATH%
+以后在任意目录下执行即可动态设置GOPATH
+linux下文件内容如下：
+搞一个sh：
+export GOPATH=$(pwd)
