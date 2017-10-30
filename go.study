@@ -43,5 +43,5 @@ set GOPATH=%cd%
 echo GOPATH=%GOPATH%
 以后在任意目录下执行即可动态设置GOPATH
 linux下文件内容如下：
-搞一个sh：
-export GOPATH=$(pwd)
+在.bashrc中加入：
+alias gopath='export GOPATH=$(pwd)'
