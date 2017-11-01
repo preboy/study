@@ -193,6 +193,8 @@ git push origin --tags      # 推送所有的标签
 git branch                          # 查看本地分支
 git branch -r                       # 查看远程分支
 git branch -a                       # 查看远程、本地分支
+git branch -v                       # 
+git branch -vv                      # 查看本地分支与远程分支的联系情况
 
 git fetch origin dev                # 命令来把远程分支拉到本地
 git checkout -b dev origin/dev      # 本地创建分支并切换
@@ -201,6 +203,8 @@ git pull origin dev                 # 拉去分支到本地
 # 老子搞错了，全部还原，有两个方法：
 git checkout  【当前merge的分支】
 git reset   -- hard  【版本号】
+
+
 
 
 --------------- 龙哥的奇淫巧技 ---------------
