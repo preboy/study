@@ -210,3 +210,8 @@ git reset   -- hard  【版本号】
 --------------- 龙哥的奇淫巧技 ---------------
 git pull --rebase       先拉，然后在把自己的修改追加到后面
 
+
+-- git维护的文件，只在本地改，不需要提交的处理办法：
+git update-index --assume-unchanged         -- 注册
+git update-index --no-assume-unchanged      -- 取消
+git ls-files -v | grep "^[hsmrck] "         -- 列表
