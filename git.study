@@ -217,3 +217,9 @@ git pull --rebase       先拉，然后在把自己的修改追加到后面
 git update-index --assume-unchanged         -- 注册
 git update-index --no-assume-unchanged      -- 取消
 git ls-files -v | grep "^[hsmrck] "         -- 列表
+
+
+
+git 常用config
+git config --global core.autocrlf false     # 提交检出均不转换
+git config --global core.safecrlf true      # 拒绝提交包含混合换行符的文件
