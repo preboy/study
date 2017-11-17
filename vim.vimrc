@@ -178,3 +178,14 @@ map <F3> :source D:/Tools/Vim8/_vimrc<CR>
 map <F4> :noh<CR>
 
 inoremap <C-B> <ESC>ddk$a
+
+
+" from Mr.Long
+nmap <C-j> <C-e>
+nmap <C-k> <C-y>
+
+" for vim diff
+highlight DiffAdd    cterm=bold  ctermbg=yellow
+highlight DiffDelete cterm=bold  ctermbg=cyan
+highlight DiffChange cterm=bold  ctermbg=green
+highlight DiffText   cterm=bold  ctermbg=red
