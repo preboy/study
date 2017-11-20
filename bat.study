@@ -48,3 +48,7 @@ XCOPY /D ....   只复制更新的文件
 rem: 加载网络硬盘
 net use z: /del
 net use z:  \\172.31.244.4\d$\zcg abc,.123 /user:administrator
+
+
+遍历目录下的文件并操作
+forfiles /M *.proto /C "cmd /c protoc --gogofaster_out=..\msg @file"
