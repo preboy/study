@@ -2,6 +2,7 @@
 
     用户管理：
         adduser  useradd  userdel  usermod(修改用户帐号)
+        useradd -G wheel  zcg 建立用户的同时附加组
 
     用户组管理：
         groupadd groupmod  groupdel
@@ -916,6 +917,8 @@ bash -x script.sh
     粘滞位: 目录还有一个权限，在其它位的x, 表示只有目录的创建者才有限制删除文件。tT  
 
     chmod chown  ... -R 以递归执行下去
+    chown user:group  file   同时更改了组
+
 
 
 linux文件系统第二属性
