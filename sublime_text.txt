@@ -1,4 +1,4 @@
- 我的sublime text 配置：用在golang工程中
+﻿ 我的sublime text 配置：用在golang工程中
 {
 	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
 	"font_face": "Consolas",
@@ -24,6 +24,8 @@
 	"show_line_endings": true,
 	"tab_completion": false,
 	"theme": "Default.sublime-theme",
+	"line_padding_top": 2,
+	"line_padding_bottom": 2,
 	"update_check": false
 }
 
