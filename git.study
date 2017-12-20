@@ -206,6 +206,7 @@ git pull origin dev                 # 拉去分支到本地
 git checkout  【当前merge的分支】
 git reset   -- hard  【版本号】
 
+git rm --cached 2dgame.exe          # 放弃对此文件的git管理
 
 
 
