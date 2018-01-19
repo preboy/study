@@ -31,14 +31,14 @@ var num = 10;  num.toString(2);	// 显示二进制
 Object的方法，属性：
 	constructor
 	hawOwnProperty(propertyName)	用于检测属性是否在对象实例中，（而不是原型中）
-	isPrototypeOf(object)  
+	isPrototypeOf(object)
 	propertyIsEnumberable(propertyname)
 	toLocaleString()
 	toString()
 	valueOf()
 
 ~   Not  按位取反
-&   And  
+&   And
 |   Or
 ^   Xor  异或
 <<  并不会影响符号位，-2 << 5 是64
@@ -47,7 +47,7 @@ Object的方法，属性：
 
 !  &&  ||   逻辑操作符			采用的是短路的方式
 
-*  / %  
+*  / %
 
 ===   !== 全等  、  全不等
 
@@ -61,7 +61,7 @@ with (expression)  statement;   将代码的作用域设置到一个特定对象
 with 是不建议使用的东西了
 
 
-switch (express){}  
+switch (express){}
 可以使用字符串，还有一种写法
 
 var num = 10;
@@ -76,7 +76,7 @@ switch(true)
 
 function sayHello()
 {
-	arguments[0] ... 他们是参数  
+	arguments[0] ... 他们是参数
 	arguments[1] = 20 还可以用于返回值，像C++中的引用
 }
 
@@ -86,7 +86,7 @@ javascript中没有块级作用域
 
 
 
-array  也有栈的方法  
+array  也有栈的方法
 	push     添加新元素并返回长度
 	pop	 返回项
 	length   返回长度
@@ -109,7 +109,7 @@ arguments.caller
 
 每个函数都有两个属性
 length	表示希望接收命名参数的个数
-prototype	
+prototype
 
 每个函数都包括两个非继承而来的方法：apply  call	,   在特定的作用域中调用函数，相当于设置了this值。
 第一个参数，代表this
@@ -122,7 +122,7 @@ x()
 string的方法：
 	str.charAt(1);		单字符
 	str.charCodeAt(1);	数字
-	str[1]	
+	str[1]
 	substr
 	substring
 	slice
@@ -140,7 +140,7 @@ string的方法：
 
 严格模式
 "use strict"
-在整个脚本的顶部加入    也可以在函数的开头处添加  
+在整个脚本的顶部加入    也可以在函数的开头处添加
 
 最好使用;结尾   可以增加解析的性能
 
@@ -165,21 +165,21 @@ Object有方法
 
     a && b    a || b   逻辑操作， 属于短路操作
 
-    全相等 全不等 :   区别于常规：在比较之前不转换类型     :  我理解：线比较类型在比较值
+    全相等 全不等 :   区别于常规：在比较之前不转换类型     :  我理解：先比较类型在比较值
     ===    未经过转换就相等 返回true
     !==    未经过转换就不相等 返回true
-        
+
 
     with语句已经不建议使用了
     switch 他的case 不局限与整数了，可以是任何类型
 
 数组：
     var a = new Array(10);
-    var b = new ArrY(1,2,3,4,5);
+    var b = new Array(1,2,3,4,5);
     var c = Array();
     var d = [1,2,3,4,5];
 
-    if (value is instanceof Array){} 
+    if (value is instanceof Array){}
     Array.isArray(value)  这个效果更好
 
 数组栈：
@@ -195,7 +195,7 @@ Object有方法
 
 其他方法：
     sort()          // 内部实现是通过元素的tostring 方法   或者   arr.sort(function(e1, e2){return e1 > e2;})
-    reverse()  
+    reverse()
 
     concat
     slice
@@ -232,7 +232,7 @@ Object有方法
 面向对象：
     Object.defineProperty(obj, "name",{
         writable:false, // 是否可写
-        value:"Preboy", 
+        value:"Preboy",
         enumerable,     // 能否用for in 得到
         configurable,   // 能否delete删除...
     })
@@ -373,8 +373,8 @@ typeof 2.34  返回类型 number
 
 var obj = JSON.parse(text);
 
-<a href="javascript:void(0)">单击此处什么也不会发生</a> 
-操作符指定要计算一个表达式但是不返回值。 
+<a href="javascript:void(0)">单击此处什么也不会发生</a>
+操作符指定要计算一个表达式但是不返回值。
 
 (function(){})()  函数自调，必须使用()把函数体转换成一个表达式。
 
@@ -395,6 +395,51 @@ element.appendChild(para);
 
 
 
-HTML 
+HTML
   <hr>  水平线
   target='_blank'
+
+  for ... in  数组胡下标
+  for ... of  数组元素的值   不会列出数组的自定义属性
+
+
+======================= javascript new study
+
+构造函数 有一个prototype对象
+    用以实现对象的共有属性
+    任意一个对象都有一个__proto__属性，指向构造函数的prototype
+
+
+调用函数时指定this:
+    　Animal.apply(this, arguments)  相当于   new Animal(arguments)
+
+
+暗含的构造函数
+Array.prototype.constructor == Array
+
+a = new Array()
+---------  a对象默认含有这几个属性 
+a.length
+a.__proto__
+a.constructor = Array
+
+
+如果替换了prototype对象，下一步必然是为新的prototype对象加上constructor属性，
+o.prototype = {};
+o.prototype.constructor = o;
+
+
+
+extend(Child, Parent)
+{  
+    var F = function(){}
+    F.prototype = Parent
+    // F.prototype.constructor = F
+    Child.prototype = new F()
+    Child.prototype.constructor = Child
+}
+
+
+
+
+

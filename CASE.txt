@@ -100,3 +100,7 @@ sudo service php-fpm restart
 2. 找到 HKEY_CURRENT_USER\Software\SimonTatham
 3. 在 SimonTatham 这个节点上点击右键，选择导出，保存。
 如果你想恢复配置信息，只需要双击保存的这个文件，导入注册表信息即可
+
+
+这个网站，检测json正确性
+https://jsonlint.com/
