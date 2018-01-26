@@ -399,8 +399,12 @@ HTML
   <hr>  水平线
   target='_blank'
 
-  for ... in  数组胡下标
-  for ... of  数组元素的值   不会列出数组的自定义属性
+  for ... in  对象的下标    不推荐用于数组 不保证顺序
+  for ... of  对象元素的值   不会列出数组的自定义属性
+    
+
+  数组用： forEach 来遍历
+
 
 
 ======================= javascript new study
@@ -440,6 +444,8 @@ extend(Child, Parent)
 }
 
 
-
-
+for...in循环和Object.keys方法的区别:
+前者包括对象继承自原型对象的属性，
+而后者只包括对象本身的属性。
+如果需要获取对象自身的所有属性，不管enumerable的值，可以使用Object.getOwnPropertyNames方法  (不包括继承而来的)
 
