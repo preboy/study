@@ -166,9 +166,13 @@ Object有方法
     a && b    a || b   逻辑操作， 属于短路操作
 
     全相等 全不等 :   区别于常规：在比较之前不转换类型     :  我理解：先比较类型在比较值
-    ===    未经过转换就相等 返回true
+    ===    未经过转换就相等 返回true        基本与 Object.is 一致 (不同之处只有两个：一是+0不等于-0，二是NaN等于自身。)
     !==    未经过转换就不相等 返回true
+        +0 === -0 //true
+        NaN === NaN // false
 
+        Object.is(+0, -0) // false
+        Object.is(NaN, NaN) // true
 
     with语句已经不建议使用了
     switch 他的case 不局限与整数了，可以是任何类型
@@ -448,4 +452,124 @@ for...in循环和Object.keys方法的区别:
 前者包括对象继承自原型对象的属性，
 而后者只包括对象本身的属性。
 如果需要获取对象自身的所有属性，不管enumerable的值，可以使用Object.getOwnPropertyNames方法  (不包括继承而来的)
+
+
+
+
+================ ECMAScript 6 入门 =========================
+
+var命令会发生”变量提升“现象     即脚本开始运行时，变量已经存在
+
+暂时性死区：
+只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。
+
+const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址不得改动。
+
+
+而是变量指向的那个内存地址不得改动。  let
+
+
+
+ES6允许模式：
+    let [a, b, c] = [1, 2, 3];
+    let [foo, [[bar], baz]] = [1, [[2], 3]];
+    let [x, y = 'b'] = ['a', undefined]; // x='a', y='b'        默认值 / 惰性
+
+解构不仅可以用于数组，还可以用于对象。
+    let { foo, bar } = { foo: "aaa", bar: "bbb" };
+    let { foo: baz } = { foo: 'aaa', bar: 'bbb' };      变量名与属性名不一样  baz变量名
+
+
+任何部署了 Iterator 接口的对象，都可以用for...of
+
+
+模板字符串 ${}中可以任何javascript表达式
+function fn() {
+  return "Hello World";
+}
+
+`foo ${fn()} bar`
+
+
+函数参数：
+参数变量是默认声明的，所以不能用let或const再次声明。
+参数默认值不是传值的，而是每次都重新计算默认值表达式的值
+
+函数进行声明初始化时，参数会形成一个单独的作用域（context）
+    var x = 1;
+    function f(x, y = x) {
+      var x = 200
+      console.log(y);
+    }
+    f(2)    // 2
+
+
+    function add(...values)     // 函数的多少参数  ：  数组
+
+
+箭头函数：
+let getTempItem = id => ({ id: id, name: "Temp" });     
+    // 一个参数可以不用加()/0个多个参数则需要()
+    // 返回对象，需要加一个()，因为容易被解析成代码块
+let fn = () => void doesNotReturn();      
+    // 没有返回值的简体写法，前面加个 void
+    
+    注意：
+    函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。      跟function不一样的结果
+    奥秘：箭头函数根本就没有this，他所使用的都是上层作用域的this, upvalue， 所以以前老是有这一句：var _this = this; 然后再使用_this
+        箭头函数根本就没有this、arguments、super、new.target
+
+        function foo() {
+          setTimeout(() => {
+            console.log('id:', this.id);
+          }, 1000);
+        }
+        var id = 21;
+        foo.call({ id: 42 });
+        // 输出:42
+    所以啊： 这种特性很有利于封装回调函数
+    
+  function Timer() {
+  this.s1 = 0;
+  this.s2 = 0;
+  // 箭头函数
+  setInterval(() => this.s1++, 1000);       // 此处的作用域Timer对象
+  // 普通函数
+  setInterval(function () {
+    this.s2++;                              // 此处的是全局对象(windows/global)
+  }, 1000);
+}
+
+var s2 = 100        // windows.s2或者global.s2        因为：在nodejs中global不等于顶层域
+var timer = new Timer();
+
+setTimeout(() => console.log('s1: ', timer.s1), 3100);
+setTimeout(() => console.log('s2: ', timer.s2, global.s2), 3100);
+// s1: 3
+// s2: 0    103
+
+
+对象的key如果为对象，则key转换为"[object Object]"字符串，所以多个key只能对应一个值，因为key对象都转换为"[object Object]"了
+
+
+由于undefined和null无法转成对象  所以无法用于Object.asign
+
+
+
+// 设置、获取对象的 __proto__
+Object.setPrototypeOf()
+Object.getPrototypeOf()
+关键字super，指向当前对象的原型对象
+
+
+ES5 的对象属性名都是字符串
+ES6 对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的 Symbol 类型
+
+
+对象（Object），只能用字符串当作键。
+Map 的key，则可以是其它对象
+
+
+类：
+只有调用super之后，才可以使用this关键字，否则会报错。
 

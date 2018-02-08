@@ -1,0 +1,10 @@
+[
+    {
+        "keys": ["alt+w", "alt+m"],
+        "command": "recent_files_modified"
+    },
+    {
+        "keys": ["ctrl+alt+o"],
+        "command": "recent_files_closed"
+    }
+]
