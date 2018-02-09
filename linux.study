@@ -1031,3 +1031,8 @@ ifstat
 
 // 使用-------------
 
+
+
+
+打包时排除某些文件夹： 注意：  --exclude=./Admin   而不是：--exclude=./Admin/*
+tar -czvf bin.tar.gz  --exclude=./Admin --exclude=./node_modules  ./*
