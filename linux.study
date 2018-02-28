@@ -1036,3 +1036,10 @@ ifstat
 
 打包时排除某些文件夹： 注意：  --exclude=./Admin   而不是：--exclude=./Admin/*
 tar -czvf bin.tar.gz  --exclude=./Admin --exclude=./node_modules  ./*
+
+
+netstat只列出当前用户
+netstat --inet  -ee | grep zcg
+
+ss 也有同机的功能 -e
+ss -lpoten | grep 1003 | grep GameServer
