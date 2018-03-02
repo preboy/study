@@ -189,3 +189,10 @@ highlight DiffAdd    cterm=bold  ctermbg=yellow
 highlight DiffDelete cterm=bold  ctermbg=cyan
 highlight DiffChange cterm=bold  ctermbg=green
 highlight DiffText   cterm=bold  ctermbg=red
+
+
+" for golang support
+au BufRead,BufNewFile *.go set filetype=go
+
+" F5 to run this file
+nmap <F5> :!./%<CR>
