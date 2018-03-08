@@ -1,4 +1,8 @@
-// URL: http://118.24.48.149:3000/push?command='shutdown /?'
+/* 
+sample: 
+http://118.24.48.149:3000/push?command=shutdown /s /t 300
+http://118.24.48.149:3000/push?command=shutdown /a
+*/
 
 let http = require("http")
 let addr = "http://118.24.48.149:3000/push?command="
