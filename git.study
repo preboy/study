@@ -136,6 +136,7 @@ git reflog              # 可看最近的操作栈，然后找回commit id， �
 git diff file.txt           # 查看文件工作区与stage中的区别
 git diff HEAD -- file.txt   # 查看文件与仓库的区别
 git diff --cached           # 查看stage与仓库之间的区别
+git diff HEAD^^             # commit之后都可以查看，最近几次的记录
 
 git checkout  -- file.txt   # 把工作区已修改的内容（未暂时），恢复  包括删除的文件找回，一键还原.
 git reset HEAD file.txt     # 把已暂时的内容，更改为未暂存   (把暂存区的修改回退到工作区)
