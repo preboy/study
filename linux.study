@@ -1043,3 +1043,7 @@ netstat --inet  -ee | grep zcg
 
 ss 也有同机的功能 -e
 ss -lpoten | grep 1003 | grep GameServer
+
+
+# 会对某运行中的程序产生dump文件
+pcore 
