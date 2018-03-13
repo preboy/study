@@ -37,11 +37,17 @@ var arr [...] int { 1,2,3,4,5}
 var arr [4] int { 1:10, 2:20}
 
 
-在windows上搞一个批处理文件放到%PATH%下，内容如下：
+
+任意目录下执行即可动态设置GOPATH:
+
+一、在windows上搞一个批处理文件放到C:\Windows目录，内容如下：
 @echo off
 set GOPATH=%cd%
 echo GOPATH=%GOPATH%
-以后在任意目录下执行即可动态设置GOPATH
-linux下文件内容如下：
+doskey C=cd /d E:\WorkSpace\2dgame\simulator\win32
+doskey S=cd /d E:\WorkSpace\gworld
+doskey N=cd /d E:\WorkSpace\note
+
+二、linux下文件内容如下：
 在.bashrc中加入：
 alias gopath='export GOPATH=$(pwd)'
