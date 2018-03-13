@@ -40,14 +40,8 @@ var arr [4] int { 1:10, 2:20}
 
 任意目录下执行即可动态设置GOPATH:
 
-一、在windows上搞一个批处理文件放到C:\Windows目录，内容如下：
-@echo off
-set GOPATH=%cd%
-echo GOPATH=%GOPATH%
-doskey C=cd /d E:\WorkSpace\2dgame\simulator\win32
-doskey S=cd /d E:\WorkSpace\gworld
-doskey N=cd /d E:\WorkSpace\note
+一、windows：
+    见bat.study 'Windows下的配置文件'
 
-二、linux下文件内容如下：
-在.bashrc中加入：
+二、linux在.bashrc中加入：
 alias gopath='export GOPATH=$(pwd)'

@@ -10,10 +10,10 @@ for /L %%a in (1,1,100) do start cmd /c telnet localhost 1234
 
 for /f "tokens=1,2,3,4,5" %%i in (%%s) do (
     echo %%i
-    echo %%j    
+    echo %%j
     echo %%k
     echo %%l
-    echo %%m        
+    echo %%m
 在tokens中使用了几个数字，这个地方就可以使用自%%j开始的变量，这一群变量都是自动声明的
 %%i 是手动声明的
 )
@@ -52,3 +52,21 @@ net use z:  \\172.31.244.4\d$\zcg abc,.123 /user:administrator
 
 遍历目录下的文件并操作
 forfiles /M *.proto /C "cmd /c protoc --gogofaster_out=..\msg @file"
+
+
+
+Windows下的配置文件内容：(该文件保存到C:\Windows\gopath.bat)
+==========================================================================================
+
+@echo off
+
+cd /d E:\WorkSpace\gworld
+
+set GOPATH=%cd%
+echo GOPATH=%GOPATH%
+
+doskey C=cd /d E:\WorkSpace\2dgame\simulator\win32
+doskey S=cd /d E:\WorkSpace\gworld
+doskey N=cd /d E:\WorkSpace\note
+
+doskey E=explorer .
