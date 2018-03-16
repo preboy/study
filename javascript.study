@@ -573,3 +573,27 @@ Map 的key，则可以是其它对象
 类：
 只有调用super之后，才可以使用this关键字，否则会报错。
 
+
+
+============================== EXPRESS ==============================
+路由:其实就是对path(一个端点)的处理
+
+app.METHOD(path, function(req, res){
+    console.log("ddd");
+});
+
+
+app.all(path, function(req, res, next){
+    console.log("in mid");
+    next();
+});           // 对所有路由加中间件
+
+
+app.use(...)        // 使用中间件
+
+app.route(path)     // 链式处理的方法，  返回的对象可以xxx 链式处理
+
+
+中间件：    主要是处理 path/xxx 开头的请求
+    下面继续使用  METHOD处理请求
+
