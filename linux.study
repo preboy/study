@@ -1012,7 +1012,6 @@ nm -D 7z.so
 objdump -tT 7z.so
 
 
-date +"%Y%m%d" 输出 20170512
 
 关于linux的umask:
 一、文件基数为666，目录为777，即文件无设x位，目录可设x位。
@@ -1047,3 +1046,10 @@ ss -lpoten | grep 1003 | grep GameServer
 
 # 会对某运行中的程序产生dump文件
 pcore 
+
+
+关于时间戳转换的问题：
+date +"%Y%m%d" 输出 20170512
+date +%s                            # 输出: 1521535216
+date -d '2013-2-22 22:14' +%s       # 输出：1361542440
+date -d @1521535216                 # 输出: Tue Mar 20 16:40:16 CST 2018
