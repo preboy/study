@@ -1,9 +1,9 @@
 let express = require('express');
 let app = express();
-
 const fs = require('fs');
 
 let commands = []
+
 
 app.get('/task', function(req, res) {
     let str = commands.pop();
@@ -29,6 +29,10 @@ app.get('/push', function(req, res) {
     res.send('OK');
 });
 
+
+app.get('/list', function(req, res) {
+    res.json(commands);
+});
 
 var server = app.listen(3000, function() {
     var host = server.address().address;
