@@ -73,7 +73,5 @@ doskey E=explorer .
 
 doskey gb=git branch -vv
 doskey gd=git diff
-doskey gitc=git pull --rebase & git status
 doskey gl=git log  --graph
 doskey gs=git status
-doskey gss=git pull & git status
