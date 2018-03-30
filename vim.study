@@ -803,3 +803,7 @@ ctrl-^ 在最近的两个文件之间跳转
 :cp
 :copen cw
 :cclose
+
+发现json文件有错，需要跳到偏移112的方法：
+112goto
+或者editplus的HEX模式
