@@ -1053,3 +1053,18 @@ date +"%Y%m%d" 输出 20170512
 date +%s                            # 输出: 1521535216
 date -d '2013-2-22 22:14' +%s       # 输出：1361542440
 date -d @1521535216                 # 输出: Tue Mar 20 16:40:16 CST 2018
+
+
+
+两台机子无密码登录脚本回忆：
+    A是踏板机   B为其它机器 
+
+scp install.sh root@B:~/
+ssh root@B "
+    id game > /dev/null 2>&1
+    if [ $? -eq 1 ];then
+        adduser -G wheel -p "此得的密码是加密后的字符串" game
+    fi
+    ./install.sh
+    ssh-copy-id -i ~/.ssh/id_rsa.pub  game@B
+"
