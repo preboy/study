@@ -1,4 +1,4 @@
-============================ linux bash 学习笔记 ============================ 
+============================ linux bash 学习笔记 ============================
 
     用户管理：
         adduser  useradd  userdel  usermod(修改用户帐号)
@@ -102,12 +102,13 @@ awk
 
     expr length "$string"   ====  $(#string)
 
-    1> 相当于  >   >> 相当于 1>>
+    >  相当于  1>
+    >> 相当于  1>>
+    &> 相当于  2>&1
 
-    cmd 2>&1 output.txt 将2 当作 1对待     == cmd &>
+    cmd 2>&1 output.txt 将2 当作 1对待     == cmd &> output.txt
 
     tee -a 可以追加的方式
-
 
     bash 支持普通数组(以0作为开始索引)，关联数组
     $array_var[*] 取整个数组内容
@@ -315,11 +316,10 @@ tar:
 
 cat:
     -b  or  -n  ：显示行号
-    -s :  两个连续的空行，只现实一行
+    -s :  两个连续的空行，只显示一行
 
 tee:
     -a 追加到文件末尾
-
 
     :> logger  # 可以正阳清空文件内容
 
@@ -372,7 +372,7 @@ var = value  比较
 
 脚本参数：
   $@  = "arg1" "arg2" "arg3"
-  $*   = "arg1 arg2 arg3"
+  $*  = "arg1 arg2 arg3"
 
   export -f funcname  # n导出函数，这样，子进程就可以使用这个函数了
 
@@ -573,7 +573,7 @@ strings filename  # 查看文件中所有可以打印的字符串
 
 
 pstack 打印某个进程的堆栈
-
+ptrace
 
 -- 读取整个文件并赋值到变量a
 a=$(<a.sh)
@@ -625,7 +625,7 @@ ctrl+a [ 复制模式
 
 fsetpos == fseek  == rewind    # 他们都是定位FILE流的函数。C标准提供。
 ftell 获取当前位置，好像。
-fflush  清洗 
+fflush  清洗
 ferror   feof clearerr  # 这些都是针对出错处理的函数。
 fileno 与 fdopen 是流个filedescripter的交互
 
@@ -657,13 +657,13 @@ struct tm * gmtime_r (const time_t *timep, struct tm *0result);
 linux信号发生时：
     同步信号：一般是本进程自己发给自己的，比如硬件中断、raise等。
         他产是立即就发生的，可能大raise返回之前就调用了。
-        
+
     异步信号：其它进程发的，==
         在CPU获得时间片时被调用，
         从内核切换到用户态时被调用。 可能过早的退出系统调用。
 
 
-    
+
 man syscalls
 查看所有系统调用。
 
@@ -726,7 +726,7 @@ sed 's/abc/def/g' 可以不指定范围
 sed 'y/12345/ABCDE'  input  变化，tr也有这个功能
 可以将多个命令写在一个{}里面，与多个-e参数功能一样哟，  多个之间用;隔开
 sed '/partern/{n; s/1/2/g; }'  input n 表示处理下一行，
-用;隔开的命令也行 
+用;隔开的命令也行
 sed 's/1/2; s/3/4; ' input
 
 
@@ -750,10 +750,10 @@ $((exp))  符号C语言规范的表达式
 
 
 
-################## 字符串相关的操作：################## 
+################## 字符串相关的操作：##################
 
 ${#string}
-expr length "$string" 
+expr length "$string"
     求长度
 
 expr match $string $substring
@@ -783,10 +783,10 @@ expr $string  : '.*\($substring\)'
 
 
 删除子串：
-${var%pattern}    右短
-${var%%pattern}   右长
-${var#pattern}    左短
-${var##pattern}   左长
+${var%.*}    右短
+${var%%.*}   右长
+${var#*.}    左短
+${var##*.}   左长
 
 
 替换：
@@ -794,7 +794,7 @@ ${string/find/replace}      仅替换一次
 ${string//find/replace}     替换所有
 
 ${string/#find/replace}     替换开头处的字符串
-${string/%find/replace}     替换结尾处的字符串    
+${string/%find/replace}     替换结尾处的字符串
     string=abcdef
     ${string/#a*c/111}      111def
     ${string/#de*/111}      abc111
@@ -803,7 +803,7 @@ ${string/%find/replace}     替换结尾处的字符串
 变量的间接引用
 b=100
 a=b
-eval tmp=\$$a 或者 tmp=${!a} 
+eval tmp=\$$a 或者 tmp=${!a}
 
 
 expr 支持 | &  < > ~!  + - * / 等数学运算符
@@ -846,7 +846,7 @@ wait 等待所有字进程，因为没有默认参数
 c1 && c2 && c3 ..
 依次执行，直到某个返回FALSE为止
 
-c1 || c2 || c3 
+c1 || c2 || c3
 
 
 数组
@@ -879,7 +879,7 @@ ${a[*]#M*a}   将带有M*a的字串做处理，删除匹配的子串，但不是
 ${a[*]##M*a}  将带有M*a的字串做处理，删除匹配的子串，但不是删除整个串哦， 最长删除
 
 ${a[*]/M*a/replacement}     替换         一样的道理
-${a[*]//M*a/replacement}    替换 最长    
+${a[*]//M*a/replacement}    替换 最长
 
 
 
@@ -891,8 +891,8 @@ let 中不需要使用$符号
 
 
 错误，输出，都重定向
-2 > &1 
-&>  
+2 > &1
+&>
 
 数组长度
 ${#a[@]}
@@ -913,8 +913,8 @@ bash -x script.sh
 文件权限制  w r x
 执行位特殊权限：
     拥有者   setuid
-    同组     setgid 
-    粘滞位: 目录还有一个权限，在其它位的x, 表示只有目录的创建者才有限制删除文件。tT  
+    同组     setgid
+    粘滞位: 目录还有一个权限，在其它位的x, 表示只有目录的创建者才有限制删除文件。tT
 
     chmod chown  ... -R 以递归执行下去
     chown user:group  file   同时更改了组
@@ -922,12 +922,12 @@ bash -x script.sh
 
 
 linux文件系统第二属性
-lsattr chattr 
+lsattr chattr
 
 
 touch的作用：
     touch file 用于创建文件
-    touch -a file 修改文件访问时间 
+    touch -a file 修改文件访问时间
     touch -m file 修改文件内容更改时间
     touch -d "timeformat" ... 还可以指定其它时间
 
@@ -962,7 +962,7 @@ unix文件有三个时间：但是无创建时间
 变化时间  文件元数据（权限）修改时间按
 stat filename 查看文件的各个时间
 
-find . -type f -name "*.txt" -print0 | xargs -0 wc -l 
+find . -type f -name "*.txt" -print0 | xargs -0 wc -l
 这条命令，-print0  xars -0 使用都是null结束符
 
 这种情况很有可能
@@ -970,7 +970,7 @@ xargs -I {}  s.sh -p {} -i    # -I 用于命名，然后指定使用地方
 
 可以将输出导出给子shell，这是一个好方法
 cat file.txt | ( while read arg; do eho $arg; done)
-cat file.txt | xargs 
+cat file.txt | xargs
 
 
 
@@ -1045,7 +1045,7 @@ ss -lpoten | grep 1003 | grep GameServer
 
 
 # 会对某运行中的程序产生dump文件
-pcore 
+pcore
 
 
 关于时间戳转换的问题：
@@ -1057,7 +1057,7 @@ date -d @1521535216                 # 输出: Tue Mar 20 16:40:16 CST 2018
 
 
 两台机子无密码登录脚本回忆：
-    A是踏板机   B为其它机器 
+    A是踏板机   B为其它机器
 
 scp install.sh root@B:~/
 ssh root@B "
