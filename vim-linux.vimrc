@@ -145,7 +145,7 @@ nnoremap <Leader>m A -- by Preboy.ZHANG at <Esc>"=strftime("%c")<CR>p
 " inoremap <C-D> -- by Preboy.ZHANG at <C-R>=strftime("%c")<CR>
 
 " 去掉我不想要的map
-unmap <C-Y>
+" unmap <C-Y>
 
 
 " convenience for modify config file & unhighlight.

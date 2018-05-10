@@ -1,0 +1,8 @@
+
+条件 or
+$or: [{svr:"game15"}, {svr:"game16"} ],
+
+
+// 设置mongdob shell 中find显示多少行
+DBQuery.shellBatchSize=99999
+
