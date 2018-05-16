@@ -1,47 +1,121 @@
 
-���Դ�ļ���ͬ����һ������ֻҪ����ʱpackageָ���İ���һ����
-һ������Ӧ����һ��*.a�ļ������ɵ��ļ��������ǰ���+.a��ɣ�Ӧ����Ŀ¼��+.a���
-go install ������ �����Ӧ�Ĳ����ǰ���������·��������
-import ������ ����ʹ�õ�Ҳ���ǰ�����Ҳ��·����
-����������.SayHello() ����ʹ�õĲ��ǰ�����
-ָ��������·�����ʹ����˴�Ŀ¼��Ψһ�İ���������������Ĭ�Ͼͻ�ȥ���ɻ���ʹ������������Ҫ�����ֶ�ָ����
-һ��Ŀ¼�¾�ֻ����һ��������
-���ڵ�����Դ��ĵ���������������������ʱ����ʵʹ�õĲ��������ǹ���Ŀ¼�µ�.a�ļ��������Ը�����Դ����������ʱ�ļ����е�.a�ļ�
-���ڵ���û��Դ��ĵ����������������ʱ���벻���ܳɹ�����ô��ʱĿ¼�¾Ͳ�������.a�ļ��������������ʱ��ֻ�����ӵ�����Ŀ¼�µ�.a�ļ�
-���ڱ�׼�⣬�������޸���Դ���룬ֻҪ�����±���GoԴ�룬��ô����ʱʹ�õľͻ����Ѿ�����õ�*.a�ļ�
-������������ģʽ������ģʽ������ģʽ�����ģʽ
+多个源文件可同属于一个包，只要声明时package指定的包名一样；
+一个包对应生成一个*.a文件，生成的文件名并不是包名+.a组成，应该是目录名+.a组成
+go install ××× 这里对应的并不是包名，而是路径名！！
+import ××× 这里使用的也不是包名，也是路径名
+×××××.SayHello() 这里使用的才是包名！
+指定×××路径名就代表了此目录下唯一的包，编译器连接器默认就会去生成或者使用它，而不需要我们手动指明！
+一个目录下就只能有一个包存在
+对于调用有源码的第三方包，连接器在连接时，其实使用的并不是我们工作目录下的.a文件，而是以该最新源码编译出的临时文件夹中的.a文件
+对于调用没有源码的第三方包，上面的临时编译不可能成功，那么临时目录下就不可能有.a文件，所以最后链接时就只能链接到工作目录下的.a文件
+对于标准库，即便是修改了源代码，只要不重新编译Go源码，那么链接时使用的就还是已经编译好的*.a文件
+包导入有三种模式：正常模式、别名模式、简便模式
 
 
-���� GOPATH
+设置 GOPATH
 
-�ȴ�go env �п��� : set GOPATH=xxx
-Ȼ��  ճ��������̨ set GOPATH=xxx;newpath    # �����Ϳ���go build go install��
-
-
-
-��������ϸ�ڣ�
-������Ϊָ��ʱ���÷���ֻ������ָ����                �������Ҫ���÷������ӿ����͵�ֵֻ����ָ��
-������Ϊ����ʱ���÷��������ڶ����Լ�ָ����          �������Ҫ���÷�����������͵�ֵ����ʹָ�롢����
+先从go env 中拷贝 : set GOPATH=xxx
+然后  粘贴到控制台 set GOPATH=xxx;newpath    # 这样就可以go build go install了
 
 
 
-godoc fmt �鿴fmt���İ����ĵ�
+方法定义细节：
+接受者为指针时，该方法只定义在指针上                借口类型要调用方法：接口类型的值只能是指针
+接受者为对象时，该方法定义在对象以及指针上          借口类型要调用方法：借口类型的值可以使指针、对象
 
 
-GOPATH�������ö��Ŀ¼
+
+godoc fmt 查看fmt包的帮助文档
 
 
-���� ���� ��ʼ����
+GOPATH可以设置多个目录
+
+
+数组 声明 初始化：
 var arr [5] int
 var arr [...] int { 1,2,3,4,5}
 var arr [4] int { 1:10, 2:20}
 
 
 
-����Ŀ¼��ִ�м��ɶ�̬����GOPATH:
+任意目录下执行即可动态设置GOPATH:
 
-һ��windows��
-    ��bat.study 'Windows�µ������ļ�'
+一、windows：
+    见bat.study 'Windows下的配置文件'
 
-����linux��.bashrc�м��룺
+二、linux在.bashrc中加入：
 alias gopath='export GOPATH=$(pwd)'
+
+
+编译可gdb调试版本
+build.sh修改
+go install -gcflags "-N -l" GameServer
+
+
+
+可以这样初始化结构体：
+xx := &XX{
+		true,
+		"sss",
+		3,
+	}
+
+
+// 未使用的变量
+var x bool
+_ = x
+
+
+// 防止xx,你懂的
+for _, x := range xx {
+    x := x
+    ...    
+}
+
+
+// 支持任意参数的函数做为数组、map的项
+make([]func(...int), 0, 10)
+
+// 解析json时可以这样，interface的好运用
+map[interface]interface
+
+
+
+判断channel是否close
+i, ok := <- ch 
+if ok { 
+    println(i) 
+} else { 
+    println("channel closed") 
+} 
+
+for循环读取channel
+for i := range ch { // ch关闭时，for循环会自动结束 
+    println(i) 
+} 
+防止读取超时
+select { 
+    case <- time.After(time.Second*2): 
+        println("read channel timeout") 
+    case i := <- ch: 
+        println(i) 
+} 
+
+防止写入超时
+// 其实和读取超时很像 
+select { 
+    case <- time.After(time.Second *2): 
+        println("write channel timeout") 
+    case ch <- "hello": 
+        println("write ok") 
+}
+
+
+dlv调试：
+    
+    在 p7/bin/目录下，设置GOPATH为上层目录
+    dlv debug game --output game
+
+
+
+cond.Wait()     // 在这句话里，其它已经release了

@@ -6,3 +6,70 @@ $or: [{svr:"game15"}, {svr:"game16"} ],
 // 设置mongdob shell 中find显示多少行
 DBQuery.shellBatchSize=99999
 
+
+mongodb更新方法：
+find之后，拷贝到文本编辑器，然后修改数据，再update上去，注意update的filter
+
+修改子表：
+db.getCollection('union').update({_id:16777222}, {$set:{"union_boss.buff_idx":24}})
+
+// 显示过滤
+db.castle.find({}, {_id:1, user_id:1, "tile.country_id":1})
+
+查找日志：秘银火枪图纸  通过扫荡
+db.stat_bld.find({"action":"mould_got", "uid":"u6-1205732", "src":"msg.BabelChapterSweepRequest", "m_id":7000406}).pretty()
+db.user.find({"server_name" : "game1", "bot":{$eq:null}}, {"name":1, "sdk":1})
+
+
+---------------------------------- 一个例子 ----------------------------------
+// lxq 查询
+db.stat_pay.aggregate(
+[
+        {
+		$match : {
+                    amt: {$gt: 0},
+                    $or: [{svr:"game15"}, {svr:"game17"}, {svr:"game18"}, {svr:"game19"}, {svr:"game20"}, {svr:"game21"}, {svr:"game22"}, {svr:"game23"}, {svr:"game24"}, {svr:"game25"}, {svr:"game26"}, {svr:"game27"}, {svr:"game28"}, {svr:"game29"}, {svr:"game30"}],
+                },
+	},
+
+	{
+	    $group: {
+		_id:      "$userid",
+		svr:      {$last: "$svr"},
+		name:     {$last: "$name"},
+		vip:      {$last: "$vip"},
+		create_t: {$last: "$create_t"},
+		curr:     {$last: "$currency"},
+		pay_t:    {$max:  "$ts"},
+		amount:   {$sum:  "$amt"},
+		count:    {$sum:  "$cnt"},
+	    },
+	},
+
+	{
+		$sort: {
+			amount: -1,
+			pay_t:  -1,
+			count:  1,
+		},
+	},
+
+	{
+	    $project: {
+		_id:    1,
+		svr:    1,
+		name:   1,
+		vip:    1,
+		amount: 1,
+		count:  1,
+		curr:   1,
+		create_t: 1,
+		pay_t: 1,
+	    },
+	},
+]);
+
+----------------------------------
+
+从文件中恢复文件到mongodb
+mongoimport --db skyc --collection giftinfo < t.json
