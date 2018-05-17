@@ -53,7 +53,7 @@ go install -gcflags "-N -l" GameServer
 
 
 
-可以这样初始化结构体：
+可以这样初始化结构体：顺序必须与结构体中的保持一致
 xx := &XX{
 		true,
 		"sss",
@@ -69,7 +69,7 @@ _ = x
 // 防止xx,你懂的
 for _, x := range xx {
     x := x
-    ...    
+    ...
 }
 
 
@@ -82,40 +82,47 @@ map[interface]interface
 
 
 判断channel是否close
-i, ok := <- ch 
-if ok { 
-    println(i) 
-} else { 
-    println("channel closed") 
-} 
+i, ok := <- ch
+if ok {
+    println(i)
+} else {
+    println("channel closed")
+}
 
 for循环读取channel
-for i := range ch { // ch关闭时，for循环会自动结束 
-    println(i) 
-} 
+for i := range ch { // ch关闭时，for循环会自动结束
+    println(i)
+}
 防止读取超时
-select { 
-    case <- time.After(time.Second*2): 
-        println("read channel timeout") 
-    case i := <- ch: 
-        println(i) 
-} 
+select {
+    case <- time.After(time.Second*2):
+        println("read channel timeout")
+    case i := <- ch:
+        println(i)
+}
 
 防止写入超时
-// 其实和读取超时很像 
-select { 
-    case <- time.After(time.Second *2): 
-        println("write channel timeout") 
-    case ch <- "hello": 
-        println("write ok") 
+// 其实和读取超时很像
+select {
+    case <- time.After(time.Second *2):
+        println("write channel timeout")
+    case ch <- "hello":
+        println("write ok")
 }
 
 
 dlv调试：
-    
+
     在 p7/bin/目录下，设置GOPATH为上层目录
     dlv debug game --output game
+    dlv debug game --output game -- -config config.json -server game1 -log game1.log    // 传递参数 '--'之后的参数传递给程序
 
 
+cond.L.lock()
+cond.Wait()     // 程序会停在Wait上，此时已经释放了mutex，wait结束之后已会获得mutex
+...             // 所以在此间的语句具有唯一性
+cond.L.Unlock()
 
-cond.Wait()     // 在这句话里，其它已经release了
+
+map 在填充时不能为nil
+而slice则可以
