@@ -1068,3 +1068,7 @@ ssh root@B "
     ./install.sh
     ssh-copy-id -i ~/.ssh/id_rsa.pub  game@B
 "
+
+工具
+======================
+utrace：用于分析C++程序性能
