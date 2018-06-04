@@ -606,6 +606,10 @@ app.route(path)     // 链式处理的方法，  返回的对象可以xxx 链式
     下面继续使用  METHOD处理请求
 
 
+app.get("zcg/:id")
+    访问模式    http://localhost/zcg/ff
+    则 req.params.id = 'ff'
+
 
 ============================================ mozilla.org ============================================
 
