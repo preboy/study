@@ -196,7 +196,7 @@ git push origin --tags      # 推送所有的标签
 git branch                          # 查看本地分支
 git branch -r                       # 查看远程分支
 git branch -a                       # 查看远程、本地分支
-git branch -v                       # 
+git branch -v                       #
 git branch -vv                      # 查看本地分支与远程分支的联系情况
 
 git fetch origin dev                # 命令来把远程分支拉到本地
@@ -233,3 +233,14 @@ git log -m -commited    -- 显示从远古到 commited 的所有提示，即不�
 git show commited       -- 只显示commited本次的提交
 git log --author=evil   -- 过虑提交者
 
+
+
+=========== (windows:  c:\user\preboy\.gitconfig) ===========
+[user]
+	name = preboy.sl
+	email = preboy@126.com
+[core]
+	autocrlf = false
+	safecrlf = true
+[credential]
+	helper = wincred
