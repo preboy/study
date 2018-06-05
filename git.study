@@ -244,3 +244,13 @@ git log --author=evil   -- 过虑提交者
 	safecrlf = true
 [credential]
 	helper = wincred
+
+// 右键 Setting -> Git -> Credntial:
+    credential helper:  wincard
+
+
+=========== 添加密钥
+// 右键 Setting -> Git -> Remote:
+    'origin' in list:
+        set 'Putty Key' file
+
