@@ -1072,3 +1072,30 @@ ssh root@B "
 工具
 ======================
 utrace：用于分析C++程序性能
+
+
+===================== 在另一台机器上执行命令时需要 tty的问题 =====================
+
+执行这样的命令：无法成功    sudo 必须要tty
+ssh game@10.135.55.206  "sudo ls /"
+    ERROR: sudo: sorry, you must have a tty to run sudo
+
+加个参数-t就可以了
+ssh -t game@10.135.55.206  "sudo ls /"
+    OK: Connection to 10.135.55.206 closed.
+
+putty也有一个-t参数，类似的功能，用在pworld的build.bat中
+
+
+
+===================== <<< 输入内容
+加入a.sh在执行过程中需要输入
+read "Please Enter yes"
+则该脚本无法自动完成
+
+如何才能完全脚本化呢？
+
+./a.sh  <<< 要输入的内容
+这样就可以执行下去了
+
+
