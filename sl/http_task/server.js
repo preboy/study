@@ -1,8 +1,16 @@
+#!/usr/bin/node
+
+let fs = require('fs');
 let express = require('express');
+let bodyParser = require("body-parser");
+
 let app = express();
-const fs = require('fs');
 
 let commands = []
+let ip_str=""
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/task', function(req, res) {
@@ -32,6 +40,22 @@ app.get('/push', function(req, res) {
 
 app.get('/list', function(req, res) {
     res.json(commands);
+});
+
+// IP 地址自动更新
+app.post('/ip', function(req, res) {
+    let body = req.body;
+    if (body.sign != "zhang") {
+        res.end("fuck");
+        return;
+    }
+
+    ip_str = req.connection.remoteAddress;
+    res.end("ok");
+});
+
+app.get('/ip', function(req, res) {
+    res.end(ip_str);
 });
 
 var server = app.listen(3000, function() {

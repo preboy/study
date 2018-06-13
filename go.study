@@ -126,3 +126,6 @@ cond.L.Unlock()
 
 map 在填充时不能为nil
 而slice则可以
+
+
+空的slice、map是可以for-range的， 不会崩溃
