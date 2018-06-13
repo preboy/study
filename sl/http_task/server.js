@@ -1,17 +1,45 @@
 #!/usr/bin/node
 
-let fs = require('fs');
-let express = require('express');
+let express    = require('express');
+var ex_session = require('express-session');
+let app        = express();
 let bodyParser = require("body-parser");
+var path       = require('path');
+let fs         = require('fs');
+var morgan     = require('morgan');
 
-let app = express();
 
 let commands = []
-let ip_str=""
+let ip_str="none"
 
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(morgan('common', {
+    skip: function(req, res) { return res.statusCode < 400; },
+}));
+
+
+// static
+app.use(express.static(path.join(__dirname, 'public')));
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+// session
+app.use(ex_session({
+    secret: 'fy admin key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 3 * 3600 * 1000,
+    }
+}));
+
+
+// ----------------------------------------------------------------
 
 app.get('/task', function(req, res) {
     let str = commands.pop();
@@ -57,6 +85,13 @@ app.post('/ip', function(req, res) {
 app.get('/ip', function(req, res) {
     res.end(ip_str);
 });
+
+
+// view
+app.get('/ipset', function(req, res) {
+    res.render('ipset-view');
+});
+
 
 var server = app.listen(3000, function() {
     var host = server.address().address;

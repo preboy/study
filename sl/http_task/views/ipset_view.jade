@@ -1,0 +1,28 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+
+        title 更新服务器IP地址
+
+        // bootstrap & jquery
+        // link(href='/dist/bootstrap/css/bootstrap.min.css', rel='stylesheet')
+        // script(src='/dist/jquery/jquery-2.2.3.min.js')
+        // script(src='/dist/bootstrap/js/bootstrap.min.js')
+
+        // sign in
+        // link(href='/css/signin.css', rel='stylesheet')
+
+    body
+        .container
+            form(method='post' action='/ip')
+                h2 设置IP地址
+
+                // input.form-control(type='text',     name='acct', placeholder='账号', required='', autofocus='')
+                // input.form-control(type='password', name='pwd',  placeholder='密码', required='')
+
+                input(type='text', name='sign',  placeholder='zhang', value='zhang', required='')
+
+                button(type='submit') 设置
+
