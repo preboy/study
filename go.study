@@ -129,3 +129,4 @@ map 在填充时不能为nil
 
 
 空的slice、map是可以for-range的， 不会崩溃
+空的map仍然可以索引，而不会崩溃
