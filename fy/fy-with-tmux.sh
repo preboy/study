@@ -60,12 +60,24 @@ _start()
         tmux new-window -n $svr_name -t $session_name "$svr_exec"
         sleep 2
 
-        if [ -d "/proc/$!" ]; then
-            echo $! > $svr_name.pid
-            echo -e "\t\t\033[1;32m[OK]\033[0m"
-        else
+        pid=
+        cnt=0
+        while [ ${#pid} -eq 0 ]; do
+            sleep 1
+            pid=$(ps -ef|grep "$svr_exec"|grep -v grep|awk '{print $2}')
+            echo $pid > $svr_name.pid
+            cnt=$((cnt + 1))
+            if [ $cnt -gt 4 ]; then
+                break
+            fi
+        done
+
+        if [ ${#pid} -eq 0 ]; then
             echo -e "\t\t\033[0;31m[Failed]\033[0m"
+        else
+            echo -e "\t\t\033[1;32m[OK]\033[0m"
         fi
+
      done
 }
 
