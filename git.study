@@ -232,6 +232,7 @@ git log -p -n           -- 显示最近n次的提交
 git log -m -commited    -- 显示从远古到 commited 的所有提示，即不显示 commited以后的提交
 git show commited       -- 只显示commited本次的提交
 git log --author=evil   -- 过虑提交者
+git log --name-status   -- 只列出文件名
 
 
 
