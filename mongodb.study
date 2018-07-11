@@ -73,3 +73,41 @@ db.stat_pay.aggregate(
 
 从文件中恢复文件到mongodb
 mongoimport --db skyc --collection giftinfo < t.json
+
+
+
+
+================================
+CentOS 7 下配置文件的修改：
+
+服务名是: mongod    #这个名字，搞得人猜了很久
+
+/etc/mongodb.conf
+
+[1]
+...
+# Where and how to store data.
+storage:
+  dbPath: /data/mongo-data          # 此处修改数据存在位置    先建好此目录，前chowm mongod:mongod   /data/mongo-data 
+  journal:
+...
+
+
+[2]
+...
+security:                       # 这一行要打开：且添加下一行
+  authorization: enabled        
+...    
+ 注意：
+    在修改此处之前，登录进去，建立用户db.createUser({user:"root", pwd:"123", roles:["root"]})
+    添加用户之后再修改配置文件，重启服务器
+    测试
+
+[3]
+  wiredTiger:
+    engineConfig:       # 此处要修改最大大小，防止占用过多（自己的机子上安装mongodb的话）
+      cacheSizeGB: 1
+
+
+[其它]
+    修改 IP、端口
