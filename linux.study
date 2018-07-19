@@ -402,6 +402,13 @@ xargs:      将标准输入的东西，转换成命令行参数u
 
     如果xargs 带参数，则表示执行
 
+    -P 这个参数有作用：允许最多同时运行多个任务，
+        龙哥用他替换了之前的 "for() ... &"实现多任务 
+        还有一个外部程序可安装  parallel(CentOS 7)
+
+        输入：  seq 20 | xargs -P 4 -I A sleep A     查看    ps ux | grep sleep
+
+
     # 可以这样写：
     cat a.txt | xargs -I {} ls -a {}  #表示分开执行
 
