@@ -1,14 +1,14 @@
 
 CASE-1
-php ��ʹ�� mysql_pconnect(...) ʧ�ܣ�����2003  Can't connect to Mysql on '...'
-��Ҫ��shell��ִ�� setsebool httpd_can_network_connect 1
-���ܻ������õ����⣬��Ҫ���Ķ��������
-������selinux��
+php 中使用 mysql_pconnect(...) 失败，返回2003  Can't connect to Mysql on '...'
+需要在shell下执行 setsebool httpd_can_network_connect 1
+可能还是设置的问题，需要在哪儿搞个设置
+好像是selinux的
 
 
 
 CASE-2
-// lua���������⣬��̨��BIG5�ַ��У�����\(0x5C)��Ҫ�����⴦�����������޸�֮��lua��print������Ч��
+// lua本身的问题，在台湾BIG5字符中，遇到\(0x5C)需要做特殊处理，做如下修改之后，lua的print不再有效果
 static void read_string (LexState *ls, int del, SemInfo *seminfo) {
   save_and_next(ls);  /* keep delimiter (for error messages) */
   while (ls->current != del) {
@@ -81,26 +81,75 @@ static void read_string (LexState *ls, int del, SemInfo *seminfo) {
 
 
 
-win7 Զ������������������
-���� gpedit.msc
-���������	����ģ��	ϵͳ	interͨ�Ź�����  ���Ҳ�ѡ�� ����internetͨ�� ���ã���һ�����������
+win7 远程桌面连接慢的问题
+运行 gpedit.msc
+计算机配置	管理模板	系统	inter通信管理，  在右侧选择 限制internet通信 启用，（一般局域网哈）
 
 
-PHP����REDIS
-��centos 6 �°�װ��php-redis
-�� /etc/php.ini ����extension=redis.so  
+PHP配置REDIS
+在centos 6 下安装好php-redis
+在 /etc/php.ini 加入extension=redis.so  
 sudo service php-fpm restart
-�鿴phpinfo();���Ƿ����redis
+查看phpinfo();中是否包含redis
 
 
 
 
-����PUTTY���õķ���
-1. ��ʼ->����(Win+R)->regedit
-2. �ҵ� HKEY_CURRENT_USER\Software\SimonTatham
-3. �� SimonTatham ����ڵ��ϵ���Ҽ���ѡ�񵼳������档
-�������ָ�������Ϣ��ֻ��Ҫ˫�����������ļ�������ע�����Ϣ����
+备份PUTTY配置的方法
+1. 开始->运行(Win+R)->regedit
+2. 找到 HKEY_CURRENT_USER\Software\SimonTatham
+3. 在 SimonTatham 这个节点上点击右键，选择导出，保存。
+如果你想恢复配置信息，只需要双击保存的这个文件，导入注册表信息即可
 
 
-�����վ�����json��ȷ��
+这个网站，检测json正确性
 https://jsonlint.com/
+
+
+
+
+
+
+====================================================================================
+				Hole in working
+====================================================================================
+
+增加明日可获得奖励预览
+奖励易毁掉玩法<刘安>
+智能推荐助手：给出详情，引导充值
+战斗：引导玩家看细节(注意英雄个性，增加培养兴趣)
+每日迅速完成任务(今天我很忙，扫荡:获得基本奖励)、正常速度(有获得奖励暴率)
+增加《楚留香》的每日剧情，吸引玩家留下来
+不要让材料过剩
+
+
+活动预热时间（活动还未正式开启），玩家就充了值，却未算计到了活动里面，这是个设计上的自找麻烦
+
+
+p3问题：
+	活动配置多条，第一项没有完成，则无法完成后面的
+	从配置表读取项，然后注册成就事件，造成配置更新之后未注册新的配置
+
+
+风云玩家：
+	喜欢打怪暴装备，不单调
+
+
+cocos2dx找不到资源，容易造成程序崩溃，搞死人
+
+p7问题：
+	奖励配置未好好检测，第5名比第3名要好
+		应当形成一整套流程规范(策划不要老打游戏，又不做测试)
+
+
+
+interface{} 的类型一定要注意,   一定要使用如下格式: v, ok := val.(int32) 
+
+panic要及时通知开发人员：需要一种机制
+
+panic的伤害降到最低化，事件机制
+
+
+程序崩溃之后要看有什么其它影响
+	不执行的代码会怎么办？  
+
