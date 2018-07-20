@@ -24,6 +24,9 @@
         -r 表示递归搜索
         -w 精确匹配单词
 
+        --include=*.go  只搜索特写的文件  etc: grep -r -w func . --include=*.go
+
+
 
 sed [opt] 'sed command'  inputfile
 sed [opt] -f sed_file inputfile
