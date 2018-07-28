@@ -1,0 +1,4 @@
+
+putty日志设置：
+
+putty-&H-&Y&M&D-&T.log
