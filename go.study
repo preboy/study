@@ -130,3 +130,12 @@ map 在填充时不能为nil
 
 空的slice、map是可以for-range的， 不会崩溃
 空的map仍然可以索引，而不会崩溃
+
+
+
+go debug:
+    sudo yum install graphviz
+    go tool pprof prof
+        然后输入svg格式，生产文件，下载，用浏览器打开
+
+
