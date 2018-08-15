@@ -111,3 +111,12 @@ security:                       # 这一行要打开：且添加下一行
 
 [其它]
     修改 IP、端口
+
+
+
+导出表：
+mongodump -h 10.66.234.75 -u mongouser -p 'cfC1i21c43' --authenticationDatabase=admin -d mju -c user -q '{"base.svr": {$in: ["game1"]}, "_id":"u1-1000013"}' --gzip -o db_u1
+
+
+导入表：
+mongorestore  -h 192.168.0.200  --port 28001  --gzip   --authenticationDatabase admin   -d zcg_mju   db_u1/mju/
