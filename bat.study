@@ -1,10 +1,10 @@
 
-rem ½øÈëµ½ÅÌ·û¸ùÄ¿Â¼
+rem è¿›å…¥åˆ°ç›˜ç¬¦æ ¹ç›®å½•
 cd %~dp0
 %~d0
 
 
-// Õâ¸ö°ÔµÀ°¡
+// è¿™ä¸ªéœ¸é“å•Š
 for /L %%a in (1,1,100) do start cmd /c telnet localhost 1234
 
 
@@ -14,11 +14,11 @@ for /f "tokens=1,2,3,4,5" %%i in (%%s) do (
     echo %%k
     echo %%l
     echo %%m
-ÔÚtokensÖĞÊ¹ÓÃÁË¼¸¸öÊı×Ö£¬Õâ¸öµØ·½¾Í¿ÉÒÔÊ¹ÓÃ×Ô%%j¿ªÊ¼µÄ±äÁ¿£¬ÕâÒ»Èº±äÁ¿¶¼ÊÇ×Ô¶¯ÉùÃ÷µÄ
-%%i ÊÇÊÖ¶¯ÉùÃ÷µÄ
+åœ¨tokensä¸­ä½¿ç”¨äº†å‡ ä¸ªæ•°å­—ï¼Œè¿™ä¸ªåœ°æ–¹å°±å¯ä»¥ä½¿ç”¨è‡ª%%jå¼€å§‹çš„å˜é‡ï¼Œè¿™ä¸€ç¾¤å˜é‡éƒ½æ˜¯è‡ªåŠ¨å£°æ˜çš„
+%%i æ˜¯æ‰‹åŠ¨å£°æ˜çš„
 )
 
-ÀıÈç£º
+ä¾‹å¦‚ï¼š
 set servers="1 log logserver.exe logserver.conf  111" "1 data dataserver.exe dataserver.conf 222"
 
  for %%s in (%servers%) do (
@@ -37,25 +37,25 @@ if not "%1"=="" set HOST=%1
 
 
 
-ÔÚwindowsÅú´¦ÀíÎÄ¼şÖĞ£¬
-set /p a="ÇëÊäÈë²ÎÊı"
-½á¹ûÖ®ºó£¬»·¾³±äÁ¿a=ËùÊäÈëµÄÖµ
+åœ¨windowsæ‰¹å¤„ç†æ–‡ä»¶ä¸­ï¼Œ
+set /p a="è¯·è¾“å…¥å‚æ•°"
+ç»“æœä¹‹åï¼Œç¯å¢ƒå˜é‡a=æ‰€è¾“å…¥çš„å€¼
 
 start "title" /MIN  ....
-XCOPY /D ....   Ö»¸´ÖÆ¸üĞÂµÄÎÄ¼ş
+XCOPY /D ....   åªå¤åˆ¶æ›´æ–°çš„æ–‡ä»¶
 
 
-rem: ¼ÓÔØÍøÂçÓ²ÅÌ
+rem: åŠ è½½ç½‘ç»œç¡¬ç›˜
 net use z: /del
 net use z:  \\172.31.244.4\d$\zcg abc,.123 /user:administrator
 
 
-±éÀúÄ¿Â¼ÏÂµÄÎÄ¼ş²¢²Ù×÷
+éå†ç›®å½•ä¸‹çš„æ–‡ä»¶å¹¶æ“ä½œ
 forfiles /M *.proto /C "cmd /c protoc --gogofaster_out=..\msg @file"
 
 
 
-WindowsÏÂµÄÅäÖÃÎÄ¼şÄÚÈİ£º(¸ÃÎÄ¼ş±£´æµ½C:\Windows\gopath.bat)
+Windowsä¸‹çš„é…ç½®æ–‡ä»¶å†…å®¹ï¼š(è¯¥æ–‡ä»¶ä¿å­˜åˆ°C:\Windows\gopath.bat)
 ==========================================================================================
 
 @echo off
@@ -75,3 +75,14 @@ doskey gb=git branch -vv
 doskey gd=git diff
 doskey gl=git log  --graph
 doskey gs=git status
+
+
+
+Windowsä¸‹çš„é…ç½®æ–‡ä»¶å†…å®¹ï¼š(è¯¥æ–‡ä»¶ä¿å­˜åˆ°C:\Windows\gotest.bat)
+==========================================================================================
+@echo off
+
+cd /d E:\WorkSpace\gotest
+
+set GOPATH=%cd%
+echo GOPATH=%GOPATH%
