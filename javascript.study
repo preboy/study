@@ -30,7 +30,7 @@ var num = 10;  num.toString(2);	// 显示二进制
 
 Object的方法，属性：
 	constructor
-	hawOwnProperty(propertyName)	用于检测属性是否在对象实例中，（而不是原型中）
+	hasOwnProperty(propertyName)	用于检测属性是否在对象实例中，（而不是原型中）
 	isPrototypeOf(object)
 	propertyIsEnumberable(propertyname)
 	toLocaleString()
@@ -114,7 +114,7 @@ prototype
 每个函数都包括两个非继承而来的方法：apply  call	,   在特定的作用域中调用函数，相当于设置了this值。
 第一个参数，代表this
 funcname.call(o or this, other params...)
-这样，对象与方法就不需要有任务耦合联系了
+这样，对象与方法就不需要有任何关系了
 
 对象.函数() 将改变函数中this为对象，但：
 var x = funcname.bind(o)   将o绑定生成新的绑定函数，绑定函数中的this永久(不可再次绑定)的被绑定到o
@@ -149,7 +149,7 @@ string的方法：
 
 3.125e7 = 31250000
 
-javascript中字符串用" or '  来引用， 他们之间没有任何区别，不想其他的语言
+javascript中字符串用" or '  来引用， 他们之间没有任何区别，不像其他的语言
 字符串是16位的unicode编码，不是ansi编码
 
 
@@ -460,7 +460,7 @@ for...in循环和Object.keys方法的区别:
 
 ================ ECMAScript 6 入门 =========================
 
-var命令会发生”变量提升“现象     即脚本开始运行时，变量已经存在
+var命令会发生"变量提升"现象     即脚本开始运行时，变量已经存在
 
 暂时性死区：
 只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。

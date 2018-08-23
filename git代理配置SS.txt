@@ -1,4 +1,4 @@
-git´úÀíÅäÖÃss
+gitä»£ç†é…ç½®ss
 
 C:\Users\Preboy>more .gitconfig
 [user]
