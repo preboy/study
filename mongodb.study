@@ -120,3 +120,10 @@ mongodump -h 10.66.234.75 -u mongouser -p 'cfC1i21c43' --authenticationDatabase=
 
 导入表：
 mongorestore  -h 192.168.0.200  --port 28001  --gzip   --authenticationDatabase admin   -d zcg_mju   db_u1/mju/
+
+
+
+golang 使用 mongodb存储的时候，
+如果是map，则map的key只能是string,  且 key中不能包含:
+    Windows下：/ . " $ * < > : | ?
+    Linux下：  / . " $

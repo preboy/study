@@ -2,6 +2,7 @@ set nocompatible
 runtime macros/matchit.vim
 source $VIMRUNTIME/vimrc_example.vim
 
+
 set diffexpr=MyDiff()
 function! MyDiff()
   let opt = '-a --binary '
@@ -38,6 +39,7 @@ endfunction
 "            Edit by user
 " --------------------------------------------------------------
 
+
 " Change Tab into Space
 set expandtab
 set tabstop=4
@@ -53,20 +55,21 @@ set langmenu=en_US
 language message en_US          " for English report or tips
 
 
-set fileencodings=ucs-bom,utf-8,cp936,default,latin1
-" set fileencoding=utf-8        " Default file encoding : UTF-8
+set fileencodings=cp936,ucs-bom,utf-8,latin1
+set fileencoding=utf-8        " Default file encoding : UTF-8
 set fileformats=unix,dos,mac
 set fileformat=unix             " Default file format : UNIX
+
 syntax on                       " Open Syntax Highlighting
 colorscheme desert              " Syntax Coloring
 set nobackup                    " No backup file
 set noundofile                  " No undo file
-set guifont=Consolas:h14        " Default font information
-au GUIEnter * simalt ~x         " Maximize window
+" set guifont=Consolas:h14        " Default font information
+" au GUIEnter * simalt ~x         " Maximize window
 set number                      " Display line number
 set laststatus=2                " Display task bar
 set autoindent                  " Smart indenting
-set cursorline                  " Highlight line cursor
+" set cursorline                  " Highlight line cursor
 set tags=tags;
 set autochdir                   " 自动切换到当前编辑的文件目录
 set autowrite                   " 自动存档(避免切换操作的时候讨厌的提示)
@@ -134,11 +137,7 @@ nnoremap <Leader>e :<C-U>!explorer %:p:h <CR>
 " :noh
 nnoremap <Leader>a :<C-U>noh<CR>
 
-" svn log dialog
-nnoremap <Leader>l :<C-U>!tortoiseproc /command:log /path:%<CR>
-nnoremap <Leader>f :<C-U>!tortoiseproc /command:diff /path:%<CR>
-nnoremap <Leader>u :<C-U>silent !svn update<CR>                     " nnoremap <Leader>u :<C-U>!tortoiseproc /command:update /path:%<CR>
-nnoremap <Leader>c :<C-U>!tortoiseproc /command:commit /path:%<CR>
+
 
 " insert time
 nnoremap <Leader>m A -- by Preboy.ZHANG at <Esc>"=strftime("%c")<CR>p
