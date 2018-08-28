@@ -699,3 +699,27 @@ in运算符：
 关于 void
 
 void function(a,b){}() 类似于 (function(a,b){})()
+
+
+
+
+// =====================================================================
+//                     nodejs reload js & json module
+// =====================================================================
+
+var global_config = {}
+files = ["m.js", "m1.js", "j.json", "j1.json"]
+
+function load_config(){
+    Object.keys(require.cache).forEach( k => { delete require.cache[k] } )        
+    Object.keys(global_config).forEach( k => { delete global_config[k] } )    
+    files.forEach( file => {
+        global_config[file] = require("./" + file)
+    })
+}
+
+load_config()
+load_config()
+
+console.log(global_config)
+
