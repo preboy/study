@@ -266,3 +266,7 @@ git log --name-status   -- 只列出文件名
 显示远程信息：
 git remote show origin
 
+
+冲突解决：
+$ git checkout --ours xxx/A.go   // 抛弃我的修改，使用merge的
+$ git checkout --theirs xxx/A.go // 抛弃merge的修改，使用我的
