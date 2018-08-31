@@ -2,3 +2,38 @@
 putty日志设置：
 
 putty-&H-&Y&M&D-&T.log
+
+
+# --------------------------- 测试传递多个参数 ---------------------------
+
+function fn()
+{
+    echo "args=$*"
+
+    while [ $# -ne 0 ]
+    do
+        echo "arg: $0 $1"
+        shift
+    done
+}
+
+echo -e "\e[1;31mcount of args: $#  \e[1;0m"
+fn $*
+
+
+# --------------------------- linux shell Array ---------------------------
+declare -A SERVER
+
+SERVER["game1"]="fuckyou 1"
+SERVER["game2"]="fuckyou 2"
+SERVER["game3"]="fuckyou 3"
+SERVER["game4"]="fuckyou 4"
+SERVER["game5"]="fuckyou 5"
+SERVER["game6"]="fuckyou 6"
+SERVER["game6"]="fuckyou 7"
+
+echo "${SERVER[*]}"
+
+for val in "${!SERVER[@]}"; do
+    echo "key-val: $val ${SERVER[$val]}"
+done
