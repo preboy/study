@@ -48,13 +48,18 @@ sed [opt] -f sed_file inputfile
     s 替换文件行中的部分内容
 
 
-awk
+awk 
+    使用方法: awk '{pattern + action}' {filenames}   
+
     awk -F ':' 'awk code' inputfile
     awk -f awkscript input
 
     awk 'BEGIN {one=1, two=2} {print${onw+two}} ' inputfile  # 这一行运行错误全
     ll | awk 'BEGIN {one=1;two=2;}; {print one+two;}; END{}'
-
+    
+    例子：
+    ls -l | tail -n +2  |  awk 'BEGIN{total=0;} {total=total+$2; print $2 } END{print total}'
+    ls -l | tail -n +2  |  awk '/wblist/ {total=total+$2; print $2 } END{print total}'      添加了pattern但无BEGIN
 
 引用符号的意义：
     引用符号        意义
