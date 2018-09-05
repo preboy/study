@@ -88,7 +88,7 @@ CentOS 7 下配置文件的修改：
 ...
 # Where and how to store data.
 storage:
-  dbPath: /data/mongo-data          # 此处修改数据存在位置    先建好此目录，前chowm mongod:mongod   /data/mongo-data 
+  dbPath: /data/mongo-data          # 此处修改数据存在位置    先建好此目录，前chowm mongod:mongod   /data/mongo-data
   journal:
 ...
 
@@ -96,8 +96,8 @@ storage:
 [2]
 ...
 security:                       # 这一行要打开：且添加下一行
-  authorization: enabled        
-...    
+  authorization: enabled
+...
  注意：
     在修改此处之前，登录进去，建立用户db.createUser({user:"root", pwd:"123", roles:["root"]})
     添加用户之后再修改配置文件，重启服务器
@@ -127,3 +127,10 @@ golang 使用 mongodb存储的时候，
 如果是map，则map的key只能是string,  且 key中不能包含:
     Windows下：/ . " $ * < > : | ?
     Linux下：  / . " $
+
+
+从mongodb中读取出来的数据，
+slice:
+    如果数据库中值为[] ，则读取出来的slice为非空，如果数据库中无该项，则为nil
+    如果数据库中值为{} ，则读取出来的map为非空，  如果数据库中无该项，则为nil
+    程序中值为nil的map或者slice，写入到数据库中，对应的项为{}或[], 下一次读取到程序中，就不为nil了
