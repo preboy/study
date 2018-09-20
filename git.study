@@ -270,3 +270,7 @@ git remote show origin
 冲突解决：
 $ git checkout --ours xxx/A.go   // 抛弃我的修改，使用merge的
 $ git checkout --theirs xxx/A.go // 抛弃merge的修改，使用我的
+
+// 切换节点：
+$ git checkout -b sub 888xxxxxx  // 从当前分支切出新分支，但节点回退到 888xxxxxx
+$ git branch sub      888xxxxxx  // 不切换分支
