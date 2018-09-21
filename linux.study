@@ -48,15 +48,15 @@ sed [opt] -f sed_file inputfile
     s 替换文件行中的部分内容
 
 
-awk 
-    使用方法: awk '{pattern + action}' {filenames}   
+awk
+    使用方法: awk '{pattern + action}' {filenames}
 
     awk -F ':' 'awk code' inputfile
     awk -f awkscript input
 
     awk 'BEGIN {one=1, two=2} {print${onw+two}} ' inputfile  # 这一行运行错误全
     ll | awk 'BEGIN {one=1;two=2;}; {print one+two;}; END{}'
-    
+
     例子：
     ls -l | tail -n +2  |  awk 'BEGIN{total=0;} {total=total+$2; print $2 } END{print total}'
     ls -l | tail -n +2  |  awk '/wblist/ {total=total+$2; print $2 } END{print total}'      添加了pattern但无BEGIN
@@ -414,7 +414,7 @@ xargs:      将标准输入的东西，转换成命令行参数u
     如果xargs 带参数，则表示执行
 
     -P 这个参数有作用：允许最多同时运行多个任务，
-        龙哥用他替换了之前的 "for() ... &"实现多任务 
+        龙哥用他替换了之前的 "for() ... &"实现多任务
         还有一个外部程序可安装  parallel(CentOS 7)
 
         输入：  seq 20 | xargs -P 4 -I A sleep A     查看    ps ux | grep sleep
@@ -448,7 +448,7 @@ setuid  setgid  # 以其他身份来运行程序
 
 目录有一个粘滞位，表示：只有创建该目录的人，才有权限删除目录中的文件
 
-# 目录堆栈  
+# 目录堆栈
  cd -
  pushd popd
 
@@ -991,6 +991,9 @@ xargs -I {}  s.sh -p {} -i    # -I 用于命名，然后指定使用地方
 cat file.txt | ( while read arg; do echo $arg; done)
 cat file.txt | xargs
 
+示例： 要执行多个命令可以使用sh帮助，要看多个执行输出的分隔，可以加-t
+    ls game*/game*.log   | xargs -n 1 -I {}  sh -c " tail {} &&  echo {} end ---------------"
+    ls game*/game*.log   | xargs -n 1 -I {}  -t tail {}
 
 
 $[1+3] 执行算术运算
@@ -1007,6 +1010,13 @@ rename 'y/[a-z]/[A-Z]' *.txt
 
 
 lsof  这个功能很强大
+lsof -u game    // 用户
+lsof -c server  // 进程
+lsof -p pid     // 进程ID
+lsof +D path    // 路径，可填写部分路径
+lsof +d path    // 不包括子目录
+lsof -i [[tcp|udp]:port]   // 网络连接
+
 pwdx  查看目录
 
 安装 mlocalte
@@ -1133,3 +1143,8 @@ arr[fuck]=100  则a[0]=100   a[任意字符串]==100
 
 echo ${arr[@]}   # 获得所有的值
 echo ${!arr[@]}  # 获得所有的下标
+
+
+网络工具：
+nc
+nmap
