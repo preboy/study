@@ -248,13 +248,15 @@ do
     last_modification=$(stat -c %Y $f)
     tail=""
     if [ $last_modification -lt $today_morning_sec ];then
-        tail="DELETE"
+        tail="Obsolete"
         if [ "$1" = "purge" ];then
+            tail="DELETED"
             rm $f
         fi
     fi
     printf "%-30s %-12s %s\n" $f $last_modification $tail
 done
+
 
 说明:
 printf中的%-30s，表示宽度、对齐方式
