@@ -234,3 +234,27 @@ load_config()
 console.log(global_config)
 
 
+
+// =====================================================================
+//                   shell 删除过期的文件(今天0点以前)
+// =====================================================================
+#!/bin/sh
+
+today_morning=`date  +"%Y-%m-%d"`
+today_morning_sec=`date +%s -d $today_morning`
+
+for f in $(ls *.txt)
+do
+    last_modification=$(stat -c %Y $f)
+    tail=""
+    if [ $last_modification -lt $today_morning_sec ];then
+        tail="DELETE"
+        if [ "$1" = "purge" ];then
+            rm $f
+        fi
+    fi
+    printf "%-30s %-12s %s\n" $f $last_modification $tail
+done
+
+说明:
+printf中的%-30s，表示宽度、对齐方式
