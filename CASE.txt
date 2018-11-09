@@ -260,3 +260,56 @@ done
 
 说明:
 printf中的%-30s，表示宽度、对齐方式
+
+
+
+// =====================================================================
+//                   nodejs crypto sign verify
+// =====================================================================
+
+const crypto = require("crypto")
+
+
+const private_key = `-----BEGIN RSA PRIVATE KEY-----
+MIICXQIBAAKBgQC7gKBtPm5TV0lya4toluFkMgfL7oGTZSQGQhipsKP6vkbA0aB2
+Xhgeo4fOYcOgM3JOT6meH4Mp0lRRI65Giz1JefKYsCTR2tIT2zQSRDJ9hTnOhx9f
+0F3ufoCmSzf/z9O7HDtH+7cjvkBtoOV3p3cxfnhrLg9jzP0UugsCAE+WMQIDAQAB
+AoGACIUlxRELLlpPChX89bm1cDodxJSH6syzwF0Mhdly+hffWy+rXPWVnv7LUwN6
+QjNURF62VGsWKLZYAn/ekXIOTM55T/DSYIvK/Oze2YcQ4Akq8PWk4gsvBBGmXQTN
+XTnIxjttlF1kcy1EGYHpI0y5bTEu+yJvCkhEepPeRnBZCGkCQQDrb0GFnBWbndB/
+IF1PbmBNRJISQd38zTEyimpRUapNOjkqOvh+/zAP0TLdYLUeRwjui2DOmKO6eICD
+d1mZMmYzAkEAy+GFZzJ7amXjb7IwlEe3Qwybe2l7oZ2GvQ2PFsAp6e2UJviXcPUb
+79RBo9QWGr+NmmYM1IgNq8/Pf5KZkEAGCwJAMd2xuhPyO7C0bYi0WtOdECCa88UB
+uL7ZUcQherHaaVsQqpIs+fEhA+iiZmNKWWxgRu48heWsoB1P0wifcKRNIwJBAIYv
+0luPkEcA9GZJg0u0v9tzasoZLPO7+DhpuimhJHUAlyfnKdWAnXiF3QX0yu+j75EV
+ZZBkU4snZUxzsnqMiO0CQQCd06oGo7+DEZyZ0oGuozVlx9V8uV0msrRe4aMcpTg3
+kEpV7qG3t3OpjnCijSpOoQiagLu51SBsSwx1tArv3vsU
+-----END RSA PRIVATE KEY-----
+`
+
+const public_key = `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC7gKBtPm5TV0lya4toluFkMgfL
+7oGTZSQGQhipsKP6vkbA0aB2Xhgeo4fOYcOgM3JOT6meH4Mp0lRRI65Giz1JefKY
+sCTR2tIT2zQSRDJ9hTnOhx9f0F3ufoCmSzf/z9O7HDtH+7cjvkBtoOV3p3cxfnhr
+Lg9jzP0UugsCAE+WMQIDAQAB
+-----END PUBLIC KEY-----
+`
+
+
+var Type = "RSA-MD5"   // "RSA-SHA256"
+var str = "zcg-fuck"
+
+// part: sign
+var signer = crypto.createSign(Type);
+signer.update(str)
+var ret = signer.sign(private_key, output_format='base64').toString("utf8");
+console.log("sign:", ret)
+
+
+// part: verity
+var verify = crypto.createVerify(Type);
+verify.update(str);
+var ss = verify.verify(public_key, ret, 'base64');
+console.log("verify:", ss);
+
+
