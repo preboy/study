@@ -106,6 +106,16 @@ awk
 
     for file in $(ls); do echo $file; done   # or  for file in $(*)
     for a in {1..5}; do echo a; done
+    
+    #####--------- 这是一个生动的例子
+    #!/bin/bash
+    db_xxx=(db_c db_b db_u1 db_u2 db_u3 db_gs999 db_gs1 db_gs2)
+    for d in "${db_xxx[@]}"; do
+        cnnstr=$(core/deploy.lua -d $d)
+        echo "str $d $cnnstr"
+done
+
+
 
     字符串长度：
 
