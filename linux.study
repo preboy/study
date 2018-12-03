@@ -28,7 +28,6 @@
         --include=*.go  只搜索特写的文件  etc: grep -r -w func . --include=*.go
 
 
-
 sed [opt] 'sed command'  inputfile
 sed [opt] -f sed_file inputfile
     opt:
@@ -111,10 +110,10 @@ awk
     #!/bin/bash
     db_xxx=(db_c db_b db_u1 db_u2 db_u3 db_gs999 db_gs1 db_gs2)
     for d in "${db_xxx[@]}"; do
+    # for d in db_c db_b db_u1 db_u2 db_u3 db_gs999 db_gs1 db_gs2; do       #### replace above line is ok yet
         cnnstr=$(core/deploy.lua -d $d)
         echo "str $d $cnnstr"
-done
-
+    done
 
 
     字符串长度：
