@@ -313,3 +313,69 @@ var ss = verify.verify(public_key, ret, 'base64');
 console.log("verify:", ss);
 
 
+// =====================================================================
+//				KVM
+// =====================================================================
+
+母机：
+
+	
+/etc/sysconfig/network-scripts/ifcfg-br0
+	DEVICE=br0
+	TYPE=Bridge
+	BOOTPROTO=dhcp
+	ONBOOT=yes
+
+在原来的网络文件(ifcfg-em1)上附加一句：
+BRIDGE=br0
+
+systemctl restat network 
+
+
+---------------------- create.sh
+#!/bin/bash
+
+echo "Edit first! :)"
+exit 1
+
+virt-install \
+    --name centos7 \
+    --os-type linux \
+    --os-variant rhel7 \
+    --vcpus 4 --cpu host \
+    --memory 4096 \
+    --network bridge=br0 \
+    --disk path=/data/vms/base/centos7.img,size=200,sparse=yes \
+    --graphics none \
+    -l /data/vms/iso/CentOS-7-x86_64-Minimal-1804.iso \
+    -x 'console=ttyS0'
+
+
+---------------------- clone.sh
+
+#!/bin/bash
+
+base=$1
+new=$2
+
+if [ -z "$base" ] || [ -z "$new" ]; then
+    echo "$0 base new"
+    exit 1
+fi
+
+virt-clone -o $base -n $new -f ./img/$new.img
+virsh autostart $new
+
+echo "new vm $new is cloned from $base"
+
+
+vms
+|
+|__base
+|
+|__img
+|
+|__iso
+
+
+ctrl+] 退离 虚拟机，跟screen一样
