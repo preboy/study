@@ -99,7 +99,7 @@ security:                       # 这一行要打开：且添加下一行
   authorization: enabled
 ...
  注意：
-    在修改此处之前，登录进去，建立用户db.createUser({user:"root", pwd:"123", roles:["root"]})
+    在修改此处之前，登录进去，建立用户db.createUser({user:"mongodbuser", pwd:"mongodbuser", roles:["root"]})
     添加用户之后再修改配置文件，重启服务器
     测试
 
