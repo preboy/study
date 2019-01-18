@@ -124,7 +124,7 @@ mongorestore  -h 192.168.0.200  --port 28001  --gzip   --authenticationDatabase 
 
 导出表：
 mongoexport --host 172.16.0.15 -u mongouser -p PtnCASe3ev5xR38 --authenticationDatabase=admin -d mjc -c giftinfo --type=json -o ggg.csv
-
+mongoimport --host 172.16.0.17 -u mongouser -p tanyh3421 --authenticationDatabase=admin -d mjc -c giftinfo --type=json --file ggg.csv
 
 golang 使用 mongodb存储的时候，
 如果是map，则map的key只能是string,  且 key中不能包含:
