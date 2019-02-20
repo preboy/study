@@ -601,7 +601,7 @@ strings filename  # 查看文件中所有可以打印的字符串
 
 
 pstack 打印某个进程的堆栈
-ptrace
+ptrace 打印某个进程的系统调用
 
 -- 读取整个文件并赋值到变量a
 a=$(<a.sh)
