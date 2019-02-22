@@ -138,3 +138,6 @@ slice:
     如果数据库中值为{} ，则读取出来的map为非空，  如果数据库中无该项，则为nil
     程序中值为nil的map或者slice，写入到数据库中，对应的项为{}或[], 下一次读取到程序中，就不为nil了
 
+
+# shell中直接执行mongo语句，主要是为了打印出入方便重定向
+mongo "mongodb://mongouser:7zfadonoh38n@172.29.0.36:27017/mjb?authSource=admin" --quiet  --eval 'db.order.find().limit(10).toArray().forEach( v=> { print(v.lv, v.first); })'
