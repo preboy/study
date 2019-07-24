@@ -156,7 +156,7 @@ security:
       user: "mongouser",
       pwd:  "mongopass",
       roles: [
-         { role: "readAnyDatabase", db: "admin" }
+         { role: "readWriteAnyDatabase", db: "admin" }
       ]
     }
 )
