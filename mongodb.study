@@ -141,3 +141,26 @@ slice:
 
 # shell中直接执行mongo语句，主要是为了打印出入方便重定向
 mongo "mongodb://mongouser:7zfadonoh38n@172.29.0.36:27017/mjb?authSource=admin" --quiet  --eval 'db.order.find().limit(10).toArray().forEach( v=> { print(v.lv, v.first); })'
+
+
+mongodb开启认证
+vim /etc/mongo.conf
+security:
+  authorization: enabled #注意缩进，缩进参照配置文件其他配置。缩进错误可能第6步重启不成功。
+
+创建用户 并拥有很大的权限
+   use admin;
+
+   db.createUser(
+    {
+      user: "mongouser",
+      pwd:  "mongopass",
+      roles: [
+         { role: "readAnyDatabase", db: "admin" }
+      ]
+    }
+)
+
+然后可以连接
+mongo mongodb://mongouser:mongopass@127.0.0.1/ --authenticationDatabase=admin
+mongo -u mongouser -p mongopass
