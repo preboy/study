@@ -700,3 +700,9 @@ in运算符：
 
 void function(a,b){}() 类似于 (function(a,b){})()
 
+
+
+启动 node 的调试模式：
+node -e 'process._debugProcess(935)'    //其中935为进程号
+或者
+kill -SIGUSR1 935   // nodejs定义SIGUSR1信号陷入debug模式

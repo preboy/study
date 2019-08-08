@@ -151,15 +151,15 @@ security:
 创建用户 并拥有很大的权限
    use admin;
 
-   db.createUser(
-    {
-      user: "mongouser",
-      pwd:  "mongopass",
-      roles: [
-         { role: "readWriteAnyDatabase", db: "admin" }
-      ]
-    }
-)
+   db.createUser({
+        user: "mongouser",
+        pwd:  "mongopass",
+        roles: [
+            { role: "readWriteAnyDatabase", db: "admin" }
+        ]
+    })
+
+    // 如果想建立一个万能的用户，则：  roles: [ "root" ]
 
 然后可以连接
 mongo mongodb://mongouser:mongopass@127.0.0.1/ --authenticationDatabase=admin

@@ -49,3 +49,17 @@ select @result;
 date time问题：
 select from_unixtime(1234523, "%Y%m%d");
 select unix_timestamp(date); 得整数
+
+
+
+------------------------------------------------------------
+t1(t1id t1str)   
+t2(t2id t2str)
+
+
+交叉连接
+select * from t1, t2;
+==
+select * from t1 cross join t2
+
+
