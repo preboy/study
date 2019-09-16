@@ -225,6 +225,7 @@ git ls-files -v | grep "^[hsmrck] "         -- 列表
 git 常用config
 git config --global core.autocrlf false     # 提交检出均不转换
 git config --global core.safecrlf true      # 拒绝提交包含混合换行符的文件
+git config --global diff.tool vimdiff       # 配置比较工具，如果出错，可以试试：sudo ln -s /usr/bin/diff /usr/share/vim/vim74diff
 
 
 git log --stat          -- 在 git log 的基础上加上统计信息
@@ -280,3 +281,4 @@ git remote prune origin         -- 清除本地的记录
 
 
 git cherry-pick commitid 合并另一个分支上的提交到本分支
+
