@@ -139,3 +139,8 @@ go debug:
         然后输入svg格式，生产文件，下载，用浏览器打开
 
 
+go vendor
+    import mname
+    现在当前模块下的vendor目录查找
+    反复上一级
+    直到/src/vendor
