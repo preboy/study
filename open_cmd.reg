@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+ 
+#文件夹里面和桌面上的右键
+[HKEY_CLASSES_ROOT\Directory\Background\shell\cmd2]
+@="Open cmd"
+"icon"="shell32.dll,24"
+[HKEY_CLASSES_ROOT\Directory\Background\shell\cmd2\command]
+@="cmd.exe /s /k pushd \"%V\""
