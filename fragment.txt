@@ -1,0 +1,21 @@
+// ----------------------------------------------------------------------------
+// 创建日志最简单的方法
+
+func CreateLog(filename string, prefix string) *log.Logger {
+    os.Remove(filename)
+    logFile, err := os.OpenFile(filename, os.O_CREATE|os.O_RDWR, 0666)
+    if err != nil {
+        panic(err.Error())
+    }
+
+    return log.New(logFile, prefix, log.Ldate|log.Lmicroseconds|log.Lshortfile)
+}
+
+func getGID() uint64 {
+    b := make([]byte, 64)
+    b = b[:runtime.Stack(b, false)]
+    b = bytes.TrimPrefix(b, []byte("goroutine "))
+    b = b[:bytes.IndexByte(b, ' ')]
+    n, _ := strconv.ParseUint(string(b), 10, 64)
+    return n
+}
