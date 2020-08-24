@@ -150,3 +150,6 @@ go vendor
     x := obj.fn
     x() // 执行时，仍然可以访问obj对象
 
+
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.cn,https://goproxy.io,direct

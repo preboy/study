@@ -19,3 +19,34 @@ func getGID() uint64 {
     n, _ := strconv.ParseUint(string(b), 10, 64)
     return n
 }
+
+
+// ----------------------------------------------------------------------------
+// AI 请求：
+
+const axios = require('axios');
+
+axios.post(
+    'http://100.64.15.28:9002/Pubilc_MahJong',
+
+    {
+        pon_hand:   "",
+        kon_hand:   "",
+        chow_hand:  "",
+        hand:       "D4D5D5D5D7D7D7D8D8D8D9D9D9",
+        history:    ["0,Discard,D6"],
+        dealer:     0,
+        seat:       3,
+        special:    "",
+    }).then(function (response) {
+            console.log("OK", response.data);
+    }).catch(function (error) {
+        console.log("err", error);
+    });
+
+
+编译 boost
+
+.\b2.exe toolset=msvc-14.2 link=static runtime-link=static,shared --build-dir=build/x86 address-model=32 -j4 install --includedir=C:\boost_1_72_0\include --libdir=C:\boost_1_72_0\stage\lib\x86 --with-system --with-thread --with-date_time --with-regex --with-serialization stage
+.\b2.exe toolset=msvc-14.2 link=static runtime-link=static,shared --build-dir=build/x64 address-model=64 -j4 install --includedir=C:\boost_1_72_0\include --libdir=C:\boost_1_72_0\stage\lib\x64 --with-system --with-thread --with-date_time --with-regex --with-serialization stage
+    
