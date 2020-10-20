@@ -50,3 +50,15 @@ axios.post(
 .\b2.exe toolset=msvc-14.2 link=static runtime-link=static,shared --build-dir=build/x86 address-model=32 -j4 install --includedir=C:\boost_1_72_0\include --libdir=C:\boost_1_72_0\stage\lib\x86 --with-system --with-thread --with-date_time --with-regex --with-serialization stage
 .\b2.exe toolset=msvc-14.2 link=static runtime-link=static,shared --build-dir=build/x64 address-model=64 -j4 install --includedir=C:\boost_1_72_0\include --libdir=C:\boost_1_72_0\stage\lib\x64 --with-system --with-thread --with-date_time --with-regex --with-serialization stage
     
+
+整数时间转换为字符串
+std::string format_date(time_t* sec)
+{
+    tm* m = localtime(sec);
+
+    char szBuff[1024] = {};
+    strftime(szBuff, 1024, "%Y-%m-%d %H:%M:%S", m);
+
+    return std::string(szBuff);
+}
+
