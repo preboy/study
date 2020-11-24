@@ -471,10 +471,6 @@ c++11中，所以的值，必定属于将亡值、纯右值，左值
 
 
 
-
-
-
-
 ( a == 0 ? a : b ) = 16;
 就是将三元操作符当作左值来使用.
 
@@ -484,8 +480,6 @@ x:path mypath(strpath, fs:native);
 
 可以在函数内声明class struct
 for (struct { int x, float y;} loop = {1,2}; ..;..){...}
-
-
 
 
 
@@ -592,3 +586,116 @@ do
 2. 全部改为ansi
 3. C++选项，命令 中加入： /utf-8
 
+
+// ----------------------------------------------------------------------------
+// 模板学习：
+
+类模板在外定义成员函数：
+
+
+template<typename A, typename B>
+class myClass
+{
+    void h();
+};
+
+template<typename A, typename B>
+void myClass<A,B>::h()
+{
+};
+
+区别于普通成员函数的方法：
+void myClass::h(){}
+
+非类型型参，类型型参，
+
+
+模板显示实例化：让程序员控制模板实例化的时间：
+
+比如有：
+template<typename T>void h(hT a){};
+template void h<int>(int ); 这就创建了一个h函数的int实例。
+
+template<typename T> T h(T a){} 
+显示实例化为:
+template int h<int>(int);
+
+template class A<int, int>; 将类显示实例化为int类型。
+
+显示模板实参：
+template<typename A, typename B, typename C>A h(B b, C c){};
+可以省略尾部的实参，如：
+h<int>(2,3.4);只指定了A为int,B,C 自行推导。但只能省略尾部的哈，
+
+模板特化：
+如有：template<tpyename T> void h(T a){};
+则特化为：
+template<> void h<int>(int a){}
+如果可以从实参是推演出模板的形参：则可以省略掉模板实参的部分：
+比如：template<> void h(int a){}
+
+在类外定义被特化的模板类的方法时，应当省略掉前面的“template<>”
+如：void A<int>::h(){}
+
+如有:template<typename T1, typename T2> class A{};
+特化后为：
+template<> class A<INT, CHAR>{};
+
+类模板的部分特化：
+template<typename T2>class A<int, T2>{}; T1为int;
+template<typename T1>class A<T1, T1>{} 将T2特化为T1
+
+模板类 类A内部定义了类B，函数g，
+ template<typename T1>
+class A
+{
+  public:
+    template<typename T2>
+      class B
+      {
+      };
+
+    template<typename T3> void g(T3 a);
+
+};
+
+在外部实现时：
+
+template<tpyename T1>
+template<typename T2>
+class A<T1>::B
+{
+};
+
+
+
+
+// ----------------------------------------------------------------------------
+当模板参数是值传递时，会造成参数decay:
+    丢失const和volatile属性。
+    丢失引用类型。
+    传递数组时，模板参数会decay成指针。
+
+
+因为在模板参数类型推导过程中不允许类型自动转换，但是调用普通函数是允许的，所以这个会调用非模板函数。
+    max<>(7, 42);       // calls max<int> (by argument deduction)
+    max('a', 42.7);     // calls the nontemplate for two ints
+    int max(int a, int b) { 
+      return b < a ? a : b; 
+    }
+
+    // maximum of two values of any type:
+    template <typename T> 
+    T max(T a, T b) { 
+      return b < a ? a : b; 
+    }
+
+
+
+由于函数模板重载，所以函数模板并不像类模板一样可以进行偏特化。
+
+再强调一下，不可以将类模板声明或定义在函数或者块作用域内。
+通常类模板只能定义在global/namespace 作用域，或者是其它类的声明里面。
+
+
+从c++17起，可以使用auto推断非类型模板参数：
