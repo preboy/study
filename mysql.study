@@ -66,3 +66,10 @@ select * from t1 cross join t2
 领主大乱斗欧美遇到的问题： 
 mysql读取的时间是当前时间（+8时区），不是系统（0时区）时间
 select convert_tz('2019-09-07 00:00:00','+08:00','+0:00'); 解决掉了
+
+
+mysql 8.0版本下：
+
+grant all privileges on *.* to 'dwj'@'dwj'; 
+ALTER USER 'dwj'@'%' IDENTIFIED WITH mysql_native_password BY 'dwj';
+flush privileges;

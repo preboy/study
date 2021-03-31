@@ -1,11 +1,15 @@
+x/200xg $rsp
+x/200i  0xFFFFFFFF
 
 
-
-n    = f10
-s    = f11
-c   # 从当前位置继续执行
+设置断点:
+b wawo::exception::exception(int const&, char const*, char const*, int const&, char const*)
 
 
+打印详细信息
+addr2line -e gameserver -p -f 0xFFFFFFFF
 
 
+set disassembly-flavor intel
 
+info line 函数名/*内存地址
