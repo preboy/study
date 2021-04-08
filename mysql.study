@@ -73,3 +73,122 @@ mysql 8.0版本下：
 grant all privileges on *.* to 'dwj'@'dwj'; 
 ALTER USER 'dwj'@'%' IDENTIFIED WITH mysql_native_password BY 'dwj';
 flush privileges;
+
+
+-------------------------------------------------------------------------------
+-- mysql笔记
+
+show tables from 库名;
+show create table 表名;
+desc 表名;
+
+int(N) 我们只需要记住两点：
+无论N等于多少，int永远占4个字节
+N表示的是显示宽度，不足的用0补足，超过的无视长度而直接显示整个数字，但这要整型设置了unsigned zerofill才有效
+
+
+浮点数float、double如果不写精度和标度，则会按照实际显示
+decimal不写精度和标度，小数点后面的会进行四舍五入，并且插入时会有警告!
+
+
+SET PASSWORD FOR '用户名'@'主机' = PASSWORD('密码')
+
+show grants for 'test1'@'localhost';
+drop user test1@localhost;
+
+// 直接操作mysql表之后，需要flush
+delete from user where user='用户名' and host='主机'; flush privileges;
+
+
+create database [if not exists] 库名;
+drop databases [if exists] 库名;
+
+
+
+>net stop mysql
+>net start mysql
+
+
+复制表
+create table 表名 like 被复制的表名;
+
+
+复制表结构+数据
+create table 表名 [as] select 字段,... from 被复制的表 [where 条件];
+
+%：表示匹配任意一个或多个字符
+_：表示匹配任意一个字符。
+
+
+查询运算符、like、between and、in、not in对NULL值查询不起效。
+
+IS NULL/IS NOT NULL
+
+
+
+
+select * from students; 
+select * from students where name like '%';
+
+当name有NULL值时，第2个sql查询不出name为NULL的记录
+
+
+
+select 列 from 表 limit [offset,] count;
+select 列 from 表名 limit (page - 1) * pageSize,pageSize;
+
+
+SELECT user_id 用户id, COUNT(id) 下单数量 FROM t_order GROUP BY user_id; 
+
+SELECTuser_id 用户id, the_year 年份, COUNT(id) 下单数量 FROMt_order GROUP BY user_id , the_year;
+
+
+
+本文开头有介绍，分组中select后面的列只能有2种：
+1. 出现在group by后面的列
+2. 使用聚合函数的列
+
+
+分组后对数据筛选，使用having关键字
+
+
+where是在分组（聚合）前对记录进行筛选，而having是在分组结束后的结果里筛选，最后返回整个
+sql的查询结果。
+
+
+迪卡儿积：
+SELECT user_id 用户id, max(price) 最大金额 FROMt_order t GROUP BY user_id ORDER BY 最大金额 desc;
+
+
+
+内连接:
+select 字段 from 表1 inner join 表2 on 连接条件; 
+或
+select 字段 from 表1 join 表2 on 连接条件; 
+或
+select 字段 from 表1, 表2 [where 关联条件];     // 建议使用的方法
+
+
+
+select 列 from 从表 left  join 主表 on 连接条件;
+select 列 from 从表 right join 主表 on 连接条件;
+
+
+
+在事务中设置一个点，可以让事务部分提交
+savepoint part1;
+
+
+start transaction read only;    // 只读事务
+
+
+查看隔离级别
+show variables like 'transaction_isolation';
+
+
+
+mysql 有 if for loop while 等等语句，
+
+还有游标，方便一行一行的取数据
+
+
