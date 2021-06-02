@@ -192,3 +192,6 @@ mysql 有 if for loop while 等等语句，
 还有游标，方便一行一行的取数据
 
 
+
+
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'jjdev123';
