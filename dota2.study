@@ -1,0 +1,30 @@
+DeepPrintTable is a Global Valve-made function which will display the information of the table passed.
+
+Dynamic_Wrap is a function to ensure that the script_reload command also reloads the listeners
+
+
+dota_script_function_help - 显示dota2可用功能。
+script_reload - 运行时重新加载脚本。
+
+
+https://github.com/Pizzalol/SpellLibrary
+
+
+teleport:
+FindClearSpaceForUnit
+
+
+CalculateStatBonus
+
+
+nPlayerID  范围： 
+for nPlayerID = 0, ( DOTA_MAX_TEAM_PLAYERS - 1 ) do
+end
+
+
+-- 给怪物升级
+unit:CreatureLevelUp(10)
+
+
+unit:SetMustReachEachGoalEntity(true)
+
