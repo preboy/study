@@ -94,3 +94,20 @@ pkg install bash-completion
 注意添加下一行到 .bashrc 中
 [[ $PS1 && -f /usr/local/share/bash-completion/bash_completion.sh ]] && \
         source /usr/local/share/bash-completion/bash_completion.sh
+
+
+
+
+换源：
+cat /usr/local/etc/pkg/repos/FreeBSD.conf
+ustc:{
+    url: "pkg+http://mirrors.ustc.edu.cn/freebsd-pkg/${ABI}/latest",
+    mirror_type: "srv",
+    signature_type: "none",
+    fingerprints: "/usr/share/keys/pkg",
+    enabled: yes
+}
+
+
+
+
