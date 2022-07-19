@@ -1,0 +1,10 @@
+一、设置msys2终端
+
+在setting.json中添加:
+"terminal.integrated.profiles.windows": {
+   "MSYS2": {
+        "path": "C:\\msys64\\usr\\bin\\bash.exe",
+    }
+},
+"terminal.integrated.defaultProfile.windows": "MSYS2"
+
